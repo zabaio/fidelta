@@ -5,7 +5,7 @@
 
 #include "types.h"
 #include "display.h"
-#include "robinhood.h"
+#include "uthash.h"
 
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts);
@@ -37,7 +37,6 @@ int main()
         if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 1;}
     #endif
 
-
     // Initialization of the triangle list
     // Insertion of the starting triangle
     t_node *t_list = NULL;
@@ -48,7 +47,7 @@ int main()
     for(i=0; i<N_PTS; i++){
         push_pt_front(&t_list[0].enc,pts[i]);
     }
-
+    printf("ok");
 
     // Initialization of the hash table
 

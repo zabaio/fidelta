@@ -4,9 +4,8 @@
 #include "types.h"
 
 // defines general ordering criterion
-int pts_in_order(point a,point b){
-    return (a.x<b.x||(a.x==b.x&&a.y<=b.y));
-}
+#define PTS_IN_ORDER(a, b) \
+    (a->x < b->x || (a->x == b->x && a->y <= b->y))
 
 void swap_pts(point *a,point *b){
     point temp=*a;
@@ -16,16 +15,16 @@ void swap_pts(point *a,point *b){
 
 // sorting 2 points
 void order_two_pts(point *a,point *b){
-    if(!pts_in_order(*a,*b))
+    if(!PTS_IN_ORDER(a,b))
         swap_pts(a,b);
     return;
 }
 
 // sorting 3 points
 void order_three_pts(point *a,point *b,point *c){
-    if(!pts_in_order(*a,*b)) swap_pts(a,b);
-    if(!pts_in_order(*a,*c)) swap_pts(a,c);
-    if(!pts_in_order(*b,*c)) swap_pts(b,c);
+    if(!PTS_IN_ORDER(a,b)) swap_pts(a,b);
+    if(!PTS_IN_ORDER(a,c)) swap_pts(a,c);
+    if(!PTS_IN_ORDER(b,c)) swap_pts(b,c);
     return;
 }
 

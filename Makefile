@@ -1,17 +1,22 @@
-SerialDelaunay: main.o display.o types.o
-	cd bin && gcc -o SerialDelaunay ../main.o ../display.o ../types.o -lm
+CC = gcc
+COM = $(CC) -c
+LIN = $(CC) -lm
+OBJDIR = -o ./bin/$@
 
-main.o: main.c types.h display.h robinhood.h
-	gcc -c main.c
+SerialDelaunay: main.o display.o types.o
+	cd bin && $(LIN) -o SerialDelaunay main.o display.o types.o
+
+main.o: main.c types.h display.h 
+	$(COM) main.c $(OBJDIR)
 
 display.o: display.c display.h types.h
-	gcc -c display.c
+	$(COM) display.c $(OBJDIR)
 
 types.o: types.c types.h
-	gcc -c types.c
+	$(COM) types.c $(OBJDIR)
 
 clean:
-	rm -rf *.o
+	rm -rf ./bin/*.o
 
 run:
 	./bin/SerialDelaunay
