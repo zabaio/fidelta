@@ -18,5 +18,8 @@ types.o: types.c types.h
 clean:
 	rm -rf ./bin/*.o
 
+all:
+	make clean && make && make run
+
 run:
 	./bin/SerialDelaunay

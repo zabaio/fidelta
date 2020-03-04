@@ -27,8 +27,8 @@ int main()
 
     srand(time(NULL));
     for(i = 0; i<N_PTS; i++){
-        pts[i].x = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
-        pts[i].y = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
+        pts[i].x = rand()%(MAX_COR*2+1)-MAX_COR;
+        pts[i].y = rand()%(MAX_COR*2+1)-MAX_COR;
         print_pt(pts[i]);
     }
 
@@ -46,14 +46,16 @@ int main()
     for(i=0; i<N_PTS; i++){
         push_pt_front(&t_list[0].enc,pts[i]);
     }
-    printf("ok");
 
     // Initialization of the hash table
+
+
     record_t *segs = NULL;
+    printf("%p\n", segs);
     hash_add(&segs, &pts[-3], &pts[-2], make_value(&t_list->t, NULL));
+    printf("%p\n", segs);
     record_t *f = hash_find(segs, &pts[-3], &pts[-2]);
-    print_seg(f->key);
-    printf("%p %p\n",f->value.t1,f->value.t2);
+    if (f) print_seg(f->key); else printf("Not found\n");
     return 0;
 }
 

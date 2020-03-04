@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "types.h"
 
-#define PT_FRMT "( %.3f , %.3f )"       // format of the displayed point
+#define PT_FRMT "( %d , %d )"       // format of the displayed point
 
 void print_pt(point pt){
     printf(PT_FRMT "\n", pt.x, pt.y);

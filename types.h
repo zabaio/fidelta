@@ -4,7 +4,7 @@
 #include "uthash.h"
 
 typedef struct{
-    double x,y;
+    int x,y;
 } point;
 
 typedef struct{
@@ -36,7 +36,7 @@ typedef struct {
     UT_hash_handle hh;
 } record_t;
 
-void set_pt(point *pt,double x,double y);
+void set_pt(point *pt,int x,int y);
 void set_seg(segment *seg,point a,point b);
 void set_t(triangle *t,point a,point b,point c);
 void push_t_front(t_node **ref, triangle t);
