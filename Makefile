@@ -1,6 +1,6 @@
 CC = gcc
-COM = $(CC) -c
-LIN = $(CC) -lm
+COM = $(CC) -c -g
+LIN = $(CC) -lm 
 OBJDIR = -o ./bin/$@
 
 SerialDelaunay: main.o display.o types.o

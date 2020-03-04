@@ -5,7 +5,6 @@
 
 #include "types.h"
 #include "display.h"
-#include "uthash.h"
 
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts);
@@ -50,7 +49,11 @@ int main()
     printf("ok");
 
     // Initialization of the hash table
-
+    record_t *segs = NULL;
+    hash_add(&segs, &pts[-3], &pts[-2], make_value(&t_list->t, NULL));
+    record_t *f = hash_find(segs, &pts[-3], &pts[-2]);
+    print_seg(f->key);
+    printf("%p %p\n",f->value.t1,f->value.t2);
     return 0;
 }
 
