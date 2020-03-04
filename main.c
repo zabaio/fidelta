@@ -46,11 +46,12 @@ int main()
     for(i=0; i<N_PTS; i++){
         push_pt_front(&t_list[0].enc,pts[i]);
     }
-    printf("ok");
-
     // Initialization of the hash table
     record_t *segs = NULL;
+    printf("%p\n",segs);
     hash_add(&segs, &pts[-3], &pts[-2], make_value(&t_list->t, NULL));
+    printf("%p, %f\n",segs,segs->key.a.x);
+    if(segs->key.a.x==pts[-3].x) printf ("funziona\n");
     record_t *f = hash_find(segs, &pts[-3], &pts[-2]);
     print_seg(f->key);
     printf("%p %p\n",f->value.t1,f->value.t2);
