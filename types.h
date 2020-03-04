@@ -45,8 +45,8 @@ void pull_t(t_node **ref, t_node *del);
 void pull_pt(pt_node **ref, pt_node *del);
 
 adj_tri make_value(triangle *t1, triangle *t2);
-void hash_add(record_t **head, point *p1, point *p2, adj_tri value);
-record_t *hash_find(record_t *head, point *p1, point *p2);
+void hash_add(record_t **head, point p1, point p2, adj_tri value);
+record_t *hash_find(record_t *head, point p1, point p2);
 void hash_delete(record_t *head, record_t *item);
 
 #endif // TYPES_H_INCLUDED

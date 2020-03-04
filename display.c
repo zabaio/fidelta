@@ -27,3 +27,9 @@ void print_t_exp(triangle t){
     return;
 }
 
+void print_record(record_t rec){
+    print_seg(rec.key);
+    if(rec.value.t1) print_t(*rec.value.t1); else printf("nil\n");
+    if(rec.value.t2) print_t(*rec.value.t2); else printf("nil\n"); 
+    return;
+}

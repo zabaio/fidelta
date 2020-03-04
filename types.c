@@ -106,18 +106,18 @@ void pull_pt(pt_node **ref, pt_node *del){
 }
 
 // add record to hash table
-void hash_add(record_t **head, point *p1, point *p2, adj_tri value){
+void hash_add(record_t **head, point p1, point p2, adj_tri value){
     record_t *new =(record_t *)malloc(sizeof(record_t));
-    set_seg(&(new->key),*p1,*p2);
+    set_seg(&(new->key),p1,p2);
     new->value = value;
     HASH_ADD(hh, *head, key, sizeof(segment), new);
     return;
 }
 
-record_t *hash_find(record_t *head, point *p1, point *p2){
+record_t *hash_find(record_t *head, point p1, point p2){
     record_t *r;
     segment *seg = (segment *)malloc(sizeof(segment));
-    set_seg(seg,*p1,*p2);
+    set_seg(seg,p1,p2);
     HASH_FIND(hh, head, seg, sizeof(segment), r);
     return r;
 }

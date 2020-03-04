@@ -48,14 +48,21 @@ int main()
     }
 
     // Initialization of the hash table
-
+    // hash_add wants: segs address, pt 1, pt 2, make_value(tri 1 address, tri 2 address)
+    // hash_find wants: segs, pt 1, pt2
+    // hash_delete wants:
 
     record_t *segs = NULL;
-    printf("%p\n", segs);
-    hash_add(&segs, &pts[-3], &pts[-2], make_value(&t_list->t, NULL));
-    printf("%p\n", segs);
-    record_t *f = hash_find(segs, &pts[-3], &pts[-2]);
-    if (f) print_seg(f->key); else printf("Not found\n");
+    
+    hash_add(&segs, t_list->t.p1, t_list->t.p2, make_value(&t_list->t, NULL));
+    hash_add(&segs, t_list->t.p2, t_list->t.p3, make_value(&t_list->t, NULL));
+    hash_add(&segs, t_list->t.p3, t_list->t.p1, make_value(&t_list->t, NULL));
+
+    record_t *probe = segs;
+    while(probe != NULL){
+        print_record(*probe);
+        probe = probe->hh.next;
+    }
     return 0;
 }
 
