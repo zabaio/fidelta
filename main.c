@@ -6,6 +6,7 @@
 #include "types.h"
 #include "display.h"
 
+#define DEBUG
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts);
 #endif
@@ -89,7 +90,7 @@ int main()
                 }
             }
         }
-        printf("%d",cyc);
+        printf("%d punti allineati",cyc);
         return !cyc;
     }
 #endif

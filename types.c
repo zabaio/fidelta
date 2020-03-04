@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 #include "types.h"
-#include "uthash.h"
 
 // defines general ordering criterion
 #define PTS_IN_ORDER(a, b) \

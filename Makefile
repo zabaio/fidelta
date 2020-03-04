@@ -1,10 +1,10 @@
 CC = gcc
 COM = $(CC) -c -g
-LIN = $(CC) -lm 
+LIN = $(CC)
 OBJDIR = -o ./bin/$@
 
 SerialDelaunay: main.o display.o types.o
-	cd bin && $(LIN) -o SerialDelaunay main.o display.o types.o
+	cd bin && $(LIN) -o SerialDelaunay main.o display.o types.o -lm
 
 main.o: main.c types.h display.h 
 	$(COM) main.c $(OBJDIR)
