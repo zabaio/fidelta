@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "types.h"
 
-#define PT_FRMT "( %d , %d )"       // format of the displayed point
+#define PT_FRMT "( %4d , %4d )"       // format of the displayed point
 
 void print_pt(point pt){
     printf(PT_FRMT "\n", pt.x, pt.y);
@@ -31,5 +31,20 @@ void print_record(record_t rec){
     print_seg(rec.key);
     if(rec.value.t1) print_t(*rec.value.t1); else printf("nil\n");
     if(rec.value.t2) print_t(*rec.value.t2); else printf("nil\n"); 
+    return;
+}
+
+void fout_pts(point* pts, int num_pts){
+    FILE *out;
+    int i;
+    out = fopen("./files/random.node","w");
+    if(out == NULL){
+        printf("Cannot open output file");
+        return;
+    }
+    fprintf (out,"%d 2 0 0\n",num_pts);
+    for(i=0; i<num_pts; i++){
+        fprintf(out,"%d %d %d\n",i, pts[i].x, pts[i].y);
+    }
     return;
 }

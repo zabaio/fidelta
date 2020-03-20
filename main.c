@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -12,7 +13,7 @@
 #endif
 
 #define N_PTS 10
-#define MAX_COR 10
+#define MAX_COR 100
 
 int main()
 {
@@ -34,7 +35,7 @@ int main()
     }
 
     #ifdef DEBUG
-        if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 1;}
+        if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 0;}
     #endif
 
     // Initialization of the triangle list
@@ -64,6 +65,8 @@ int main()
         print_record(*probe);
         probe = probe->hh.next;
     }
+
+    fout_pts(pts-3,N_PTS+3);
     return 0;
 }
 
@@ -85,12 +88,20 @@ int main()
                                     +(pts[k].x*pts[k].x+pts[k].y*pts[k].y)*(pts[j].x-pts[i].x));
                     r=sqrt(pow(pts[i].x-ux,2)+pow(pts[i].y-uy,2));
                     for(l=k+1;l<n_pts;l++){
-                        if(pow(pts[l].x-ux,2)+pow(pts[l].y-uy,2)-pow(r,2)==0) cyc++;
+                        if(pow(pts[l].x-ux,2)+pow(pts[l].y-uy,2)-pow(r,2)==0){
+                            cyc++;
+                            // printf("\n");
+                            // print_pt(pts[i]);
+                            // print_pt(pts[j]);
+                            // print_pt(pts[k]);
+                            // print_pt(pts[l]);
+                            // printf("\n");
+                        }
                     }
                 }
             }
         }
-        printf("%d punti allineati",cyc);
+        // printf("%d cerchi\n",cyc);
         return !cyc;
     }
 #endif

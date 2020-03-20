@@ -2,6 +2,12 @@ CC = gcc
 COM = $(CC) -c -g
 LIN = $(CC)
 OBJDIR = -o ./bin/$@
+PTS_FILE_NAME = random
+TRIANGLE_EXE = ../triangle/triangle
+TRIANGLE_INPUT = ./files/$(PTS_FILE_NAME).node
+SHOWME_EXE = ../triangle/showme
+SHOWME_INPUT = ./files/$(PTS_FILE_NAME).1.ele
+
 
 SerialDelaunay: main.o display.o types.o
 	cd bin && $(LIN) -o SerialDelaunay main.o display.o types.o -lm
@@ -23,3 +29,6 @@ all:
 
 run:
 	./bin/SerialDelaunay
+
+compare:
+	make run && $(TRIANGLE_EXE) $(TRIANGLE_INPUT) && $(SHOWME_EXE) $(SHOWME_INPUT)
