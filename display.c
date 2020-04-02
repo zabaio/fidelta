@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "types.h"
 
-#define PT_FRMT "( %4d , %4d )"       // format of the displayed point
+#define PT_FRMT "( %.1f , %.1f )"       // format of the displayed point
 
 void print_pt(point pt){
     printf(PT_FRMT "\n", pt.x, pt.y);
@@ -27,14 +27,51 @@ void print_t_exp(triangle t){
     return;
 }
 
+void print_tris(t_node *tris){
+    printf("\nTriangoli in tris:\n");
+    while(tris != NULL){
+        print_t(tris->t);
+        while(tris->enc != NULL){
+            printf("\t" PT_FRMT "\n", tris->enc->pt.x, tris->enc->pt.y);
+            tris->enc = tris->enc->next;
+        }
+        tris = tris->next;
+    }
+}
+
 void print_record(record_t rec){
     print_seg(rec.key);
-    if(rec.value.t1) print_t(*rec.value.t1); else printf("nil\n");
-    if(rec.value.t2) print_t(*rec.value.t2); else printf("nil\n"); 
+    if(rec.value.t1){
+        printf("\t"); 
+        print_t(*rec.value.t1);
+    } 
+    else printf("\tnil\n");
+    if(rec.value.t2) {
+        printf("\t");
+        print_t(*rec.value.t2); 
+    }    
+    else printf("\tnil\n"); 
     return;
 }
 
-void fout_pts(point* pts, int num_pts){
+void print_hash(record_t *elem){
+    printf("\n Elements in segs:\n");
+    while(elem != NULL){
+        print_record(*elem);
+        elem = elem->hh.next;
+    }
+    return;
+}
+
+void print_acts(s_node *acts){
+    printf("\n Segments in acts:\n");
+    while(acts != NULL){
+        print_seg(acts->s);
+        acts = acts->next;
+    }
+}
+
+void fprint_pts(point* pts, int num_pts){
     FILE *out;
     int i;
     out = fopen("./files/random.node","w");
@@ -44,7 +81,7 @@ void fout_pts(point* pts, int num_pts){
     }
     fprintf (out,"%d 2 0 0\n",num_pts);
     for(i=0; i<num_pts; i++){
-        fprintf(out,"%d %d %d\n",i, pts[i].x, pts[i].y);
+        fprintf(out,"%d %f %f\n",i, pts[i].x, pts[i].y);
     }
     return;
 }
