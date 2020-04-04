@@ -17,13 +17,13 @@ void print_t_exp(triangle t);
 void print_tris(t_node *tris);
 
 // prints an entry of the hash table
-void print_record(record_t rec);
+void print_record(record_segs rec);
 
 // prints the entire hash table
-void print_hash(record_t *elem);
+void print_segs(record_segs *elem);
 
 // prints all active segments
-void print_acts(s_node *acts);
+void print_acts(record_acts *elem);
 
 // printf an array of points
 void fprint_pts(point* pts, int num_pts);

@@ -5,7 +5,7 @@
 #define PT_FRMT "( %.1f , %.1f )"       // format of the displayed point
 
 void print_pt(point pt){
-    printf(PT_FRMT "\n", pt.x, pt.y);
+    printf( PT_FRMT "\n", pt.x, pt.y);
     return;
 }
 
@@ -39,35 +39,43 @@ void print_tris(t_node *tris){
     }
 }
 
-void print_record(record_t rec){
-    print_seg(rec.key);
-    if(rec.value.t1){
-        printf("\t"); 
-        print_t(*rec.value.t1);
-    } 
-    else printf("\tnil\n");
-    if(rec.value.t2) {
-        printf("\t");
-        print_t(*rec.value.t2); 
-    }    
-    else printf("\tnil\n"); 
+void print_record(record_segs rec){
+     
     return;
 }
 
-void print_hash(record_t *elem){
+void print_segs(record_segs *elem){
     printf("\n Elements in segs:\n");
     while(elem != NULL){
-        print_record(*elem);
+        print_seg(elem->key);
+        if(elem->value.t1){
+            printf("\t");
+            print_t(elem->value.t1->t);
+        } 
+        else printf("\tnil\n");
+        
+        if(elem->value.t2) {
+            printf("\t");
+            print_t(elem->value.t2->t); 
+        }    
+        else printf("\tnil\n");
+        
         elem = elem->hh.next;
     }
     return;
 }
 
-void print_acts(s_node *acts){
+void print_acts(record_acts *elem){
     printf("\n Segments in acts:\n");
-    while(acts != NULL){
-        print_seg(acts->s);
-        acts = acts->next;
+    while(elem != NULL){
+        print_seg(elem->key);
+        if(elem->father){
+            printf("\t"); 
+            print_t(elem->father->t);
+        } 
+        else printf("\tnil\n");
+        
+        elem = elem->hh.next;
     }
 }
 

@@ -4,6 +4,7 @@
 #include "uthash.h"
 
 typedef struct{
+    int id;
     double x,y;
 } point;
 
@@ -27,23 +28,28 @@ typedef struct t_node{
     struct t_node *prev,*next;
 } t_node;                     
 
-// element of stack of segments
-typedef struct s_node{
-    segment s;
-    struct s_node *next;
-} s_node;
+typedef struct {
+    t_node *t1, *t2;
+} adj_tri;
 
 typedef struct {
-    triangle *t1, *t2;
-} adj_tri;
+    t_node *t;
+    tn_node *next;
+} tn_node;
 
 typedef struct {
     segment key;
     adj_tri value;
     UT_hash_handle hh;
-} record_t;
+} record_segs;
 
-void set_pt(point *pt,int x,int y);
+typedef struct {
+    segment key;
+    t_node *father;
+    UT_hash_handle hh;
+} record_acts;
+
+void set_pt(point *pt,int x,int y,int id);
 void set_seg(segment *seg,point a,point b);
 void set_t(triangle *t,point a,point b,point c);
 
@@ -54,11 +60,15 @@ void push_pt(pt_node **ref, point pt);
 void pop_pt(pt_node **ref, pt_node *del);
 
 adj_tri make_value(triangle *t1, triangle *t2);
-void hash_add(record_t **head, point p1, point p2, adj_tri value);
-record_t *hash_find(record_t *head, point p1, point p2);
-void hash_delete(record_t *head, record_t *item);
+void segs_add(record_segs **head, point p1, point p2, adj_tri value);
+adj_tri segs_neighbors(record_segs *head, point p1, point p2);
+void segs_delete(record_segs *head, record_segs *del);
 
-void push_s(s_node **ref, segment seg);
-void pop_s(s_node **ref);
+void acts_add(record_acts **head, segment s, t_node *father);
+int is_active(record_acts *head, segment *seg);
+void acts_delete(record_acts *head, record_acts *del);
+
+void push_tn (tn_node **ref, t_node *node);
+void pop_tn (tn_node **ref);
 
 #endif // TYPES_H_INCLUDED

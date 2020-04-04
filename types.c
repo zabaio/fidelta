@@ -40,7 +40,8 @@ void order_three_pts(point *a,point *b,point *c){
 }
 
 // init point
-void set_pt(point *pt,int x,int y){
+void set_pt(point *pt,int x,int y,int id){
+    pt->id=id;
     pt->x=x;
     pt->y=y;
     return;
@@ -75,7 +76,23 @@ void push_t(t_node **ref, triangle t){
     return;
 }
 
-// add point to the front of the list
+void push_tn (tn_node **ref, t_node *node){
+    tn_node *new_node = (tn_node*)malloc(sizeof(tn_node));
+    new_node->t = node;
+    new_node->next = *ref;
+    *ref = new_node;
+    return;
+}
+
+void pop_tn (tn_node **ref){
+    tn_node *tmp;
+    tmp = *ref;
+    *ref = (*ref)->next;
+    free(tmp);
+    return;
+}
+
+// add point to the front of the list, returns the end of the list
 void push_pt(pt_node **ref, point pt){
     pt_node *new_node = (pt_node*)malloc(sizeof(t_node));
     new_node->pt = pt;
@@ -123,26 +140,26 @@ void pop_pt(pt_node **ref, pt_node *del){
     return;
 }
 
-// add record to hash table
-void hash_add(record_t **head, point p1, point p2, adj_tri value){
-    record_t *new =(record_t *)malloc(sizeof(record_t));
+// add record to segs hash table
+void segs_add(record_segs **head, point p1, point p2, adj_tri value){
+    record_segs *new =(record_segs *)malloc(sizeof(record_segs));
     set_seg(&(new->key),p1,p2);
     new->value = value;
     HASH_ADD(hh, *head, key, sizeof(segment), new);
     return;
 }
 
-// finds record in hash table given 2 points
-record_t *hash_find(record_t *head, point p1, point p2){
-    record_t *r;
+// finds record in segs hash table given 2 points
+adj_tri segs_neighbors(record_segs *head, point p1, point p2){
+    record_segs *r;
     segment *seg = (segment *)malloc(sizeof(segment));
     set_seg(seg,p1,p2);
     HASH_FIND(hh, head, seg, sizeof(segment), r);
-    return r;
+    return r->value;
 }
 
-// deletes record in hash table
-void hash_delete(record_t *head, record_t *del){
+// deletes record in segs hash table
+void segs_delete(record_segs *head, record_segs *del){
     HASH_DELETE(hh, head, del);
     free(del);
     return;
@@ -156,23 +173,24 @@ adj_tri make_value(triangle *t1, triangle *t2){
     return v;
 }
 
-// add element to stack of segments
-void push_s(s_node **ref, segment seg){
-    s_node *new_node = (s_node*)malloc(sizeof(t_node));
-    new_node->s = seg;
-    new_node->next = *ref;
-    *ref = new_node;
+// add record to acts hash table
+void acts_add(record_acts **head, segment s, t_node *father){
+    record_acts *new =(record_acts *)malloc(sizeof(record_acts));
+    new->father = father;
+    HASH_ADD(hh, *head, key, sizeof(segment), new);
     return;
 }
 
-// pop element from stack of segments
-void pop_s(s_node **ref){
-    if(ref == NULL){
-        printf("Illecit pop from acts");
-        return;
-    }
-    s_node *del = *ref;
-    *ref = (*ref)->next;
+//  chechs if segment seg is inside acts
+int is_active(record_acts *head, segment *seg){
+    record_acts *r;
+    HASH_FIND(hh, head, seg, sizeof(segment), r);
+    return (r != NULL);
+}
+
+// deletes record in acts hash table
+void acts_delete(record_acts *head, record_acts *del){
+    HASH_DELETE(hh, head, del);
     free(del);
     return;
 }

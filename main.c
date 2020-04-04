@@ -15,19 +15,21 @@
 #define MAX_COR 100
 
 // checks if point d is inside the circumcircle of t
-int in_circle(triangle *t, point *d);
+int same_triangle (triangle *t1, triangle *t2);
+int in_circle (triangle *t, point *d);
+void merge (pt_node **ref, pt_node *lf, pt_node *lu, triangle *son);
 
 int main()
 {
     // Initialization of the input point set.
     // Negative-index points represent the starting big triangle
     int i;
-    point pts_unwr[N_PTS+3];
-    point *const pts = &pts_unwr[3];
+    point pts[N_PTS];
+    point bounding[3];
 
-    set_pt(pts-1, MAX_COR*3, 0);
-    set_pt(pts-2, 0, MAX_COR*3);
-    set_pt(pts-3, -MAX_COR*3, -MAX_COR*3);
+    set_pt(&bounding[2], MAX_COR*3, 0,-1);
+    set_pt(&bounding[1], 0, MAX_COR*3,-2);
+    set_pt(&bounding[0], -MAX_COR*3, -MAX_COR*3,-3);
 
     printf("Generated Points:\n");
     srand(time(NULL));
@@ -45,36 +47,124 @@ int main()
     // Insertion of the starting triangle
     t_node *tris = NULL;
     triangle t_start;
-    set_t(&t_start, pts[-1], pts[-2], pts[-3]);
+    set_t(&t_start, bounding[0], bounding[1], bounding[2]);
     push_t(&tris, t_start);
 
     for(i=0; i<N_PTS; i++){
-        push_pt(&tris[0].enc,pts[i]);
+        push_pt(&(tris->enc),pts[i]);
     }
 
     print_tris(tris);
 
     // Initialization of the hash table
-    // hash_add wants: segs address, pt 1, pt 2, make_value(tri 1 address, tri 2 address)
-    // hash_find wants: segs, pt 1, pt2
-    // hash_delete wants:
+    // segs_add wants: segs address, pt 1, pt 2, make_value(tri 1 address, tri 2 address)
+    // segs_find wants: segs, pt 1, pt2
+    // segs_delete wants:
 
-    record_t *segs = NULL;
+    record_segs *segs = NULL;
     
-    hash_add(&segs, tris->t.p1, tris->t.p2, make_value(&tris->t, NULL));
-    hash_add(&segs, tris->t.p2, tris->t.p3, make_value(&tris->t, NULL));
-    hash_add(&segs, tris->t.p3, tris->t.p1, make_value(&tris->t, NULL));
+    segs_add (&segs, tris->t.p1, tris->t.p2, make_value(&tris->t, NULL));
+    segs_add (&segs, tris->t.p2, tris->t.p3, make_value(&tris->t, NULL));
+    segs_add (&segs, tris->t.p3, tris->t.p1, make_value(&tris->t, NULL));
 
     print_hash(segs);
 
     // Initialization of the active segments list
-    s_node *acts = NULL;
+    record_acts *acts = NULL;
     push_s (&acts, (segment){tris->t.p1, tris->t.p2});
     push_s (&acts, (segment){tris->t.p2, tris->t.p3});
     push_s (&acts, (segment){tris->t.p3, tris->t.p1});
     
     print_acts(acts);
+
+    record_acts *active;
+    int count;
+    tn_node *dead = NULL;
+
+    while(acts != NULL){
+        active = acts;
+        count = HASH_COUNT(acts);
+        for(; count>0; count--){
+
+            adj_tri neighbors = segs_neighbors (segs, active->key.a, active->key.b); 
+            t_node *father = active->father;
+            t_node *uncle;
+            triangle son;
+            segment opposite;
+            point v;
+
+            if (same_triangle (active->father, neighbors.t1)){
+                uncle = neighbors.t2;
+            }
+            else if (same_triangle (active->father, neighbors.t2)){
+                uncle = neighbors.t1;
+            }
+            else{
+                printf ("Match not found between the active face and its father triangle in segs\n");
+            }
+            if(father->enc == NULL) {printf("Il nodo padre non ha encroached points\n"); return 1;}
+            v.id = father->enc->pt.id;
+            v.x = father->enc->pt.x;
+            v.y = father->enc->pt.y;
+
+            // Replace (father, uncle, v)
+            set_t (&son, active->key.a, active->key.b, v);
+            push_t (&tris, son);
+
+            merge (&(tris->enc), father->enc, uncle->enc, &son);
+            
+            push_tn (&dead, father);
+            neighbors = segs_neighbors (segs, son.p1, son.p3);
+            if (same_triangle(&son, &(neighbors.t1->t))){
+                set_seg (&opposite, son.p1, son.p3);
+                if(!is_active (acts, &opposite)){
+                    push_tn (&dead, neighbors.t2);
+                }
+            }
+            else if (same_triangle(&son, &(neighbors.t2->t))){
+                set_seg (&opposite, son.p1, son.p3);
+                if(!is_active (acts, &opposite)){
+                    push_tn (&dead, neighbors.t1);
+                }
+            }
+            else{
+                printf ("Nessuno dei due triangoli di neigbors è son\n");
+                return;
+            }
+            
+            neighbors = segs_neighbors (segs, son.p2, son.p3);
+            if (same_triangle(&son, &(neighbors.t1->t))){
+                set_seg (&opposite, son.p2, son.p3);
+                if(!is_active (acts, &opposite)){
+                    push_tn (&dead, neighbors.t2);
+                }
+            }
+            else if (same_triangle(&son, &(neighbors.t2->t))){
+                set_seg (&opposite, son.p2, son.p3);
+                if(!is_active (acts, &opposite)){
+                    push_tn (&dead, neighbors.t1);
+                }
+            }
+            else{
+                printf ("Nessuno dei due triangoli di neigbors è son\n");
+                return;
+            }
+            
+            
+            active = active->hh.next;
+        }
+    }
     return 0;
+}
+
+int same_triangle(triangle *t1, triangle *t2){
+    if (t1->p1.x != t2->p1.x) return 0;
+    if (t1->p1.y != t2->p1.y) return 0;
+    if (t1->p2.x != t2->p2.x) return 0;
+    if (t1->p2.x != t2->p2.y) return 0;
+    if (t1->p3.x != t2->p3.x) return 0;
+    if (t1->p3.x != t2->p3.y) return 0;
+    return 1;
 }
 
 int in_circle(triangle *t, point *d){
@@ -98,6 +188,50 @@ int in_circle(triangle *t, point *d){
     return (det>0);
 }
 
+void merge (pt_node **ref, pt_node *lf, pt_node *lu, triangle *son){
+    while (lf->next != NULL){
+        lf = lf->next;
+    }
+    while (lu->next != NULL){
+        lu = lu->next;
+    }
+    lf = lf->prev;
+    while (lf != NULL || lu != NULL){
+        if (lu == NULL){
+            while (lf != NULL){
+                if (in_circle(son, &(lf->pt)))
+                    push_pt(ref, lf->pt);
+                lf = lf->prev;
+            }
+        }
+        else if (lf == NULL){
+            while (lu != NULL){
+                if (in_circle (son, &(lu->pt)))
+                    push_pt(ref, lu->pt);
+                lu = lu->prev;
+            }
+        }
+        else{
+            if (lf->pt.id < lf->pt.id){
+                if (in_circle(son, &(lf->pt)))
+                    push_pt (ref, lf->pt);
+                lf = lf->prev;
+            }
+            else if (lf->pt.id > lf->pt.id){
+                if (in_circle (son, &(lu->pt)))
+                    push_pt (ref, lu->pt);
+                lu = lu->prev;
+            }
+            else{
+                if (in_circle(son, &(lf->pt)))
+                    push_pt (ref, lf->pt);
+                lf = lf->prev;
+                lu = lu->prev;                
+            }
+        }
+    }
+    return;
+}
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts){
         int i,j,k,l,cyc=0;

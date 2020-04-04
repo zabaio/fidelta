@@ -8,11 +8,12 @@ that lowers iteration dependency, improving the degree of **parallelization** re
 
 ## Status
 General: **Work in Progress**
-|                |Log                            |
-|----------------|-------------------------------|
-|28/02/20        |`Start           `             |
-|04/03/20        |`Main structures implemented`  |
-|02/04/20        |`InCircle and Counterclockwise`|
+|                |Log                                   |
+|----------------|--------------------------------------|
+|28/02/20        |`Start           `                    |
+|04/03/20        |`Main structures implemented`         |
+|02/04/20        |`InCircle and Counterclockwise`       |
+|04/04/20        |`Added merge encroaching points lists`|
 
 
 ## Contacts
