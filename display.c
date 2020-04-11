@@ -31,52 +31,34 @@ void print_tris(t_node *tris){
     printf("\nTriangoli in tris:\n");
     while(tris != NULL){
         print_t(tris->t);
-        while(tris->enc != NULL){
-            printf("\t" PT_FRMT "\n", tris->enc->pt.x, tris->enc->pt.y);
-            tris->enc = tris->enc->next;
+        pt_node *probe = tris->fenc;
+        while(probe != NULL){
+            printf("\t" PT_FRMT "\n", probe->pt.x, probe->pt.y);
+            probe = probe->next;
         }
         tris = tris->next;
     }
-}
-
-void print_record(record_segs rec){
-     
-    return;
 }
 
 void print_segs(record_segs *elem){
     printf("\n Elements in segs:\n");
     while(elem != NULL){
         print_seg(elem->key);
-        if(elem->value.t1){
+        if(elem->tfirst){
             printf("\t");
-            print_t(elem->value.t1->t);
+            print_t(elem->tfirst->t);
         } 
         else printf("\tnil\n");
         
-        if(elem->value.t2) {
+        if(elem->tsecond) {
             printf("\t");
-            print_t(elem->value.t2->t); 
+            print_t(elem->tsecond->t); 
         }    
         else printf("\tnil\n");
         
         elem = elem->hh.next;
     }
     return;
-}
-
-void print_acts(record_acts *elem){
-    printf("\n Segments in acts:\n");
-    while(elem != NULL){
-        print_seg(elem->key);
-        if(elem->father){
-            printf("\t"); 
-            print_t(elem->father->t);
-        } 
-        else printf("\tnil\n");
-        
-        elem = elem->hh.next;
-    }
 }
 
 void fprint_pts(point* pts, int num_pts){

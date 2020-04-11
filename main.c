@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <assert.h>
 
 #include "types.h"
 #include "display.h"
@@ -17,7 +18,7 @@
 // checks if point d is inside the circumcircle of t
 int same_triangle (triangle *t1, triangle *t2);
 int in_circle (triangle *t, point *d);
-void merge (pt_node **ref, pt_node *lf, pt_node *lu, triangle *son);
+void merge (t_node *father, t_node *son, t_node *uncle);
 
 int main()
 {
@@ -46,12 +47,10 @@ int main()
     // Initialization of the triangle list
     // Insertion of the starting triangle
     t_node *tris = NULL;
-    triangle t_start;
-    set_t(&t_start, bounding[0], bounding[1], bounding[2]);
-    push_t(&tris, t_start);
+    push_t(&tris, bounding[0], bounding[1], bounding[2]);
 
     for(i=0; i<N_PTS; i++){
-        push_pt(&(tris->enc),pts[i]);
+        push_ptint(tris, pts[i]);
     }
 
     print_tris(tris);
@@ -70,89 +69,31 @@ int main()
     print_hash(segs);
 
     // Initialization of the active segments list
-    record_acts *acts = NULL;
-    push_s (&acts, (segment){tris->t.p1, tris->t.p2});
-    push_s (&acts, (segment){tris->t.p2, tris->t.p3});
-    push_s (&acts, (segment){tris->t.p3, tris->t.p1});
-    
-    print_acts(acts);
+    act_node *acts = NULL;
+    act_node *nextround = NULL;
 
-    record_acts *active;
-    int count;
-    tn_node *dead = NULL;
+    push_act (&acts, segs, tris->t.p1, tris->t.p2, tris);
+    push_act (&acts, segs, tris->t.p2, tris->t.p3, tris);
+    push_act (&acts, segs, tris->t.p3, tris->t.p1, tris);
 
-    while(acts != NULL){
-        active = acts;
-        count = HASH_COUNT(acts);
-        for(; count>0; count--){
+    while(acts != NULL || nextround != NULL){
+        
+        push_t (&tris, acts->act->key.a, acts->act->key.b, acts->father->fenc->pt);
+        
+        merge (acts->father, tris, acts->uncle);
+        
+        segs_add (&segs, acts->act->key.a, acts->father->fenc->pt, tris);
+        segs_add (&segs, acts->act->key.b, acts->father->fenc->pt, tris);
+        assert (acts->act->tfirst == acts->father || acts->act->tsecond == acts->father);
+        if (acts->act->tfirst == acts->father){
+            acts->act->tfirst == tris;
 
-            adj_tri neighbors = segs_neighbors (segs, active->key.a, active->key.b); 
-            t_node *father = active->father;
-            t_node *uncle;
-            triangle son;
-            segment opposite;
-            point v;
-
-            if (same_triangle (active->father, neighbors.t1)){
-                uncle = neighbors.t2;
-            }
-            else if (same_triangle (active->father, neighbors.t2)){
-                uncle = neighbors.t1;
-            }
-            else{
-                printf ("Match not found between the active face and its father triangle in segs\n");
-            }
-            if(father->enc == NULL) {printf("Il nodo padre non ha encroached points\n"); return 1;}
-            v.id = father->enc->pt.id;
-            v.x = father->enc->pt.x;
-            v.y = father->enc->pt.y;
-
-            // Replace (father, uncle, v)
-            set_t (&son, active->key.a, active->key.b, v);
-            push_t (&tris, son);
-
-            merge (&(tris->enc), father->enc, uncle->enc, &son);
-            
-            push_tn (&dead, father);
-            neighbors = segs_neighbors (segs, son.p1, son.p3);
-            if (same_triangle(&son, &(neighbors.t1->t))){
-                set_seg (&opposite, son.p1, son.p3);
-                if(!is_active (acts, &opposite)){
-                    push_tn (&dead, neighbors.t2);
-                }
-            }
-            else if (same_triangle(&son, &(neighbors.t2->t))){
-                set_seg (&opposite, son.p1, son.p3);
-                if(!is_active (acts, &opposite)){
-                    push_tn (&dead, neighbors.t1);
-                }
-            }
-            else{
-                printf ("Nessuno dei due triangoli di neigbors è son\n");
-                return;
-            }
-            
-            neighbors = segs_neighbors (segs, son.p2, son.p3);
-            if (same_triangle(&son, &(neighbors.t1->t))){
-                set_seg (&opposite, son.p2, son.p3);
-                if(!is_active (acts, &opposite)){
-                    push_tn (&dead, neighbors.t2);
-                }
-            }
-            else if (same_triangle(&son, &(neighbors.t2->t))){
-                set_seg (&opposite, son.p2, son.p3);
-                if(!is_active (acts, &opposite)){
-                    push_tn (&dead, neighbors.t1);
-                }
-            }
-            else{
-                printf ("Nessuno dei due triangoli di neigbors è son\n");
-                return;
-            }
-            
-            
-            active = active->hh.next;
         }
+        else if (acts->act->tfirst == acts->father){
+            acts->act->tfirst == tris;
+        }
+
+        //check if active ...
     }
     return 0;
 }
@@ -188,50 +129,11 @@ int in_circle(triangle *t, point *d){
     return (det>0);
 }
 
-void merge (pt_node **ref, pt_node *lf, pt_node *lu, triangle *son){
-    while (lf->next != NULL){
-        lf = lf->next;
-    }
-    while (lu->next != NULL){
-        lu = lu->next;
-    }
-    lf = lf->prev;
-    while (lf != NULL || lu != NULL){
-        if (lu == NULL){
-            while (lf != NULL){
-                if (in_circle(son, &(lf->pt)))
-                    push_pt(ref, lf->pt);
-                lf = lf->prev;
-            }
-        }
-        else if (lf == NULL){
-            while (lu != NULL){
-                if (in_circle (son, &(lu->pt)))
-                    push_pt(ref, lu->pt);
-                lu = lu->prev;
-            }
-        }
-        else{
-            if (lf->pt.id < lf->pt.id){
-                if (in_circle(son, &(lf->pt)))
-                    push_pt (ref, lf->pt);
-                lf = lf->prev;
-            }
-            else if (lf->pt.id > lf->pt.id){
-                if (in_circle (son, &(lu->pt)))
-                    push_pt (ref, lu->pt);
-                lu = lu->prev;
-            }
-            else{
-                if (in_circle(son, &(lf->pt)))
-                    push_pt (ref, lf->pt);
-                lf = lf->prev;
-                lu = lu->prev;                
-            }
-        }
-    }
+void merge (t_node *father, t_node *son, t_node *uncle){
+    
     return;
 }
+
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts){
         int i,j,k,l,cyc=0;

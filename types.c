@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "types.h"
 
@@ -65,54 +66,47 @@ void set_t(triangle *t,point a,point b,point c){
 }
 
 // add triangle to the front of the list
-void push_t(t_node **ref, triangle t){
-    t_node *new_node = (t_node*)malloc(sizeof(t_node));
-    new_node->t = t;
-    new_node->enc = NULL;
-    new_node->next = *ref;
-    new_node->prev = NULL;
-    if(*ref!=NULL) (*ref)->prev = new_node;
-    *ref = new_node;
+void push_t(t_node **ref, point p1, point p2, point p3){
+    t_node *new = (t_node*)malloc(sizeof(t_node));
+    set_t(&(new->t), p1, p2, p3);
+    new->fenc = NULL;
+    new->lenc = NULL;
+    new->next = *ref;
+    new->prev = NULL;
+    if(*ref!=NULL) (*ref)->prev = new;
+    *ref = new;
     return;
 }
 
-void push_tn (tn_node **ref, t_node *node){
-    tn_node *new_node = (tn_node*)malloc(sizeof(tn_node));
-    new_node->t = node;
-    new_node->next = *ref;
-    *ref = new_node;
+// add point to the back of the list, returns the end of the list
+void push_ptint(t_node *ref, point pt){
+    if(ref == NULL){
+        printf("Error in push_ptint");
+        exit(EXIT_FAILURE);
+    }
+    pt_node *new = (pt_node*)malloc(sizeof(pt_node));
+    set_pt(&(new->pt), pt.x, pt.y, pt.id);
+    new->next = NULL;
+    new->prev = ref->lenc;
+    if(ref->lenc == NULL){
+        ref->fenc = new;
+        ref->lenc = new;
+        return;
+    }
+    ref->lenc->next = new;
+    ref->lenc = new;
     return;
 }
 
-void pop_tn (tn_node **ref){
-    tn_node *tmp;
-    tmp = *ref;
-    *ref = (*ref)->next;
-    free(tmp);
-    return;
-}
-
-// add point to the front of the list, returns the end of the list
-void push_pt(pt_node **ref, point pt){
-    pt_node *new_node = (pt_node*)malloc(sizeof(t_node));
-    new_node->pt = pt;
-    new_node->next = *ref;
-    new_node->prev = NULL;
-    if(*ref!=NULL)
-        (*ref)->prev = new_node;
-    *ref = new_node;
-    return;
-}
-
-// delete triangle from list
-void pop_t(t_node **ref, t_node *del){
+// delete triangle from list. TODO check. Maybe not needed
+/* void pop_t(t_node **ref, t_node *del){
     if(*ref == NULL || del== NULL)
         return;
 
     pt_node *tmp;
-    while(del->enc != NULL){
-        tmp = del->enc;
-        del->enc = del->enc->next;
+    while(del->fenc != NULL){
+        tmp = del->fenc;
+        del->fenc = del->fenc->next;
         free(tmp);
     }
 
@@ -124,11 +118,11 @@ void pop_t(t_node **ref, t_node *del){
         (*ref)->next->prev=(*ref)->prev;
     free(del);
     return;
-}
+} */
 
-// delete point from list
-void pop_pt(pt_node **ref, pt_node *del){
-    if(*ref == NULL || del== NULL)
+// delete point from list TODO wrong. Maybe not needed
+/* void pop_ptint(t_node *ref, pt_node *del){
+    if(ref == NULL || del== NULL)
         return;
     if(*ref == del)
         *ref=del->next;
@@ -138,24 +132,27 @@ void pop_pt(pt_node **ref, pt_node *del){
         (*ref)->next->prev=(*ref)->prev;
     free(del);
     return;
-}
+} */
 
-// add record to segs hash table
-void segs_add(record_segs **head, point p1, point p2, adj_tri value){
-    record_segs *new =(record_segs *)malloc(sizeof(record_segs));
-    set_seg(&(new->key),p1,p2);
-    new->value = value;
-    HASH_ADD(hh, *head, key, sizeof(segment), new);
+// add a new halfsegment gets added to segs
+void segs_add(record_segs **head, point p1, point p2, t_node *tknown){
+    record_segs *record;
+    segment *seg;
+    set_seg (seg, p1, p2);
+    HASH_FIND(hh, *head, seg, sizeof(segment), record);
+    
+    if (record == NULL){
+        record = (record_segs *)malloc(sizeof(record_segs));
+        set_seg(&(record->key),p1,p2);
+        record->tfirst = tknown;
+        record->tsecond = NULL;
+        HASH_ADD(hh, *head, key, sizeof(segment), record);
+    }
+    else{
+        assert (record->tfirst != NULL && record->tsecond == NULL);
+        record->tsecond = tknown;
+    }
     return;
-}
-
-// finds record in segs hash table given 2 points
-adj_tri segs_neighbors(record_segs *head, point p1, point p2){
-    record_segs *r;
-    segment *seg = (segment *)malloc(sizeof(segment));
-    set_seg(seg,p1,p2);
-    HASH_FIND(hh, head, seg, sizeof(segment), r);
-    return r->value;
 }
 
 // deletes record in segs hash table
@@ -165,32 +162,30 @@ void segs_delete(record_segs *head, record_segs *del){
     return;
 }
 
-// creates a couple of triangles
-adj_tri make_value(triangle *t1, triangle *t2){
-    adj_tri v;
-    v.t1=t1;
-    v.t2=t2;
-    return v;
-}
-
-// add record to acts hash table
-void acts_add(record_acts **head, segment s, t_node *father){
-    record_acts *new =(record_acts *)malloc(sizeof(record_acts));
+// pushes a new active segment in acts
+void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father){
+    act_node *new = (act_node *)malloc(sizeof(act_node));
+    segment *activeseg = (segment *)malloc(sizeof(segment));
+    set_seg (activeseg, p1, p2);
+    HASH_FIND (hh, segs, activeseg, sizeof (segment), new->act);
     new->father = father;
-    HASH_ADD(hh, *head, key, sizeof(segment), new);
+    if (new->act->tfirst == father){
+        new->uncle = new->act->tsecond;
+    }
+    else if (new->act->tsecond == father){
+        new->uncle = new->act->tfirst;
+    }
+    else{
+        assert(0);
+    }
     return;
 }
 
-//  chechs if segment seg is inside acts
-int is_active(record_acts *head, segment *seg){
-    record_acts *r;
-    HASH_FIND(hh, head, seg, sizeof(segment), r);
-    return (r != NULL);
-}
-
-// deletes record in acts hash table
-void acts_delete(record_acts *head, record_acts *del){
-    HASH_DELETE(hh, head, del);
-    free(del);
+// deletes element in acts
+void pop_act(act_node **acts){
+    assert (*acts != NULL);
+    act_node *tmp = *acts;
+    free(tmp);
+    *acts = (*acts)->next;
     return;
 }
