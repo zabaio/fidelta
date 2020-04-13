@@ -14,6 +14,7 @@ General: **Work in Progress**
 |04/03/20        |`Main structures implemented`         |
 |02/04/20        |`InCircle and Counterclockwise`       |
 |04/04/20        |`Added merge encroaching points lists`|
+|14/04/20        |`First (almost) working version`      |
 
 
 ## Contacts

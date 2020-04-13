@@ -7,16 +7,14 @@
 #include "types.h"
 #include "display.h"
 
-#define DEBUG
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts);
 #endif
 
-#define N_PTS 2
+#define N_PTS 4
 #define MAX_COR 10
 
 // checks if point d is inside the circumcircle of t
-int same_triangle (triangle *t1, triangle *t2);
 int in_circle (triangle *t, point *d);
 void merge (t_node *father, t_node *son, t_node *uncle);
 void fill_sol (record_segs *segs, t_node **tail, t_node *cur);
@@ -45,13 +43,19 @@ int main()
     }
 
     */
-    pts[0].x = -3;
-    pts[0].y = -4;
+    pts[0].x = 1.2;
+    pts[0].y = -1.2;
     pts[0].id = 0;
-    pts[1].x = -3;
-    pts[1].y = 6;
+    pts[1].x = -9.1;
+    pts[1].y = -3.4;
     pts[1].id = 1;
-
+    pts[2].x = -2.5;
+    pts[2].y = 8.8;
+    pts[2].id = 2;
+    pts[3].x = 9.5;
+    pts[3].y = -6;
+    pts[3].id = 3;
+    
     #ifdef DEBUG
         if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 0;}
     #endif
@@ -160,7 +164,7 @@ int main()
     t_node *sol = NULL;
     t_node *tail = NULL;
     
-    tris->vis =1;
+    tris->vis = 1;
     sol = tris;
     tail = tris;
     printf("\n");
@@ -170,16 +174,6 @@ int main()
     print_sol (sol);
 
     return 0;
-}
-
-int same_triangle(triangle *t1, triangle *t2){
-    if (t1->p1.x != t2->p1.x) return 0;
-    if (t1->p1.y != t2->p1.y) return 0;
-    if (t1->p2.x != t2->p2.x) return 0;
-    if (t1->p2.x != t2->p2.y) return 0;
-    if (t1->p3.x != t2->p3.x) return 0;
-    if (t1->p3.x != t2->p3.y) return 0;
-    return 1;
 }
 
 int in_circle(triangle *t, point *d){
@@ -217,23 +211,32 @@ void merge (t_node *father, t_node *son, t_node *uncle){
         pt_node *uprobe = uncle->fenc;
         while (fprobe != NULL || uprobe != NULL){
             
-            if (uprobe == NULL || fprobe->pt.id <= uprobe->pt.id){
+            if (uprobe == NULL || (fprobe != NULL && fprobe->pt.id < uprobe->pt.id)){
                 if (in_circle (&son->t, &fprobe->pt)){
                     push_ptint (son, fprobe->pt);
                 }
                 fprobe = fprobe->next;
             }
             
-            else if (fprobe == NULL || uprobe->pt.id <= fprobe->pt.id){
+            else if (fprobe == NULL || (uprobe != NULL && uprobe->pt.id < fprobe->pt.id)){
                 if (in_circle (&son->t, &uprobe->pt)){
                     push_ptint (son, uprobe->pt);
                 }
                 uprobe = uprobe->next;
             }
+
+            else if (fprobe != NULL && uprobe != NULL && fprobe->pt.id == uprobe->pt.id){
+                if (in_circle (&son->t, &fprobe->pt)){  //TODO necessary?
+                    push_ptint (son, fprobe->pt);
+                }
+                uprobe = uprobe->next;
+                fprobe = fprobe->next;
+            }
         }
     }
     return;
 }
+
 
 void fill_sol (record_segs *segs, t_node **tail, t_node *cur){
     t_node *opp;
@@ -263,6 +266,7 @@ void fill_sol (record_segs *segs, t_node **tail, t_node *cur){
     }
     return;
 }
+
 
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts){
