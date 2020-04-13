@@ -12,13 +12,14 @@
     int is_general_position(point *pts,int n_pts);
 #endif
 
-#define N_PTS 10
-#define MAX_COR 100
+#define N_PTS 2
+#define MAX_COR 10
 
 // checks if point d is inside the circumcircle of t
 int same_triangle (triangle *t1, triangle *t2);
 int in_circle (triangle *t, point *d);
 void merge (t_node *father, t_node *son, t_node *uncle);
+void fill_sol (record_segs *segs, t_node **tail, t_node *cur);
 
 int main()
 {
@@ -31,14 +32,25 @@ int main()
     set_pt(&bounding[2], MAX_COR*3, 0,-1);
     set_pt(&bounding[1], 0, MAX_COR*3,-2);
     set_pt(&bounding[0], -MAX_COR*3, -MAX_COR*3,-3);
-
     printf("Generated Points:\n");
+
+    /*
     srand(time(NULL));
     for(i = 0; i<N_PTS; i++){
         pts[i].x = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
         pts[i].y = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
+        pts[i].id = i;
+        print_pt_id(pts[i]);
         print_pt(pts[i]);
     }
+
+    */
+    pts[0].x = -3;
+    pts[0].y = -4;
+    pts[0].id = 0;
+    pts[1].x = -3;
+    pts[1].y = 6;
+    pts[1].id = 1;
 
     #ifdef DEBUG
         if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 0;}
@@ -66,7 +78,7 @@ int main()
     segs_add (&segs, tris->t.p2, tris->t.p3, tris);
     segs_add (&segs, tris->t.p3, tris->t.p1, tris);
 
-    print_hash(segs);
+    print_segs_id(segs);
 
     // Initialization of the active segments list
     act_node *acts = NULL;
@@ -79,10 +91,12 @@ int main()
     while(acts != NULL || nextround != NULL){
         // load next round
         if (acts == NULL){
+            printf("Fine round;\n");
+            print_tris_id(tris);
             acts = nextround;
             nextround = NULL;
         }
-
+        printf("\nAttivo: %d %d\n", acts->act->key.a.id, acts->act->key.b.id);
         t_node *encroached = NULL;
 
         // the son gets added to tris
@@ -94,12 +108,14 @@ int main()
         // we add a-pt to segs
         // encroached gets the triangle encroached in the relation across a-pt and we add it to the next round
         encroached = segs_add (&segs, acts->act->key.a, acts->father->fenc->pt, tris);
+        print_segs_id(segs);
         if (encroached != NULL){
             push_act (&nextround, segs, acts->act->key.a, acts->father->fenc->pt, encroached);
         }
 
         // same as before with b-pt
         encroached = segs_add (&segs, acts->act->key.b, acts->father->fenc->pt, tris);
+        print_segs_id(segs);
         if (encroached != NULL){
             push_act (&nextround, segs, acts->act->key.b, acts->father->fenc->pt, encroached);
         }
@@ -121,15 +137,15 @@ int main()
                 acts->act->tsecond = tris;
             }
 
-            if ((acts->act->tfirst->fenc == NULL && acts->act->tsecond->fenc != NULL) ||
-                acts->act->tfirst->fenc->pt.id  <  acts->act->tsecond->fenc->pt.id){
+            if (acts->act->tfirst->fenc != NULL && 
+               (acts->act->tsecond->fenc == NULL || acts->act->tfirst->fenc->pt.id  <  acts->act->tsecond->fenc->pt.id)){
                 
                 push_act (&nextround, segs, acts->act->key.a, acts->act->key.b, acts->act->tfirst);
             
             }
 
-            else if ((acts->act->tsecond->fenc == NULL && acts->act->tfirst->fenc != NULL) ||
-                      acts->act->tsecond->fenc->pt.id  <  acts->act->tfirst->fenc->pt.id){
+            else if (acts->act->tsecond->fenc != NULL && 
+                    (acts->act->tfirst->fenc == NULL || acts->act->tsecond->fenc->pt.id  <  acts->act->tfirst->fenc->pt.id)){
 
                 push_act (&nextround, segs, acts->act->key.a, acts->act->key.b, acts->act->tsecond);
             
@@ -139,6 +155,20 @@ int main()
         pop_act (&acts);
 
     }
+    print_tris_id(tris);
+
+    t_node *sol = NULL;
+    t_node *tail = NULL;
+    
+    tris->vis =1;
+    sol = tris;
+    tail = tris;
+    printf("\n");
+    fill_sol(segs, &tail, tail);
+    printf("\n");
+    tail->next = NULL;
+    print_sol (sol);
+
     return 0;
 }
 
@@ -156,10 +186,10 @@ int in_circle(triangle *t, point *d){
     
     double xda = t->p1.x - d->x;
     double xdb = t->p2.x - d->x;
-    double xdc = t->p2.x - d->x;
+    double xdc = t->p3.x - d->x;
     double yda = t->p1.y - d->y;
     double ydb = t->p2.y - d->y;
-    double ydc = t->p2.y - d->y;
+    double ydc = t->p3.y - d->y;
     double da2da2 = xda*xda + yda*yda;
     double db2db2 = xdb*xdb + ydb*ydb;
     double dc2dc2 = xdc*xdc + ydc*ydc;
@@ -175,17 +205,61 @@ int in_circle(triangle *t, point *d){
 
 void merge (t_node *father, t_node *son, t_node *uncle){
     assert (father != NULL);
-    pt_node *fprobe = father->fenc;
+    pt_node *fprobe = father->fenc->next;
     if (uncle == NULL){
         while (fprobe != NULL){
-            if (in_circle (&father->t, &fprobe->pt))
+            if (in_circle (&son->t, &fprobe->pt))
                 push_ptint (son, fprobe->pt);
             fprobe = fprobe->next;
         }
     }
     else{
         pt_node *uprobe = uncle->fenc;
-        
+        while (fprobe != NULL || uprobe != NULL){
+            
+            if (uprobe == NULL || fprobe->pt.id <= uprobe->pt.id){
+                if (in_circle (&son->t, &fprobe->pt)){
+                    push_ptint (son, fprobe->pt);
+                }
+                fprobe = fprobe->next;
+            }
+            
+            else if (fprobe == NULL || uprobe->pt.id <= fprobe->pt.id){
+                if (in_circle (&son->t, &uprobe->pt)){
+                    push_ptint (son, uprobe->pt);
+                }
+                uprobe = uprobe->next;
+            }
+        }
+    }
+    return;
+}
+
+void fill_sol (record_segs *segs, t_node **tail, t_node *cur){
+    t_node *opp;
+    printf ("Visito %2d %2d %2d\n", cur->t.p1.id, cur->t.p2.id, cur->t.p3.id);
+    opp = find_opp (segs, cur->t.p1, cur->t.p2, cur);
+    if (opp != NULL && !opp->vis){
+        opp->vis = 1;
+        (*tail)->next = opp;
+        (*tail) = (*tail)->next;
+        fill_sol (segs, tail, opp);
+    }
+
+    opp = find_opp (segs, cur->t.p2, cur->t.p3, cur);
+    if (opp != NULL && !opp->vis){
+        opp->vis = 1;
+        (*tail)->next = opp;
+        (*tail) = (*tail)->next;
+        fill_sol (segs, tail, opp);
+    }
+
+    opp = find_opp (segs, cur->t.p3, cur->t.p1, cur);
+    if (opp != NULL && !opp->vis){
+        opp->vis = 1;
+        (*tail)->next = opp;
+        (*tail) = (*tail)->next;
+        fill_sol (segs, tail, opp);
     }
     return;
 }

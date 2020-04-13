@@ -41,7 +41,7 @@ void order_three_pts(point *a,point *b,point *c){
 }
 
 // init point
-void set_pt(point *pt,int x,int y,int id){
+void set_pt(point *pt,double x,double y,double id){
     pt->id=id;
     pt->x=x;
     pt->y=y;
@@ -73,17 +73,13 @@ void push_t(t_node **ref, point p1, point p2, point p3){
     new->lenc = NULL;
     new->next = *ref;
     new->prev = NULL;
-    if(*ref!=NULL) (*ref)->prev = new;
     *ref = new;
     return;
 }
 
 // add point to the back of the list, returns the end of the list
 void push_ptint(t_node *ref, point pt){
-    if(ref == NULL){
-        printf("Error in push_ptint");
-        exit(EXIT_FAILURE);
-    }
+    assert (ref != NULL);
     pt_node *new = (pt_node*)malloc(sizeof(pt_node));
     set_pt(&(new->pt), pt.x, pt.y, pt.id);
     new->next = NULL;
@@ -134,12 +130,12 @@ void push_ptint(t_node *ref, point pt){
     return;
 } */
 
-// add a new halfsegment gets added to segs
+// add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     record_segs *record;
-    segment *seg;
-    set_seg (seg, p1, p2);
-    HASH_FIND(hh, *head, seg, sizeof(segment), record);
+    segment seg;
+    set_seg (&seg, p1, p2);
+    HASH_FIND(hh, *head, &seg, sizeof(segment), record);
     
     if (record == NULL){
         record = (record_segs *)malloc(sizeof(record_segs));
@@ -151,10 +147,10 @@ t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     else{
         assert (record->tfirst != NULL && record->tsecond == NULL);
         record->tsecond = tknown;
-        if (record->tfirst->fenc->pt.id < record->tsecond->fenc->pt.id){
+        if (record->tfirst->fenc != NULL && (record->tsecond->fenc == NULL || record->tfirst->fenc->pt.id < record->tsecond->fenc->pt.id)){
             return record->tfirst;
         }
-        if (record->tsecond->fenc->pt.id < record->tfirst->fenc->pt.id){
+        if (record->tsecond->fenc != NULL && (record->tfirst->fenc == NULL || record->tsecond->fenc->pt.id < record->tfirst->fenc->pt.id)){
             return record->tsecond;
         }
     }
@@ -166,6 +162,25 @@ void segs_delete(record_segs *head, record_segs *del){
     HASH_DELETE(hh, head, del);
     free(del);
     return;
+}
+
+// returns the opposite triangle of p1p2, null if it's a border
+t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown){
+    assert (tknown != NULL);
+    record_segs *record;
+    segment seg;
+    set_seg (&seg, p1, p2);
+    HASH_FIND(hh, head, &seg, sizeof(segment), record);
+    if (tknown == record->tfirst){
+        return record->tsecond;
+    }
+    else if (tknown == record->tsecond){
+        return record->tfirst;
+    }
+    else{
+        assert(0);
+    }
+    return NULL;
 }
 
 // pushes a new active segment in acts
@@ -184,6 +199,8 @@ void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *fa
     else{
         assert(0);
     }
+    new->next = *acts;
+    *acts = new;
     return;
 }
 

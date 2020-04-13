@@ -29,6 +29,7 @@ typedef struct t_node{
     triangle t;
     struct pt_node *fenc, *lenc;
     struct t_node *prev, *next;
+    int vis;
 } t_node;                     
 
 // element of the hash table. tfirst is the first triangle to be added to the record
@@ -40,14 +41,14 @@ typedef struct {
 } record_segs;
 
 // element of the stack of active nodes. v is the encroaching point. act is the address of the active segment. father the encroached triangle
-typedef struct {
+typedef struct act_node{
     record_segs *act;
     t_node *father;
     t_node *uncle;
-    act_node *next;
+    struct act_node *next;
 } act_node;
 
-void set_pt(point *pt,int x,int y,int id);
+void set_pt(point *pt,double x,double y,double id);
 void set_seg(segment *seg,point a,point b);
 void set_t(triangle *t,point a,point b,point c);
 
@@ -60,6 +61,7 @@ void push_ptint(t_node *ref, point pt);
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
 void segs_delete(record_segs *head, record_segs *del);
+t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown);
 
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father);
 void pop_act(act_node **acts);
