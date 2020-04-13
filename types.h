@@ -57,7 +57,8 @@ void push_t(t_node **ref, point p1, point p2, point p3);
 void push_ptint(t_node *ref, point pt);
 // void pop_ptint(t_node *ref, pt_node *del);
 
-void segs_add(record_segs **head, point p1, point p2, t_node *tknown);
+// add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
+t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
 void segs_delete(record_segs *head, record_segs *del);
 
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father);

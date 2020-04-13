@@ -62,9 +62,9 @@ int main()
 
     record_segs *segs = NULL;
     
-    segs_add (&segs, tris->t.p1, tris->t.p2, make_value(&tris->t, NULL));
-    segs_add (&segs, tris->t.p2, tris->t.p3, make_value(&tris->t, NULL));
-    segs_add (&segs, tris->t.p3, tris->t.p1, make_value(&tris->t, NULL));
+    segs_add (&segs, tris->t.p1, tris->t.p2, tris);
+    segs_add (&segs, tris->t.p2, tris->t.p3, tris);
+    segs_add (&segs, tris->t.p3, tris->t.p1, tris);
 
     print_hash(segs);
 
@@ -77,23 +77,67 @@ int main()
     push_act (&acts, segs, tris->t.p3, tris->t.p1, tris);
 
     while(acts != NULL || nextround != NULL){
-        
+        // load next round
+        if (acts == NULL){
+            acts = nextround;
+            nextround = NULL;
+        }
+
+        t_node *encroached = NULL;
+
+        // the son gets added to tris
         push_t (&tris, acts->act->key.a, acts->act->key.b, acts->father->fenc->pt);
         
+        // son is populated by its encroaching points
         merge (acts->father, tris, acts->uncle);
         
-        segs_add (&segs, acts->act->key.a, acts->father->fenc->pt, tris);
-        segs_add (&segs, acts->act->key.b, acts->father->fenc->pt, tris);
+        // we add a-pt to segs
+        // encroached gets the triangle encroached in the relation across a-pt and we add it to the next round
+        encroached = segs_add (&segs, acts->act->key.a, acts->father->fenc->pt, tris);
+        if (encroached != NULL){
+            push_act (&nextround, segs, acts->act->key.a, acts->father->fenc->pt, encroached);
+        }
+
+        // same as before with b-pt
+        encroached = segs_add (&segs, acts->act->key.b, acts->father->fenc->pt, tris);
+        if (encroached != NULL){
+            push_act (&nextround, segs, acts->act->key.b, acts->father->fenc->pt, encroached);
+        }
+        
+        // if uncle is null we're on the border. ab has only tfirst filled, we update it and if there are still enc pts we add it so nextround
         assert (acts->act->tfirst == acts->father || acts->act->tsecond == acts->father);
-        if (acts->act->tfirst == acts->father){
-            acts->act->tfirst == tris;
-
+        if(acts->uncle == NULL){
+            acts->act->tfirst = tris;
+            if (tris->fenc != NULL){
+                push_act (&nextround, segs, acts->act->key.a, acts->act->key.b, tris);
+            }
         }
-        else if (acts->act->tfirst == acts->father){
-            acts->act->tfirst == tris;
+        // if uncle isn't null we find which triangle is father in segs, then we check if ab is active, both sides
+        else{
+            if (acts->act->tfirst == acts->father){
+                acts->act->tfirst = tris;
+            }
+            else if (acts->act->tsecond == acts->father){ // if the assertion is true this check is superfluous
+                acts->act->tsecond = tris;
+            }
+
+            if ((acts->act->tfirst->fenc == NULL && acts->act->tsecond->fenc != NULL) ||
+                acts->act->tfirst->fenc->pt.id  <  acts->act->tsecond->fenc->pt.id){
+                
+                push_act (&nextround, segs, acts->act->key.a, acts->act->key.b, acts->act->tfirst);
+            
+            }
+
+            else if ((acts->act->tsecond->fenc == NULL && acts->act->tfirst->fenc != NULL) ||
+                      acts->act->tsecond->fenc->pt.id  <  acts->act->tfirst->fenc->pt.id){
+
+                push_act (&nextround, segs, acts->act->key.a, acts->act->key.b, acts->act->tsecond);
+            
+            }
         }
 
-        //check if active ...
+        pop_act (&acts);
+
     }
     return 0;
 }
@@ -130,7 +174,19 @@ int in_circle(triangle *t, point *d){
 }
 
 void merge (t_node *father, t_node *son, t_node *uncle){
-    
+    assert (father != NULL);
+    pt_node *fprobe = father->fenc;
+    if (uncle == NULL){
+        while (fprobe != NULL){
+            if (in_circle (&father->t, &fprobe->pt))
+                push_ptint (son, fprobe->pt);
+            fprobe = fprobe->next;
+        }
+    }
+    else{
+        pt_node *uprobe = uncle->fenc;
+        
+    }
     return;
 }
 

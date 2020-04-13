@@ -135,7 +135,7 @@ void push_ptint(t_node *ref, point pt){
 } */
 
 // add a new halfsegment gets added to segs
-void segs_add(record_segs **head, point p1, point p2, t_node *tknown){
+t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     record_segs *record;
     segment *seg;
     set_seg (seg, p1, p2);
@@ -151,8 +151,14 @@ void segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     else{
         assert (record->tfirst != NULL && record->tsecond == NULL);
         record->tsecond = tknown;
+        if (record->tfirst->fenc->pt.id < record->tsecond->fenc->pt.id){
+            return record->tfirst;
+        }
+        if (record->tsecond->fenc->pt.id < record->tfirst->fenc->pt.id){
+            return record->tsecond;
+        }
     }
-    return;
+    return NULL;
 }
 
 // deletes record in segs hash table
