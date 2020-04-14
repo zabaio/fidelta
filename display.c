@@ -108,35 +108,16 @@ void print_segs_id(record_segs *elem){
     return;
 }
 
-void fprint_pts(point* pts, int num_pts){
-    FILE *out;
-    int i;
-    out = fopen("./files/random.node","w");
-    if(out == NULL){
-        printf("Cannot open output file");
-        return;
-    }
-    fprintf (out,"%d 2 0 0\n",num_pts);
-    for(i=0; i<num_pts; i++){
-        fprintf(out,"%d %f %f\n",i, pts[i].x, pts[i].y);
-    }
+void fprint_pt(FILE *f, point *pt){
+    
+    fprintf(f,"%d %f %f\n",pt->id + 3, pt->x, pt->y);
+
     return;
 }
 
-void print_sol(t_node *sol){
-    while (sol != NULL){
-        printf("%2d %2d %2d\n", sol->t.p1.id, sol->t.p2.id, sol->t.p3.id);
-        sol = sol->next;
-    }
-    return;
-}
+void fprint_t(FILE *f, triangle *t){
+    
+    fprintf(f, "%d %d %d\n", t->p1.id+3, t->p2.id+3, t->p3.id+3);
 
-void fprint_sol(t_node *sol){
-    FILE *out;
-    out = fopen("/files/sol.ele", "w");
-    while (sol != NULL){
-        fprintf(out, "%2d %2d %2d\n", sol->t.p1.id, sol->t.p2.id, sol->t.p3.id);
-        sol = sol->next;
-    }
     return;
 }

@@ -14,14 +14,11 @@
 
 
 #define N_PTS 100000
-#define MAX_COR 1
+#define MAX_COR 100
 
 // checks if point d is inside the circumcircle of t
 int in_circle (triangle *t, point *d);
 void merge (t_node *father, t_node *son, t_node *uncle);
-void fill_sol (record_segs *segs, t_node **tail, t_node *cur);
-
-int cont=0,cont2=0;
 
 int main()
 {
@@ -31,37 +28,33 @@ int main()
     point pts[N_PTS];
     point bounding[3];
 
-    set_pt(&bounding[2], MAX_COR*3, 0,-1);
-    set_pt(&bounding[1], 0, MAX_COR*3,-2);
-    set_pt(&bounding[0], -MAX_COR*3, -MAX_COR*3,-3);
-    printf("Generated Points:\n");
+    FILE *in = fopen("files/sede.node","w");
+    int n_tot = N_PTS + 3, c_max = MAX_COR;
+    fprintf (in, "%d 2 0 0\n", n_tot);
 
-    
+    FILE *out = fopen ("files/sede.ele","w");
+    fprintf (out, "%d 3 0\n", 2*n_tot - 5);
+
+    set_pt(&bounding[0], -MAX_COR*3, -MAX_COR*3, -3);
+    set_pt(&bounding[1], 0, MAX_COR*3, -2);    
+    set_pt(&bounding[2], MAX_COR*3, 0, -1);
+
+    fprint_pt (in, &bounding[0]);
+    fprint_pt (in, &bounding[1]);
+    fprint_pt (in, &bounding[2]);
+
     srand(time(NULL));
     for(i = 0; i<N_PTS; i++){
         pts[i].x = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
         pts[i].y = (double)rand()/(double)(RAND_MAX/(MAX_COR*2))-MAX_COR;
         pts[i].id = i;
+        fprint_pt (in, &pts[i]);
         #ifdef LOG
+            printf("Generated Points:\n");
             print_pt_id(pts[i]);
             print_pt(pts[i]);
         #endif
     }
-
-    /*
-    pts[0].x = 1.2;
-    pts[0].y = -1.2;
-    pts[0].id = 0;
-    pts[1].x = -9.1;
-    pts[1].y = -3.4;
-    pts[1].id = 1;
-    pts[2].x = -2.5;
-    pts[2].y = 8.8;
-    pts[2].id = 2;
-    pts[3].x = 9.5;
-    pts[3].y = -6;
-    pts[3].id = 3;
-    */
 
     #ifdef DEBUG
         if(!is_general_position(pts,N_PTS)) {printf("Init error - Non general position point set\n"); return 0;}
@@ -76,9 +69,8 @@ int main()
         push_ptint(tris, pts[i]);
     }
 
-    #ifdef LOG 
-        print_tris(tris);
-    #endif
+    clock_t t; 
+    t = clock();
 
     // Initialization of the hash table
     // segs_add wants: segs address, pt 1, pt 2, make_value(tri 1 address, tri 2 address)
@@ -91,10 +83,6 @@ int main()
     segs_add (&segs, tris->t.p2, tris->t.p3, tris);
     segs_add (&segs, tris->t.p3, tris->t.p1, tris);
 
-    #ifdef LOG
-        print_segs_id(segs);
-    #endif
-
     // Initialization of the active segments list
     act_node *acts = NULL;
     act_node *nextround = NULL;
@@ -104,10 +92,11 @@ int main()
     push_act (&acts, segs, tris->t.p3, tris->t.p1, tris);
 
     while(acts != NULL || nextround != NULL){
+        
         // load next round
         if (acts == NULL){
 
-            #ifdef LOG
+            #ifdef DEBUG
                 printf("Fine round;\n");
                 print_tris_id(tris);
             #endif
@@ -116,7 +105,7 @@ int main()
             nextround = NULL;
         }
 
-        #ifdef LOG
+        #ifdef DEBUG
             printf("\nAttivo: %d %d\n", acts->act->seg.a.id, acts->act->seg.b.id);
         #endif
         
@@ -132,7 +121,7 @@ int main()
         // encroached gets the triangle encroached in the relation across a-pt and we add it to the next round
         encroached = segs_add (&segs, acts->act->seg.a, acts->father->fenc->pt, tris);
         
-        #ifdef LOG
+        #ifdef DEBUG
             print_segs_id(segs);
         #endif
 
@@ -143,7 +132,7 @@ int main()
         // same as before with b-pt
         encroached = segs_add (&segs, acts->act->seg.b, acts->father->fenc->pt, tris);
         
-        #ifdef LOG
+        #ifdef DEBUG
             print_segs_id(segs);
         #endif
         if (encroached != NULL){
@@ -186,28 +175,33 @@ int main()
 
     }
     
-    #ifdef LOG
-        print_tris_id(tris);
-    #endif
+    t = clock() - t; 
+    double time_taken = 1000*((double)t)/CLOCKS_PER_SEC;
+    printf("Delaunay time: %d\n", (int)time_taken);
 
-    t_node *sol = NULL;
-    t_node *tail = NULL;
+    // Output section
+    int cont2=0,cont=0;
+    t_node *tail = tris;
     
-    tris->vis = 1;
-    sol = tris;
-    tail = tris;
-    printf("\n");
     while(tail != NULL){
-        if(tail->fenc == NULL) cont++;
+        if(tail->fenc == NULL){
+            fprintf (out, "%d ", cont);
+            fprint_t (out, &tail->t);
+            cont++;
+        } 
         cont2++;
         tail = tail->next;
     }
-    tail = tris;
-    // fill_sol(segs, &tail, tail);
-    printf("\n");
-    tail->next = NULL;
-    printf("Triangoli generati in tris: %d\n", cont);
-    printf("Triangoli della triangolazione: %d\n", cont2);
+  
+    fclose (in);
+    fclose (out);
+
+    #ifdef LOG
+        print_tris_id(tris);
+        printf("Triangoli generati in tris: %d\n", cont);
+        printf("Triangoli della triangolazione: %d\n", cont2);
+    #endif
+
     return 0;
 }
 
@@ -271,42 +265,6 @@ void merge (t_node *father, t_node *son, t_node *uncle){
     }
     return;
 }
-
-
-void fill_sol (record_segs *segs, t_node **tail, t_node *cur){
-    t_node *opp;
-    #ifdef LOG
-        printf ("Visito %2d %2d %2d\n", cur->t.p1.id, cur->t.p2.id, cur->t.p3.id);
-    #endif
-    opp = find_opp (segs, cur->t.p1, cur->t.p2, cur);
-    if (opp != NULL && !opp->vis){
-        cont++;
-        opp->vis = 1;
-        (*tail)->next = opp;
-        (*tail) = (*tail)->next;
-        fill_sol (segs, tail, opp);
-    }
-
-    opp = find_opp (segs, cur->t.p2, cur->t.p3, cur);
-    if (opp != NULL && !opp->vis){
-        cont++;
-        opp->vis = 1;
-        (*tail)->next = opp;
-        (*tail) = (*tail)->next;
-        fill_sol (segs, tail, opp);
-    }
-
-    opp = find_opp (segs, cur->t.p3, cur->t.p1, cur);
-    if (opp != NULL && !opp->vis){
-        cont++;
-        opp->vis = 1;
-        (*tail)->next = opp;
-        (*tail) = (*tail)->next;
-        fill_sol (segs, tail, opp);
-    }
-    return;
-}
-
 
 #ifdef DEBUG
     int is_general_position(point *pts,int n_pts){

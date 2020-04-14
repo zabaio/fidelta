@@ -30,5 +30,5 @@ all:
 run:
 	./bin/SerialDelaunay
 
-compare:
-	make run && $(TRIANGLE_EXE) $(TRIANGLE_INPUT) && $(SHOWME_EXE) $(SHOWME_INPUT)
+compare: files/sede.node files/sede.ele
+	../triangle/triangle ../serial_delaunay/files/sede.node && ../triangle/showme ../serial_delaunay/files/sede.ele ../serial_delaunay/files/sede.1.ele

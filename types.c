@@ -72,7 +72,6 @@ void push_t(t_node **ref, point p1, point p2, point p3){
     new->fenc = NULL;
     new->lenc = NULL;
     new->next = *ref;
-    new->prev = NULL;
     *ref = new;
     return;
 }
@@ -83,7 +82,6 @@ void push_ptint(t_node *ref, point pt){
     pt_node *new = (pt_node*)malloc(sizeof(pt_node));
     set_pt(&(new->pt), pt.x, pt.y, pt.id);
     new->next = NULL;
-    new->prev = ref->lenc;
     if(ref->lenc == NULL){
         ref->fenc = new;
         ref->lenc = new;
@@ -93,42 +91,6 @@ void push_ptint(t_node *ref, point pt){
     ref->lenc = new;
     return;
 }
-
-// delete triangle from list. TODO check. Maybe not needed
-/* void pop_t(t_node **ref, t_node *del){
-    if(*ref == NULL || del== NULL)
-        return;
-
-    pt_node *tmp;
-    while(del->fenc != NULL){
-        tmp = del->fenc;
-        del->fenc = del->fenc->next;
-        free(tmp);
-    }
-
-    if(*ref == del)
-        *ref=del->next;
-    if((*ref)->prev != NULL)
-        (*ref)->prev->next=(*ref)->next;
-    if((*ref)->next != NULL)
-        (*ref)->next->prev=(*ref)->prev;
-    free(del);
-    return;
-} */
-
-// delete point from list TODO wrong. Maybe not needed
-/* void pop_ptint(t_node *ref, pt_node *del){
-    if(ref == NULL || del== NULL)
-        return;
-    if(*ref == del)
-        *ref=del->next;
-    if((*ref)->prev != NULL)
-        (*ref)->prev->next=(*ref)->next;
-    if((*ref)->next != NULL)
-        (*ref)->next->prev=(*ref)->prev;
-    free(del);
-    return;
-} */
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
@@ -157,34 +119,6 @@ t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
         if (record->tsecond->fenc != NULL && (record->tfirst->fenc == NULL || record->tsecond->fenc->pt.id < record->tfirst->fenc->pt.id)){
             return record->tsecond;
         }
-    }
-    return NULL;
-}
-
-// deletes record in segs hash table
-void segs_delete(record_segs *head, record_segs *del){
-    HASH_DELETE(hh, head, del);
-    free(del);
-    return;
-}
-
-// returns the opposite triangle of p1p2, null if it's a border
-t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown){
-    assert (tknown != NULL);
-    record_segs *record;
-    order_two_pts (&p1, &p2);
-    idxkey idx;
-    idx.id1 = p1.id;
-    idx.id2 = p2.id;
-    HASH_FIND(hh, head, &idx, sizeof(idxkey), record);
-    if (tknown == record->tfirst){
-        return record->tsecond;
-    }
-    else if (tknown == record->tsecond){
-        return record->tfirst;
-    }
-    else{
-        assert(0);
     }
     return NULL;
 }

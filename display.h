@@ -22,11 +22,10 @@ void print_tris_id(t_node *tris);
 void print_segs(record_segs *elem);
 void print_segs_id(record_segs *elem);
 
-// printf an array of points
-void fprint_pts(point* pts, int num_pts);
+// fprints a point (id x y), id shifted by 3
+void fprint_pt(FILE *f, point *pt);
 
-void print_sol(t_node *sol);
-
-void fprint_sol(t_node *sol);
+// fprintfs a triangle (id1 id2 id3), ids shifted by 3
+void fprint_t(FILE *f, triangle *pt);
 
 #endif // DISPLAY_H_INCLUDED

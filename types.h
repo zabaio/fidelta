@@ -3,8 +3,6 @@
 
 #include "uthash.h"
 
-//TODO Evaluate if various prev are needed
-
 typedef struct{
     int id;
     double x,y;
@@ -25,7 +23,7 @@ typedef struct{
 
 typedef struct pt_node{
     point pt;
-    struct pt_node *prev,*next;
+    struct pt_node *next;
 } pt_node;
 
 // node of a dll of triangles with dll of points
@@ -33,8 +31,7 @@ typedef struct pt_node{
 typedef struct t_node{
     triangle t;
     struct pt_node *fenc, *lenc;
-    struct t_node *prev, *next;
-    int vis;
+    struct t_node *next;
 } t_node;                     
 
 // element of the hash table. tfirst is the first triangle to be added to the record
@@ -59,15 +56,11 @@ void set_seg(segment *seg,point a,point b);
 void set_t(triangle *t,point a,point b,point c);
 
 void push_t(t_node **ref, point p1, point p2, point p3);
-// void pop_t(t_node **ref, t_node *del);
 
 void push_ptint(t_node *ref, point pt);
-// void pop_ptint(t_node *ref, pt_node *del);
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
-void segs_delete(record_segs *head, record_segs *del);
-t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown);
 
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father);
 void pop_act(act_node **acts);
