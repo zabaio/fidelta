@@ -63,7 +63,7 @@ void print_tris_id(t_node *tris){
 void print_segs(record_segs *elem){
     printf("\n Elements in segs:\n");
     while(elem != NULL){
-        print_seg(elem->key);
+        print_seg(elem->seg);
         if(elem->tfirst){
             printf("\t");
             print_t(elem->tfirst->t);
@@ -84,8 +84,8 @@ void print_segs(record_segs *elem){
 void print_segs_id(record_segs *elem){
     printf("\n Elements in segs:\n");
     while(elem != NULL){
-        print_pt_id(elem->key.a);
-        print_pt_id(elem->key.b);
+        print_pt_id(elem->seg.a);
+        print_pt_id(elem->seg.b);
         printf(" --> (");
         if(elem->tfirst){
             print_pt_id(elem->tfirst->t.p1);

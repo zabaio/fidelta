@@ -15,6 +15,11 @@ typedef struct{
 } segment;
 
 typedef struct{
+    int id1;
+    int id2;
+} idxkey;
+
+typedef struct{
     point p1,p2,p3;
 } triangle;
 
@@ -34,7 +39,8 @@ typedef struct t_node{
 
 // element of the hash table. tfirst is the first triangle to be added to the record
 typedef struct {
-    segment key;
+    idxkey key;
+    segment seg;
     t_node *tfirst;
     t_node *tsecond;
     UT_hash_handle hh;

@@ -16,7 +16,7 @@ void swap_pts(point *a,point *b){
 
 // sorting 2 points
 void order_two_pts(point *a,point *b){    
-    if(!PTS_IN_ORDER(a,b))
+    if(a->id > b->id)
         swap_pts(a,b);
     return;
 }
@@ -133,16 +133,20 @@ void push_ptint(t_node *ref, point pt){
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     record_segs *record;
-    segment seg;
-    set_seg (&seg, p1, p2);
-    HASH_FIND(hh, *head, &seg, sizeof(segment), record);
+    order_two_pts (&p1, &p2);
+    idxkey idx;
+    idx.id1 = p1.id;
+    idx.id2 = p2.id;
+    HASH_FIND(hh, *head, &idx, sizeof(idxkey), record);
     
     if (record == NULL){
         record = (record_segs *)malloc(sizeof(record_segs));
-        set_seg(&(record->key),p1,p2);
+        record->key.id1 = idx.id1;
+        record->key.id2 = idx.id2;
+        set_seg(&(record->seg),p1,p2);
         record->tfirst = tknown;
         record->tsecond = NULL;
-        HASH_ADD(hh, *head, key, sizeof(segment), record);
+        HASH_ADD(hh, *head, key, sizeof(idxkey), record);
     }
     else{
         assert (record->tfirst != NULL && record->tsecond == NULL);
@@ -168,9 +172,11 @@ void segs_delete(record_segs *head, record_segs *del){
 t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown){
     assert (tknown != NULL);
     record_segs *record;
-    segment seg;
-    set_seg (&seg, p1, p2);
-    HASH_FIND(hh, head, &seg, sizeof(segment), record);
+    order_two_pts (&p1, &p2);
+    idxkey idx;
+    idx.id1 = p1.id;
+    idx.id2 = p2.id;
+    HASH_FIND(hh, head, &idx, sizeof(idxkey), record);
     if (tknown == record->tfirst){
         return record->tsecond;
     }
@@ -186,9 +192,13 @@ t_node *find_opp(record_segs *head, point p1, point p2, t_node *tknown){
 // pushes a new active segment in acts
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father){
     act_node *new = (act_node *)malloc(sizeof(act_node));
-    segment *activeseg = (segment *)malloc(sizeof(segment));
-    set_seg (activeseg, p1, p2);
-    HASH_FIND (hh, segs, activeseg, sizeof (segment), new->act);
+    
+    order_two_pts (&p1, &p2);
+    idxkey idx;
+    idx.id1 = p1.id;
+    idx.id2 = p2.id;
+    HASH_FIND(hh, segs, &idx, sizeof(idxkey), new->act);
+    
     new->father = father;
     if (new->act->tfirst == father){
         new->uncle = new->act->tsecond;
