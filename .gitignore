@@ -1,5 +1,9 @@
-*.o
 bin/
 .vscode/
-notes.c
-files/
+callgrind.*
+massif.*
+dbg/
+*.node
+*.ele
+serial/serial
+serial/showme

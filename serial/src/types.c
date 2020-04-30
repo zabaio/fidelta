@@ -27,11 +27,11 @@ void order_three_pts(point *a,point *b,point *c){
     if(!PTS_IN_ORDER(a,b)) swap_pts(a,b);
     if(!PTS_IN_ORDER(a,c)) swap_pts(a,c);
     
-    double xca = a->x - c->x;
-    double xcb = b->x - c->x;
-    double yca = a->y - c->y;
-    double ycb = b->y - c->y;
-    double det = xca*ycb - xcb*yca;
+    float xca = a->x - c->x;
+    float xcb = b->x - c->x;
+    float yca = a->y - c->y;
+    float ycb = b->y - c->y;
+    float det = xca*ycb - xcb*yca;
 
     if (det<0){
         swap_pts(b,c);
@@ -41,7 +41,7 @@ void order_three_pts(point *a,point *b,point *c){
 }
 
 // init point
-void set_pt(point *pt,double x,double y,double id){
+void set_pt(point *pt,float x,float y,float id){
     pt->id=id;
     pt->x=x;
     pt->y=y;
@@ -91,6 +91,8 @@ void push_ptint(t_node *ref, point pt){
     ref->lenc = new;
     return;
 }
+
+
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){

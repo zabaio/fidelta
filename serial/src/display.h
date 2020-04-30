@@ -1,6 +1,12 @@
 #ifndef DISPLAY_H_INCLUDED
 #define DISPLAY_H_INCLUDED
 
+// initialization based on command line. Returns 1 if random mode is selected
+int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor);
+
+// prints manual
+void man(int verbose);
+
 // prints a point (x,y)
 void print_pt(point pt);
 void print_pt_id(point pt);

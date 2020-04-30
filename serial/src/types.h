@@ -5,7 +5,7 @@
 
 typedef struct{
     int id;
-    double x,y;
+    float x,y;
 } point;
 
 typedef struct{
@@ -51,7 +51,7 @@ typedef struct act_node{
     struct act_node *next;
 } act_node;
 
-void set_pt(point *pt,double x,double y,double id);
+void set_pt(point *pt,float x,float y,float id);
 void set_seg(segment *seg,point a,point b);
 void set_t(triangle *t,point a,point b,point c);
 

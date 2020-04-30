@@ -15,6 +15,7 @@ General: **Work in Progress**
 |02/04/20        |`InCircle and Counterclockwise`       |
 |04/04/20        |`Added merge encroaching points lists`|
 |14/04/20        |`Version 0.1 - Works Fine`            |
+|30/04/20        |`Version 0.2 - 2 input modes avaiable`|
 
 ## Contacts
 - Alberto Giusti - BSc student, Politecnico di Milano - albertogiusti.alberto@gmail.com
@@ -25,5 +26,6 @@ General: **Work in Progress**
   - [Youtube](https://www.youtube.com/channel/UCaovqRpUc7D_Uf2WJHL0rvA)
   
 ## Built with
-- Vivado HLs toolchain
+- Vitis
+- Show Me (https://www.cs.cmu.edu/~quake/showme.html)
 - uthash

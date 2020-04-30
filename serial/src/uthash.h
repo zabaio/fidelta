@@ -827,7 +827,7 @@ do {                                                                            
  *
  * The calculation of tbl->ideal_chain_maxlen below deserves some
  * explanation. First, keep in mind that we're calculating the ideal
- * maximum chain length based on the *new* (doubled) bucket count.
+ * maximum chain length based on the *new* (floatd) bucket count.
  * In fractions this is just n/b (n=number of items,b=new num buckets).
  * Since the ideal chain length is an integer, we want to calculate
  * ceil(n/b). We don't depend on floating point arithmetic in this

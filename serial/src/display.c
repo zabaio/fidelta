@@ -1,8 +1,90 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "types.h"
+#include "display.h"
 
-#define PT_FRMT "( %.2f , %.2f )"       // format of the displayed point
+#define CORLIM 200000000
+#ifndef PTSLIM
+    #define PTSLIM 300000
+#endif
+#ifndef RESPATHNOEXT
+    #define RESPATHNOEXT "result"
+#endif
+
+
+int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor){
+    
+    *node = fopen (RESPATHNOEXT ".node" , "w+");
+    if (*node == NULL){
+        printf ("ERROR: Could not find output folder. Go inside serial/ or try building again\n");
+        exit (1);
+    }
+    
+    *ele = fopen (RESPATHNOEXT ".ele", "w");
+    if (*ele == NULL){
+        printf ("ERROR: Could not create result.ele\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    if (argc < 2){
+        printf ("ERROR: Not enough arguments\n");
+        man(0);
+        exit(EXIT_FAILURE);
+    }
+    if (argv[1][0] == '-'){
+        if(argv[1][1] == 'r' && argv[1][2] == '\0' && argc == 4){
+            *n_pts = atoi (argv[2]);
+            *max_cor = atoi (argv[3]);
+            if (*n_pts <= 0 || *max_cor <= 0){
+                printf("ERROR: Parameters must be positive\n");
+                man(1);
+                exit(EXIT_FAILURE);
+            }
+            if (*n_pts > PTSLIM || *max_cor > CORLIM){
+                printf ("ERROR: Parameters exceed limits\n");
+                man(1);
+                exit(EXIT_FAILURE);
+            }
+            return 1;
+        }
+        else{
+            printf ("ERROR: Incompatible arguments\n");
+            man(0);
+            exit(EXIT_FAILURE);
+        }
+    }
+    else if (argc == 2){
+        *extnode = fopen (argv[1], "r");
+        if (*extnode == NULL){
+            printf("ERROR: Could not open file\n");
+            man(0);
+            exit(EXIT_FAILURE);
+        }
+        return 0;
+    }
+    else{
+        printf ("ERROR: Too many arguments\n");
+        man(0);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void man (int verbose){
+    printf("\nAvaiable modes:\n");
+    printf("Random: \t./serial -r [N_PTS] [MAX_COORDINATE]\n");
+    printf("From file:\t./serial [PATH_TO_FILE]\n\n");
+    printf("Input files must follow .node convention defined in README\n");
+
+    if(verbose){
+        printf("[N_PTS] range is [1; %d]\n", PTSLIM);
+        printf("[MAX_COORDINATE] range is [1; %d]\n", CORLIM);
+    }
+    printf("\n");
+    return;
+}
+
+// format of all displayed points
+#define PT_FRMT "( %.2f , %.2f )"       
 
 void print_pt_id(point pt){
     printf("%2d ", pt.id);
@@ -110,14 +192,14 @@ void print_segs_id(record_segs *elem){
 
 void fprint_pt(FILE *f, point *pt){
     
-    fprintf(f,"%d %f %f\n",pt->id + 3, pt->x, pt->y);
+    fprintf(f,"%d %f %f\n",pt->id, pt->x, pt->y);
 
     return;
 }
 
 void fprint_t(FILE *f, triangle *t){
     
-    fprintf(f, "%d %d %d\n", t->p1.id+3, t->p2.id+3, t->p3.id+3);
+    fprintf(f, "%d %d %d\n", t->p1.id, t->p2.id, t->p3.id);
 
     return;
 }
