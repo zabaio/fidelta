@@ -6,30 +6,40 @@ It's a higly parallelized **Delaunay Triangulation builder** which exploits the 
 We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://arxiv.org/pdf/1810.05303.pdf) which is an incremental approach 
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
-## Use
-### Serial version
-#### Installaton
+## Serial version
+### Installaton
+    
     cd serial
     make
-#### Computing a triangulation
+
+### Computing a triangulation
 From a .node file
-    ./serial \[PATH_TO_FILE\]
+    
+    ./serial [.node_PATH]
+
 Random triangulation
-    ./serial -r \[N_PTS\] \[MAX_COORDINATE\]
-### I/O
+
+    ./serial -r [N_PTS] [MAX_COORDINATE]
+
 > I/O files follow format used by [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
-#### Input: .node
+
+### Input: .node
     <n_pts> 2 0 0
     0 <x> <y>
     1 <x> <y>
     ...
     <n_pts-1> <x> <y>
-#### Output: .ele
+
+### Output: .ele
     <n_tri> 3 0
     0 <pt1> <pt2> <pt3>
     1 <pt1> <pt2> <pt3>
     ...
     <n_tri-1> <pt1> <pt2> <pt3>
+
+## Display a triangulation
+    ./showme [.ele_PATH]
+
 ## Status
 General: **Work in Progress**
 |                |Log                                   |
@@ -46,8 +56,8 @@ General: **Work in Progress**
 - Saverio Ricci - PhD student, Politecnico di Milano - saverio.ricci95@hotmail.it
 - NECSTLab 
   - [necst.it](www.necst.it) 
-  - [Facebook](https://www.facebook.com/NECSTLab) 
   - [Youtube](https://www.youtube.com/channel/UCaovqRpUc7D_Uf2WJHL0rvA)
+  - [Facebook](https://www.facebook.com/NECSTLab) 
   
 ## Built with
 - Vitis
