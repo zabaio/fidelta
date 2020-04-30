@@ -9,9 +9,13 @@
 #endif
 #ifndef RESPATHNOEXT
     #define RESPATHNOEXT "result"
-#endif
+#endif 
 
+//--------------------------------------//
+//  Input output and user interaction   //
+//--------------------------------------//
 
+// initialization based on command line. Returns 1 if random mode is selected
 int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor){
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
@@ -69,10 +73,11 @@ int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *
     }
 }
 
+// prints manual
 void man (int verbose){
     printf("\nAvaiable modes:\n");
-    printf("Random: \t./serial -r [N_PTS] [MAX_COORDINATE]\n");
-    printf("From file:\t./serial [PATH_TO_FILE]\n\n");
+    printf("From file:\t./serial [PATH_TO_FILE]\n");
+    printf("Random: \t./serial -r [N_PTS] [MAX_COORDINATE]\n\n");
     printf("Input files must follow .node convention defined in README\n");
 
     if(verbose){
@@ -83,16 +88,29 @@ void man (int verbose){
     return;
 }
 
-// format of all displayed points
-#define PT_FRMT "( %.2f , %.2f )"       
-
-void print_pt_id(point pt){
-    printf("%2d ", pt.id);
+// prints point on file following .node format
+void fprint_pt(FILE *f, point *pt){
+    fprintf(f,"%d %f %f\n",pt->id, pt->x, pt->y);
     return;
 }
 
+// prints triangle on file following .ele format
+void fprint_t(FILE *f, triangle *t){
+    fprintf(f, "%d %d %d\n", t->p1.id, t->p2.id, t->p3.id);
+    return;
+}
+
+//--------------------------------------//
+// Functions for log and debug purposes //
+//--------------------------------------//
+
 void print_pt(point pt){
     printf( PT_FRMT "\n", pt.x, pt.y);
+    return;
+}
+
+void print_pt_id(point pt){
+    printf("%2d ", pt.id);
     return;
 }
 
@@ -187,19 +205,5 @@ void print_segs_id(record_segs *elem){
         printf("\n");
         elem = elem->hh.next;
     }
-    return;
-}
-
-void fprint_pt(FILE *f, point *pt){
-    
-    fprintf(f,"%d %f %f\n",pt->id, pt->x, pt->y);
-
-    return;
-}
-
-void fprint_t(FILE *f, triangle *t){
-    
-    fprintf(f, "%d %d %d\n", t->p1.id, t->p2.id, t->p3.id);
-
     return;
 }

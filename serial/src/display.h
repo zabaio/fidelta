@@ -1,14 +1,25 @@
 #ifndef DISPLAY_H_INCLUDED
 #define DISPLAY_H_INCLUDED
 
+// format of all displayed points
+#define PT_FRMT "( %.2f , %.2f )"
+
 // initialization based on command line. Returns 1 if random mode is selected
 int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor);
 
 // prints manual
 void man(int verbose);
 
+// fprints a point (id x y), id shifted by 3
+void fprint_pt(FILE *f, point *pt);
+
+// fprintfs a triangle (id1 id2 id3), ids shifted by 3
+void fprint_t(FILE *f, triangle *pt);
+
 // prints a point (x,y)
 void print_pt(point pt);
+
+// prints a point (id)
 void print_pt_id(point pt);
 
 // prints a segment (xa,ya)-(xb,yb)
@@ -20,18 +31,16 @@ void print_t(triangle t);
 // prints a triangle (seg1) (seg2) (seg3)
 void print_t_exp(triangle t);
 
-// prints all triangles in tris
+// prints all triangles in tris (xa,ya)-(xb,yb)-(xc,yc)
 void print_tris(t_node *tris);
+
+// printf all triangles in tris (id1)-(id2)-(id3)
 void print_tris_id(t_node *tris);
 
-// prints the entire hash table
+// prints the entire hash table (xa,ya)-(xb,yb)
 void print_segs(record_segs *elem);
+
+// prints the entire hash table (id1)-(id2)
 void print_segs_id(record_segs *elem);
-
-// fprints a point (id x y), id shifted by 3
-void fprint_pt(FILE *f, point *pt);
-
-// fprintfs a triangle (id1 id2 id3), ids shifted by 3
-void fprint_t(FILE *f, triangle *pt);
 
 #endif // DISPLAY_H_INCLUDED

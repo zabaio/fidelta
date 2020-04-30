@@ -14,7 +14,6 @@ int in_circle (triangle *t, point *d);
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
 void merge (t_node *father, t_node *son, t_node *uncle);
 
-
 int main(int argc, char *argv[])
 {
     int rmode = 0, n_pts, max_cor = 0, i;
@@ -39,15 +38,21 @@ int main(int argc, char *argv[])
         fprint_pt (node, &prov);
         set_pt(&prov, max_cor*3, 0, 2);
         fprint_pt (node, &prov);        
-        
+        #ifdef LOG
+            printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
+            printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*33);
+            printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
+        #endif
+
         for(i = 3; i < n_pts+3; i++){
             prov.x = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
             prov.y = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
             prov.id = i;
             fprint_pt (node, &prov);
             #ifdef LOG
-                printf("Generated Point ");
+                printf("Point");
                 print_pt_id(prov);
+                printf("= ");
                 print_pt(prov);
             #endif
         }
@@ -286,7 +291,7 @@ int main(int argc, char *argv[])
         printf ("Number of rounds: %d\n", roundcount);
     #endif
 
-    printf("Delaunay time: %d\n", (int)time_taken);
+    printf("Delaunay time: %d ms\n", (int)time_taken);
 
     // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
     // Note that we added the three bounding points
@@ -298,7 +303,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-inline int in_circle(triangle *t, point *d){
+int in_circle(triangle *t, point *d){
     
     float xda = t->p1.x - d->x;
     float xdb = t->p2.x - d->x;

@@ -8,13 +8,14 @@
 #define PTS_IN_ORDER(a, b) \
     (a->x < b->x || (a->x == b->x && a->y <= b->y))
 
+// swap two points
 void swap_pts(point *a,point *b){
     point temp=*a;
     *a=*b;
     *b=temp;
 }
 
-// sorting 2 points
+// sorting 2 points in order of id
 void order_two_pts(point *a,point *b){    
     if(a->id > b->id)
         swap_pts(a,b);
@@ -40,7 +41,7 @@ void order_three_pts(point *a,point *b,point *c){
     return;
 }
 
-// init point
+// fill point
 void set_pt(point *pt,float x,float y,float id){
     pt->id=id;
     pt->x=x;
@@ -48,7 +49,7 @@ void set_pt(point *pt,float x,float y,float id){
     return;
 }
 
-// init segment
+// fill segment
 void set_seg(segment *seg,point a,point b){
     order_two_pts(&a,&b);
     seg->a=a;
@@ -56,7 +57,7 @@ void set_seg(segment *seg,point a,point b){
     return;
 }
 
-// init triangle
+// fill triangle
 void set_t(triangle *t,point a,point b,point c){
     order_three_pts(&a,&b,&c);
     t->p1=a;
@@ -91,8 +92,6 @@ void push_ptint(t_node *ref, point pt){
     ref->lenc = new;
     return;
 }
-
-
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){

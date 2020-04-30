@@ -51,18 +51,28 @@ typedef struct act_node{
     struct act_node *next;
 } act_node;
 
+// fill point
 void set_pt(point *pt,float x,float y,float id);
+
+// fill segment
 void set_seg(segment *seg,point a,point b);
+
+// fill triangle
 void set_t(triangle *t,point a,point b,point c);
 
+// add triangle to the front of the list
 void push_t(t_node **ref, point p1, point p2, point p3);
 
+// add point to the back of the list, returns the end of the list
 void push_ptint(t_node *ref, point pt);
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
 
+// pushes a new active segment in acts
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father);
+
+// deletes element in acts
 void pop_act(act_node **acts);
 
 #endif // TYPES_H_INCLUDED

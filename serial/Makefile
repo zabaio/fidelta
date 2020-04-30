@@ -2,7 +2,6 @@ CC = gcc
 CFLAGS = -g -Wall
 SHOWFLAGS = -O -DLINUX -I/usr/X11R6/include -L/usr/X11R6/lib
 
-RESNAME = result
 OBJDIR = bin
 SRCDIR = src
 SHODIR = showsrc
@@ -10,11 +9,10 @@ RESPATHNOEXT = result
 OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
 OUT = serial
 INC = $(SRCDIR)/*.h
-DEFS =
 $(OBJDIR)/main.o: DEFS = -DLOG
 $(OBJDIR)/display.o: DEFS = -DPTSLIM=300000 -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" 
 
-.PHONY = clean reset draw
+.PHONY = clean reset draw run
 
 all: $(OUT) showme
 
@@ -39,5 +37,6 @@ reset:
 draw:
 	./showme $(RESPATHNOEXT).ele
 
+#Customize recipe. Example: ./$(OUT) -r 3 4
 run:
-	./$(OUT) -r 3 4
+	echo customize in Makefile 
