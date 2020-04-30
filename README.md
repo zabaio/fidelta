@@ -6,6 +6,30 @@ It's a higly parallelized **Delaunay Triangulation builder** which exploits the 
 We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://arxiv.org/pdf/1810.05303.pdf) which is an incremental approach 
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
+## Use
+### Serial version
+#### Installaton
+    cd serial
+    make
+#### Computing a triangulation
+From a .node file
+    ./serial \[PATH_TO_FILE\]
+Random triangulation
+    ./serial -r \[N_PTS\] \[MAX_COORDINATE\]
+### I/O
+> I/O files follow format used by [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
+#### Input: .node
+    <n_pts> 2 0 0
+    0 <x> <y>
+    1 <x> <y>
+    ...
+    <n_pts-1> <x> <y>
+#### Output: .ele
+    <n_tri> 3 0
+    0 <pt1> <pt2> <pt3>
+    1 <pt1> <pt2> <pt3>
+    ...
+    <n_tri-1> <pt1> <pt2> <pt3>
 ## Status
 General: **Work in Progress**
 |                |Log                                   |
