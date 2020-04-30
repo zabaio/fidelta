@@ -41,7 +41,6 @@ that lowers iteration dependency, improving the degree of **parallelization** re
     ./showme [.ele_PATH]
 
 ## Status
-General: **Work in Progress**
 |                |Log                                   |
 |----------------|--------------------------------------|
 |28/02/20        |`Start           `                    |
