@@ -7,37 +7,37 @@ We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
 ## Serial version
-### Installaton
+### Installation
     
     cd serial
     make
 
 ### Computing a triangulation
-From a .node file
+- From a .node file
     
-    ./serial [.node_PATH]
+        ./serial [.node_PATH]
 
-Random triangulation
+- Random triangulation
 
-    ./serial -r [N_PTS] [MAX_COORDINATE]
+        ./serial -r [N_PTS] [MAX_COORDINATE]
 
-> I/O files follow format used by [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
+> I/O files follow the format used by [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
 
-### Input: .node
+#### Input: .node
     <n_pts> 2 0 0
     0 <x> <y>
     1 <x> <y>
     ...
     <n_pts-1> <x> <y>
 
-### Output: .ele
+#### Output: .ele
     <n_tri> 3 0
     0 <pt1> <pt2> <pt3>
     1 <pt1> <pt2> <pt3>
     ...
     <n_tri-1> <pt1> <pt2> <pt3>
 
-## Display a triangulation
+### Display a triangulation
     ./showme [.ele_PATH]
 
 ## Status
@@ -59,7 +59,7 @@ General: **Work in Progress**
   - [Youtube](https://www.youtube.com/channel/UCaovqRpUc7D_Uf2WJHL0rvA)
   - [Facebook](https://www.facebook.com/NECSTLab) 
   
-## Built with
-- Vitis
-- Show Me (https://www.cs.cmu.edu/~quake/showme.html)
-- uthash
+## Tools
+- [Vitis](https://www.xilinx.com/products/design-tools/vitis.html)
+- [Show Me](https://www.cs.cmu.edu/~quake/showme.html)
+- [uthash](https://troydhanson.github.io/uthash/)
