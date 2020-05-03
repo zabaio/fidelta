@@ -4,7 +4,7 @@ SHOWFLAGS = -O -DLINUX -I/usr/X11R6/include -L/usr/X11R6/lib
 
 OBJDIR = bin
 SRCDIR = src
-SHODIR = showsrc
+SHODIR = ../showme
 RESPATHNOEXT = result
 OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
 OUT = serial
@@ -13,8 +13,6 @@ $(OBJDIR)/main.o: DEFS = -DLOG
 $(OBJDIR)/display.o: DEFS = -DPTSLIM=300000 -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" 
 
 .PHONY = clean reset draw run
-
-all: $(OUT) showme
 
 $(OUT): $(OBJ)
 	$(CC) -o $@ $^
@@ -25,18 +23,15 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) | $(OBJDIR)
 $(OBJDIR):
 	mkdir $@
 
-showme: $(SHODIR)/showme.c
-	$(CC) $(SHOWFLAGS) $< -o $@ -lX11
-
 clean:
-	rm -f $(OBJDIR)/*.o $(OUT) showme 
+	rm -rf $(OBJDIR) $(OUT)
 
-reset:
-	rm -rf $(OBJDIR) *.node *.ele $(OUT) showme
+reset: clean
+	rm -f *.node *.ele
 
 draw:
-	./showme $(RESPATHNOEXT).ele
+	$(SHODIR)/showme $(RESPATHNOEXT).ele
 
-#Customize recipe. Example: ./$(OUT) -r 3 4
+#Customize frequently used recipe. Example: ./$(OUT) -r 3 4
 run:
-	echo customize in Makefile 
+	@echo Customize in Makefile 

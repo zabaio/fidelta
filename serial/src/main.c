@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     int rmode = 0, n_pts, max_cor = 0, i;
     FILE *node, *ele, *extnode;
     rmode = init (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
-    
+        clock_t t; 
+    t = clock();
     point prov;
 
     if(rmode){
@@ -147,8 +148,7 @@ int main(int argc, char *argv[])
     push_act (&acts, segs, tris->t.p3, tris->t.p1, tris);
     
     // Initialization is over, we start timing the construction
-    clock_t t; 
-    t = clock();
+
 
     #ifdef LOG
         int roundcount = 0, roundwidth = 0;
