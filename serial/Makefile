@@ -9,8 +9,8 @@ RESPATHNOEXT = result
 OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
 OUT = serial
 INC = $(SRCDIR)/*.h
-$(OBJDIR)/main.o: DEFS = -DLOG
-$(OBJDIR)/display.o: DEFS = -DPTSLIM=300000 -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" 
+$(OBJDIR)/main.o: DEFS = -DLOG -DDEBUG
+$(OBJDIR)/display.o: DEFS = -DPTSLIM=1000000 -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" 
 
 .PHONY = clean reset draw run
 

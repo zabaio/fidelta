@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     int rmode = 0, n_pts, max_cor = 0, i;
     FILE *node, *ele, *extnode;
     rmode = init (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
-        clock_t t; 
-    t = clock();
+    
+    clock_t a = clock();
     point prov;
 
     if(rmode){
@@ -116,9 +116,10 @@ int main(int argc, char *argv[])
         fscanf (node, "%d %f %f \n", &bounding[i].id, &bounding[i].x, &bounding[i].y);       
     }
     push_t(&tris, bounding[0], bounding[1], bounding[2]);
+    tris->dim = n_pts;
+    tris->enc = malloc(tris->dim*sizeof(point));
     for (i = 0; i < n_pts; i++){
-        fscanf (node, "%d %f %f \n", &prov.id, &prov.x, &prov.y);
-        push_ptint(tris, prov);
+        fscanf (node, "%d %f %f \n", &(tris->enc[i].id), &(tris->enc[i].x), &(tris->enc[i].y));       
     }
 
     fclose (node);
@@ -153,7 +154,8 @@ int main(int argc, char *argv[])
     #ifdef LOG
         int roundcount = 0, roundwidth = 0;
     #endif
-
+    a = clock() - a;
+    clock_t t = clock();
     while(acts != NULL || nextround != NULL){
         
         // loads next round
@@ -171,7 +173,7 @@ int main(int argc, char *argv[])
             acts = nextround;
             nextround = NULL;
         }
-      
+
         #ifdef LOG
             roundwidth++;
         #endif
@@ -183,12 +185,26 @@ int main(int argc, char *argv[])
 
         // We add a new triangle (son) to tris. 
         // It's the one formed by the first point encroaching father and the segment act
-        push_t (&tris, acts->act->seg.a, acts->act->seg.b, acts->father->fenc->pt);
+        push_t (&tris, acts->act->seg.a, acts->act->seg.b, acts->father->enc[0]);
         
+        int alldim = 0;
+        if(acts->act->tfirst != NULL){
+            alldim += acts->act->tfirst->dim;
+        }
+        if(acts->act->tsecond != NULL){
+            alldim += acts->act->tsecond->dim;
+        }
+        tris->enc = malloc(alldim*sizeof(point));
+
         // Son is populated by its encroaching points by the function merge.
         // For each point encroaching uncle or father checks if inCircle is true
         // and in that case adds the point, preserving id order
+        
         merge (acts->father, tris, acts->uncle);
+
+        #ifdef DEBUG
+            print_tris_id(tris);
+        #endif
         
         // We now have a new triangle. We add the segment a-pt to segs.
         // If the segment already existed on it's other side there's already a triangle:
@@ -196,17 +212,17 @@ int main(int argc, char *argv[])
         // which is the one with the lowest encroaching point id, and a-pt is added to active segments.
         // If there's no triangle on the other side or the lowest encroaching point ids are the same,
         // encroached is set to NULL and a-pt is not active
-        encroached = segs_add (&segs, acts->act->seg.a, acts->father->fenc->pt, tris);
+        encroached = segs_add (&segs, acts->act->seg.a, acts->father->enc[0], tris);
         
         if (encroached != NULL){
-            push_act (&nextround, segs, acts->act->seg.a, acts->father->fenc->pt, encroached);
+            push_act (&nextround, segs, acts->act->seg.a, acts->father->enc[0], encroached);
         }
 
         // Same as before, but considering the other new segment, b-pt
-        encroached = segs_add (&segs, acts->act->seg.b, acts->father->fenc->pt, tris);
+        encroached = segs_add (&segs, acts->act->seg.b, acts->father->enc[0], tris);
         
         if (encroached != NULL){
-            push_act (&nextround, segs, acts->act->seg.b, acts->father->fenc->pt, encroached);
+            push_act (&nextround, segs, acts->act->seg.b, acts->father->enc[0], encroached);
         }
         
         #ifdef DEBUG
@@ -219,7 +235,7 @@ int main(int argc, char *argv[])
         assert (acts->act->tfirst == acts->father || acts->act->tsecond == acts->father);
         if(acts->uncle == NULL){
             acts->act->tfirst = tris;
-            if (tris->fenc != NULL){
+            if (tris->dim != 0){
                 push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, tris);
             }
         }
@@ -238,16 +254,16 @@ int main(int argc, char *argv[])
 
             // Checking if the first adjecent triangle added in segs is going to die in next round.
             // If so we add a-b to acts and the triagle is its father
-            if (acts->act->tfirst->fenc != NULL && 
-               (acts->act->tsecond->fenc == NULL || acts->act->tfirst->fenc->pt.id  <  acts->act->tsecond->fenc->pt.id)){
+            if (acts->act->tfirst->dim != 0 && 
+               (acts->act->tsecond->dim == 0 || acts->act->tfirst->enc[0].id  <  acts->act->tsecond->enc[0].id)){
                 
                 push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, acts->act->tfirst);
             
             }
 
             // Same thing but with the second triangle
-            else if (acts->act->tsecond->fenc != NULL && 
-                    (acts->act->tfirst->fenc == NULL || acts->act->tsecond->fenc->pt.id  <  acts->act->tfirst->fenc->pt.id)){
+            else if (acts->act->tsecond->dim != 0 && 
+                    (acts->act->tfirst->dim == 0 || acts->act->tsecond->enc[0].id  <  acts->act->tfirst->enc[0].id)){
 
                 push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, acts->act->tsecond);
             
@@ -268,7 +284,7 @@ int main(int argc, char *argv[])
     
     fprintf (ele, "%d 3 0\n", 2*(n_pts + 3) - 5);
     while(tail != NULL){
-        if(tail->fenc == NULL){
+        if(tail->enc[0].id != -1){
             fprintf (ele, "%d ", soldim);
             fprint_t (ele, &tail->t);
             soldim++;
@@ -280,8 +296,9 @@ int main(int argc, char *argv[])
     fclose (node);
     fclose (ele);
 
-    t = clock() - t; 
+    t += clock() - t;
     float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
+    float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
 
     #ifdef DEBUG
         print_tris_id(tris);
@@ -290,7 +307,8 @@ int main(int argc, char *argv[])
     #ifdef LOG
         printf ("Number of rounds: %d\n", roundcount);
     #endif
-
+    
+    printf("Init time: %d ms\n", (int)ini_time);
     printf("Delaunay time: %d ms\n", (int)time_taken);
 
     // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
@@ -329,41 +347,53 @@ void merge (t_node *father, t_node *son, t_node *uncle){
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
     assert (father != NULL);
-    pt_node *fprobe = father->fenc->next;
+    int fid = 1;
+    int sid = 0;
+    point *fprobe = father->enc;
+    point *sprobe = son->enc;
+    
     if (uncle == NULL){
-        while (fprobe != NULL){
-            if (in_circle (&son->t, &fprobe->pt))
-                push_ptint (son, fprobe->pt);
-            fprobe = fprobe->next;
+        for(; fid < father->dim; fid++){
+            if (in_circle (&son->t, fprobe + fid)){
+                sprobe[sid] = fprobe[fid];
+                son->dim ++; // one could use son->dim as sid
+                sid ++;
+            }
+            fid ++;
         }
     }
     else{
 
         // If uncle exists we merge its and father's encroaching point lists
         // and add it to son, while maintaining the order of the ids
-        pt_node *uprobe = uncle->fenc;
-        while (fprobe != NULL || uprobe != NULL){
+        int uid = 0;
+        point *uprobe = uncle->enc;
+        while (fid < father->dim || uid < uncle->dim){
             
-            if (uprobe == NULL || (fprobe != NULL && fprobe->pt.id < uprobe->pt.id)){
-                if (in_circle (&son->t, &fprobe->pt)){
-                    push_ptint (son, fprobe->pt);
+            if (uid == uncle->dim || (fid < father->dim && fprobe[fid].id < uprobe[uid].id)){
+                if (in_circle (&son->t, fprobe + fid)){
+                    *(sprobe + sid) = *(fprobe + fid);
+                    son->dim ++;
+                    sid ++;
                 }
-                fprobe = fprobe->next;
+                fid ++;
             }
             
-            else if (fprobe == NULL || (uprobe != NULL && uprobe->pt.id < fprobe->pt.id)){
-                if (in_circle (&son->t, &uprobe->pt)){
-                    push_ptint (son, uprobe->pt);
+            else if (fid == father->dim || (uid < uncle->dim && uprobe[uid].id < fprobe[fid].id)){
+                if (in_circle (&son->t, uprobe + uid)){
+                    *(sprobe + sid) = *(uprobe + uid);
+                    son->dim ++;
+                    sid ++;
                 }
-                uprobe = uprobe->next;
+                uid ++;
             }
 
-            else if (fprobe != NULL && uprobe != NULL && fprobe->pt.id == uprobe->pt.id){
-                if (in_circle (&son->t, &fprobe->pt)){  //TODO necessary?
-                    push_ptint (son, fprobe->pt);
-                }
-                uprobe = uprobe->next;
-                fprobe = fprobe->next;
+            else if (fid < father->dim && uid < uncle->dim && fprobe[fid].id == uprobe[uid].id){
+                assert (in_circle (&son->t, fprobe));
+                *(sprobe + sid) = *(fprobe + fid); 
+                son->dim ++;
+                uid ++;
+                fid ++;
             }
         }
     }

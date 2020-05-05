@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+
 #include "types.h"
 
 // defines general ordering criterion
@@ -70,26 +71,9 @@ void set_t(triangle *t,point a,point b,point c){
 void push_t(t_node **ref, point p1, point p2, point p3){
     t_node *new = (t_node*)malloc(sizeof(t_node));
     set_t(&(new->t), p1, p2, p3);
-    new->fenc = NULL;
-    new->lenc = NULL;
+    new->dim = 0;
     new->next = *ref;
     *ref = new;
-    return;
-}
-
-// add point to the back of the list, returns the end of the list
-void push_ptint(t_node *ref, point pt){
-    assert (ref != NULL);
-    pt_node *new = (pt_node*)malloc(sizeof(pt_node));
-    set_pt(&(new->pt), pt.x, pt.y, pt.id);
-    new->next = NULL;
-    if(ref->lenc == NULL){
-        ref->fenc = new;
-        ref->lenc = new;
-        return;
-    }
-    ref->lenc->next = new;
-    ref->lenc = new;
     return;
 }
 
@@ -114,10 +98,10 @@ t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
     else{
         assert (record->tfirst != NULL && record->tsecond == NULL);
         record->tsecond = tknown;
-        if (record->tfirst->fenc != NULL && (record->tsecond->fenc == NULL || record->tfirst->fenc->pt.id < record->tsecond->fenc->pt.id)){
+        if (record->tfirst->dim > 0 && (record->tsecond->dim == 0 || record->tfirst->enc[0].id < record->tsecond->enc[0].id)){
             return record->tfirst;
         }
-        if (record->tsecond->fenc != NULL && (record->tfirst->fenc == NULL || record->tsecond->fenc->pt.id < record->tfirst->fenc->pt.id)){
+        if (record->tsecond->dim > 0 && (record->tfirst->dim == 0 || record->tsecond->enc[0].id < record->tfirst->enc[0].id)){
             return record->tsecond;
         }
     }

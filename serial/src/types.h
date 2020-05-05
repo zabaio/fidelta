@@ -30,8 +30,9 @@ typedef struct pt_node{
 // fenc is the first encroached point. lenc the last (in order of id)
 typedef struct t_node{
     triangle t;
-    struct pt_node *fenc, *lenc;
     struct t_node *next;
+    int dim;
+    point *enc;
 } t_node;                     
 
 // element of the hash table. tfirst is the first triangle to be added to the record

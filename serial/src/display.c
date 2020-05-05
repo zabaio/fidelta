@@ -136,10 +136,9 @@ void print_tris(t_node *tris){
     printf("\nTriangoli in tris:\n");
     while(tris != NULL){
         print_t(tris->t);
-        pt_node *probe = tris->fenc;
-        while(probe != NULL){
-            printf("\t" PT_FRMT "\n", probe->pt.x, probe->pt.y);
-            probe = probe->next;
+        int i;
+        for(i = 0; i < tris->dim; i++){
+            printf("\t" PT_FRMT "\n", tris->enc[i].x, tris->enc[i].y);
         }
         tris = tris->next;
     }
@@ -149,10 +148,9 @@ void print_tris_id(t_node *tris){
     printf("\nTriangoli in tris:\n");
     while(tris != NULL){
         printf("%2d %2d %2d  -->",tris->t.p1.id, tris->t.p2.id, tris->t.p3.id);
-        pt_node *probe = tris->fenc;
-        while(probe != NULL){
-            printf(" %d", probe->pt.id);
-            probe = probe->next;
+        int i;
+        for(i = 0; i < tris->dim; i++){
+            printf(" %d", tris->enc[i].id);
         }
         printf ("\n");
         tris = tris->next;
