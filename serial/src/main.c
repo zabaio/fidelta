@@ -16,7 +16,8 @@ void merge (t_node *father, t_node *son, t_node *uncle);
 
 int main(int argc, char *argv[])
 {
-    int rmode = 0, n_pts, max_cor = 0, i;
+    int rmode = 0, n_pts, i;
+    float max_cor = 0;
     FILE *node, *ele, *extnode;
     rmode = init (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
     
@@ -41,7 +42,7 @@ int main(int argc, char *argv[])
         fprint_pt (node, &prov);        
         #ifdef LOG
             printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
-            printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*33);
+            printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*3);
             printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
         #endif
 
@@ -78,7 +79,9 @@ int main(int argc, char *argv[])
                 exit(EXIT_FAILURE);
             }
             if (prov.x > max_cor) max_cor = prov.x;
+            if (-prov.x > max_cor) max_cor = -prov.x;
             if (prov.y > max_cor) max_cor = prov.y;
+            if (-prov.y > max_cor) max_cor = -prov.y;
         }
         
         fprintf (node, "%d 2 0 0\n", n_pts+3);
@@ -157,7 +160,7 @@ int main(int argc, char *argv[])
     a = clock() - a;
     clock_t t = clock();
     while(acts != NULL || nextround != NULL){
-        
+
         // loads next round
         if (acts == NULL){
             #ifdef LOG
@@ -174,10 +177,12 @@ int main(int argc, char *argv[])
             nextround = NULL;
         }
 
+
         #ifdef LOG
             roundwidth++;
         #endif
         #ifdef DEBUG
+            print_acts_id(acts);
             printf("\nAttivo: %d %d\n", acts->act->seg.a.id, acts->act->seg.b.id);
         #endif
         
@@ -270,6 +275,10 @@ int main(int argc, char *argv[])
             }
         }
 
+        #ifdef DEBUG
+            print_acts_id(nextround);
+        #endif
+
         pop_act (&acts);
 
     }
@@ -284,7 +293,7 @@ int main(int argc, char *argv[])
     
     fprintf (ele, "%d 3 0\n", 2*(n_pts + 3) - 5);
     while(tail != NULL){
-        if(tail->enc[0].id != -1){
+        if(tail->dim == 0){
             fprintf (ele, "%d ", soldim);
             fprint_t (ele, &tail->t);
             soldim++;
@@ -293,7 +302,6 @@ int main(int argc, char *argv[])
         tail = tail->next;
     }
   
-    fclose (node);
     fclose (ele);
 
     t += clock() - t;
@@ -347,19 +355,17 @@ void merge (t_node *father, t_node *son, t_node *uncle){
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
     assert (father != NULL);
+    assert (son->dim == 0);
     int fid = 1;
-    int sid = 0;
-    point *fprobe = father->enc;
-    point *sprobe = son->enc;
+    point *fenc = father->enc;
+    point *senc = son->enc;
     
     if (uncle == NULL){
         for(; fid < father->dim; fid++){
-            if (in_circle (&son->t, fprobe + fid)){
-                sprobe[sid] = fprobe[fid];
-                son->dim ++; // one could use son->dim as sid
-                sid ++;
+            if (in_circle (&son->t, &fenc[fid])){
+                senc[son->dim] = fenc[fid];
+                son->dim ++;
             }
-            fid ++;
         }
     }
     else{
@@ -367,30 +373,28 @@ void merge (t_node *father, t_node *son, t_node *uncle){
         // If uncle exists we merge its and father's encroaching point lists
         // and add it to son, while maintaining the order of the ids
         int uid = 0;
-        point *uprobe = uncle->enc;
+        point *uenc = uncle->enc;
         while (fid < father->dim || uid < uncle->dim){
             
-            if (uid == uncle->dim || (fid < father->dim && fprobe[fid].id < uprobe[uid].id)){
-                if (in_circle (&son->t, fprobe + fid)){
-                    *(sprobe + sid) = *(fprobe + fid);
+            if (uid == uncle->dim || (fid < father->dim && fenc[fid].id < uenc[uid].id)){
+                if (in_circle (&son->t, &fenc[fid])){
+                    senc[son->dim] = fenc[fid];
                     son->dim ++;
-                    sid ++;
                 }
                 fid ++;
             }
             
-            else if (fid == father->dim || (uid < uncle->dim && uprobe[uid].id < fprobe[fid].id)){
-                if (in_circle (&son->t, uprobe + uid)){
-                    *(sprobe + sid) = *(uprobe + uid);
+            else if (fid == father->dim || (uid < uncle->dim && uenc[uid].id < fenc[fid].id)){
+                if (in_circle (&son->t, &uenc[uid])){
+                    senc[son->dim] = uenc[uid];
                     son->dim ++;
-                    sid ++;
                 }
                 uid ++;
             }
 
-            else if (fid < father->dim && uid < uncle->dim && fprobe[fid].id == uprobe[uid].id){
-                assert (in_circle (&son->t, fprobe));
-                *(sprobe + sid) = *(fprobe + fid); 
+            else if (fid < father->dim && uid < uncle->dim && fenc[fid].id == uenc[uid].id){
+                assert (in_circle (&son->t, &fenc[fid]));
+                senc[son->dim] = fenc[fid]; 
                 son->dim ++;
                 uid ++;
                 fid ++;

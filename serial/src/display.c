@@ -16,7 +16,7 @@
 //--------------------------------------//
 
 // initialization based on command line. Returns 1 if random mode is selected
-int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor){
+int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor){
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
     if (*node == NULL){
@@ -119,8 +119,18 @@ void print_seg(segment seg){
     return;
 }
 
+void print_seg_id(segment seg){
+    printf("(%d %d)", seg.a.id, seg.b.id);
+    return;
+}
+
 void print_t(triangle t){
     printf(PT_FRMT "-" PT_FRMT "-" PT_FRMT "\n", t.p1.x, t.p1.y, t.p2.x, t.p2.y, t.p3.x, t.p3.y);
+    return;
+}
+
+void print_t_id(triangle t){
+    printf("(%d %d %d)", t.p1.id, t.p2.id, t.p3.id);
     return;
 }
 
@@ -204,4 +214,21 @@ void print_segs_id(record_segs *elem){
         elem = elem->hh.next;
     }
     return;
+}
+
+void print_acts_id(act_node *acts){
+    printf("\nElements in act: \n");
+    while(acts != NULL){
+        print_seg_id(acts->act->seg);
+        printf(" -> ");
+        print_pt_id(acts->father->enc[0]); 
+        printf(", ");
+        print_t_id(acts->father->t);
+        if(acts->uncle != NULL){
+            printf(", ");
+            print_t_id(acts->uncle->t);
+        }
+        printf("\n");
+        acts = acts->next;
+    }
 }

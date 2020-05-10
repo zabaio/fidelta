@@ -5,7 +5,7 @@
 #define PT_FRMT "( %.2f , %.2f )"
 
 // initialization based on command line. Returns 1 if random mode is selected
-int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, int *max_cor);
+int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor);
 
 // prints manual
 void man(int verbose);
@@ -25,8 +25,12 @@ void print_pt_id(point pt);
 // prints a segment (xa,ya)-(xb,yb)
 void print_seg(segment seg);
 
+void print_seg_id(segment seg);
+
 // prints a triangle (xa,ya)-(xb,yb)-(xc,yc)
 void print_t(triangle t);
+
+void print_t_id(triangle t);
 
 // prints a triangle (seg1) (seg2) (seg3)
 void print_t_exp(triangle t);
@@ -42,5 +46,7 @@ void print_segs(record_segs *elem);
 
 // prints the entire hash table (id1)-(id2)
 void print_segs_id(record_segs *elem);
+
+void print_acts_id(act_node *acts);
 
 #endif // DISPLAY_H_INCLUDED
