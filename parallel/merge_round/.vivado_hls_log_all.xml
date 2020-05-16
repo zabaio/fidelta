@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vivadoHLSLog:LogRoot xmlns:vivadoHLSLog="www.xilinx.com/vivadoHLSLog">
+  <errorLogs>
+    <logs>
+      <synLog/>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </errorLogs>
+  <warningLogs>
+    <logs>
+      <synLog>
+        <logs message="WARNING: [RTGEN 206-101] Port 'in_circle/d_id' has no fanin or fanout and is left dangling.&#xA;               Please use C simulation to confirm this function argument can be read from or written to." projectName="merge_round" solutionName="solution1" date="2020-05-16T20:27:41.296+0200" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Port 'in_circle/t_p3_id' has no fanin or fanout and is left dangling.&#xA;               Please use C simulation to confirm this function argument can be read from or written to." projectName="merge_round" solutionName="solution1" date="2020-05-16T20:27:41.294+0200" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Port 'in_circle/t_p2_id' has no fanin or fanout and is left dangling.&#xA;               Please use C simulation to confirm this function argument can be read from or written to." projectName="merge_round" solutionName="solution1" date="2020-05-16T20:27:41.292+0200" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Port 'in_circle/t_p1_id' has no fanin or fanout and is left dangling.&#xA;               Please use C simulation to confirm this function argument can be read from or written to." projectName="merge_round" solutionName="solution1" date="2020-05-16T20:27:41.288+0200" type="Warning"/>
+      </synLog>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </warningLogs>
+</vivadoHLSLog:LogRoot>

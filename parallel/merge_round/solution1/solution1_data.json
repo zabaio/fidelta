@@ -1,0 +1,549 @@
+{
+  "Top": "in_circle",
+  "RtlTop": "in_circle_in_circle",
+  "RtlPrefix": "in_circle_",
+  "SourceLanguage": "c",
+  "ResetStyle": "control",
+  "GenerateBdFiles": "0",
+  "HostMachineBits": "64",
+  "Target": {
+    "Family": "virtexuplus",
+    "Device": "xcu200",
+    "Package": "-fsgd2104",
+    "Speed": "-2-e"
+  },
+  "HlsSolution": {"Config": [
+      "config_export -vivado_optimization_level=0",
+      "config_export -vivado_phys_opt=none",
+      "config_export -vivado_report_level=0",
+      "config_schedule -effort=medium",
+      "config_schedule -enable_dsp_full_reg=1",
+      "config_schedule -relax_ii_for_timing=1",
+      "config_schedule -verbose=0",
+      "config_compile -name_max_length=80",
+      "config_compile -no_signed_zeros=0",
+      "config_compile -pipeline_loops=64",
+      "config_compile -unsafe_math_optimizations=0",
+      "config_interface -clock_enable=0",
+      "config_interface -expose_global=0",
+      "config_interface -m_axi_addr64=1",
+      "config_interface -m_axi_offset=off",
+      "config_interface -register_io=off",
+      "config_interface -trim_dangling_port=0",
+      "config_rtl -encoding=onehot",
+      "config_rtl -kernel_profile=0",
+      "config_rtl -module_auto_prefix=1",
+      "config_rtl -mult_keep_attribute=0",
+      "config_rtl -reset=control",
+      "config_rtl -reset_async=0",
+      "config_rtl -reset_level=high",
+      "config_rtl -verbose=0"
+    ]},
+  "Args": {
+    "t": {
+      "index": "0",
+      "type": {
+        "kinds": [
+          "struct",
+          "pointer"
+        ],
+        "dataType": "triangle",
+        "structImpl": "flat-interface",
+        "fields": {
+          "p1": {
+            "order": "0",
+            "kinds": ["struct"],
+            "dataType": "point",
+            "structImpl": "flat-interface",
+            "fields": {
+              "id": {
+                "order": "0",
+                "dataType": "int",
+                "dataWidth": "32",
+                "interfaceRef": "t_p1_id",
+                "structImpl": "field"
+              },
+              "x": {
+                "order": "1",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p1_x",
+                "structImpl": "field"
+              },
+              "y": {
+                "order": "2",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p1_y",
+                "structImpl": "field"
+              }
+            }
+          },
+          "p2": {
+            "order": "1",
+            "kinds": ["struct"],
+            "dataType": "point",
+            "structImpl": "flat-interface",
+            "fields": {
+              "id": {
+                "order": "0",
+                "dataType": "int",
+                "dataWidth": "32",
+                "interfaceRef": "t_p2_id",
+                "structImpl": "field"
+              },
+              "x": {
+                "order": "1",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p2_x",
+                "structImpl": "field"
+              },
+              "y": {
+                "order": "2",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p2_y",
+                "structImpl": "field"
+              }
+            }
+          },
+          "p3": {
+            "order": "2",
+            "kinds": ["struct"],
+            "dataType": "point",
+            "structImpl": "flat-interface",
+            "fields": {
+              "id": {
+                "order": "0",
+                "dataType": "int",
+                "dataWidth": "32",
+                "interfaceRef": "t_p3_id",
+                "structImpl": "field"
+              },
+              "x": {
+                "order": "1",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p3_x",
+                "structImpl": "field"
+              },
+              "y": {
+                "order": "2",
+                "dataType": "float",
+                "dataWidth": "32",
+                "interfaceRef": "t_p3_y",
+                "structImpl": "field"
+              }
+            }
+          }
+        }
+      }
+    },
+    "d": {
+      "index": "1",
+      "type": {
+        "kinds": [
+          "struct",
+          "pointer"
+        ],
+        "dataType": "point",
+        "structImpl": "flat-interface",
+        "fields": {
+          "id": {
+            "order": "0",
+            "dataType": "int",
+            "dataWidth": "32",
+            "interfaceRef": "d_id",
+            "structImpl": "field"
+          },
+          "x": {
+            "order": "1",
+            "dataType": "float",
+            "dataWidth": "32",
+            "interfaceRef": "d_x",
+            "structImpl": "field"
+          },
+          "y": {
+            "order": "2",
+            "dataType": "float",
+            "dataWidth": "32",
+            "interfaceRef": "d_y",
+            "structImpl": "field"
+          }
+        }
+      }
+    }
+  },
+  "Return": {
+    "dataType": "int",
+    "dataWidth": "32",
+    "interfaceRef": "ap_return"
+  },
+  "ClockInfo": {
+    "ClockName": "ap_clk",
+    "ClockPeriod": "10",
+    "IsCombLogic": "0",
+    "II": "x",
+    "Latency": "12",
+    "Uncertainty": "1.25"
+  },
+  "Xdc": {"OocClocks": ["create_clock -name ap_clk -period 10.000 [get_ports ap_clk]"]},
+  "Ipx": {
+    "Vendor": "xilinx.com",
+    "Library": "hls",
+    "Name": "in_circle_in_circle",
+    "Version": "1.0",
+    "DisplayName": "In_circle_in_circle",
+    "Revision": "",
+    "Description": "An IP generated by Vivado HLS",
+    "Taxonomy": "\/VIVADO_HLS_IP",
+    "AutoFamilySupport": ""
+  },
+  "Files": {
+    "CSource": ["..\/..\/merge_round.c"],
+    "Vhdl": [
+      "impl\/vhdl\/in_circle_in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1.vhd",
+      "impl\/vhdl\/in_circle_in_circle_fcmp_32ns_32ns_1_1_1.vhd",
+      "impl\/vhdl\/in_circle_in_circle_fmul_32ns_32ns_32_2_max_dsp_1.vhd",
+      "impl\/vhdl\/in_circle_in_circle_fsub_32ns_32ns_32_2_full_dsp_1.vhd",
+      "impl\/vhdl\/in_circle_in_circle.vhd"
+    ],
+    "Verilog": [
+      "impl\/verilog\/in_circle_in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1.v",
+      "impl\/verilog\/in_circle_in_circle_fcmp_32ns_32ns_1_1_1.v",
+      "impl\/verilog\/in_circle_in_circle_fmul_32ns_32ns_32_2_max_dsp_1.v",
+      "impl\/verilog\/in_circle_in_circle_fsub_32ns_32ns_32_2_full_dsp_1.v",
+      "impl\/verilog\/in_circle_in_circle.v"
+    ],
+    "Misc": ["impl\/misc\/logo.png"],
+    "Subcore": [
+      "impl\/misc\/in_circle_in_circle_ap_faddfsub_0_full_dsp_32_ip.tcl",
+      "impl\/misc\/in_circle_in_circle_ap_fcmp_0_no_dsp_32_ip.tcl",
+      "impl\/misc\/in_circle_in_circle_ap_fmul_0_max_dsp_32_ip.tcl",
+      "impl\/misc\/in_circle_in_circle_ap_fsub_0_full_dsp_32_ip.tcl"
+    ],
+    "DesignXml": "\/home\/users\/alberto.giusti\/FIDELTA\/parallel\/merge_round\/solution1\/.autopilot\/db\/in_circle.design.xml",
+    "DebugDir": "\/home\/users\/alberto.giusti\/FIDELTA\/parallel\/merge_round\/solution1\/.debug",
+    "ProtoInst": ["\/home\/users\/alberto.giusti\/FIDELTA\/parallel\/merge_round\/solution1\/.debug\/in_circle.protoinst"]
+  },
+  "SubcoreInfo": {
+    "HasXpmMemory": false,
+    "HasClockedDsp": false,
+    "IP": [
+      {
+        "name": "in_circle_in_circle_ap_faddfsub_0_full_dsp_32",
+        "vlnv": "xilinx.com:ip:floating_point:7.1",
+        "params": "CONFIG.a_precision_type Single CONFIG.a_tuser_width 1 CONFIG.add_sub_value Both CONFIG.b_tuser_width 1 CONFIG.c_a_exponent_width 8 CONFIG.c_a_fraction_width 24 CONFIG.c_compare_operation Programmable CONFIG.c_has_divide_by_zero false CONFIG.c_has_invalid_op false CONFIG.c_has_overflow false CONFIG.c_has_underflow false CONFIG.c_latency 0 CONFIG.c_mult_usage Full_Usage CONFIG.c_optimization Speed_Optimized CONFIG.c_rate 1 CONFIG.c_result_exponent_width 8 CONFIG.c_result_fraction_width 24 CONFIG.component_name in_circle_in_circle_ap_faddfsub_0_full_dsp_32 CONFIG.flow_control NonBlocking CONFIG.has_a_tlast false CONFIG.has_a_tuser false CONFIG.has_aclken false CONFIG.has_aresetn false CONFIG.has_b_tlast false CONFIG.has_b_tuser false CONFIG.has_operation_tlast false CONFIG.has_operation_tuser false CONFIG.has_result_tready false CONFIG.maximum_latency false CONFIG.operation_tuser_width 1 CONFIG.operation_type Add_Subtract CONFIG.result_precision_type Single CONFIG.result_tlast_behv Null"
+      },
+      {
+        "name": "in_circle_in_circle_ap_fcmp_0_no_dsp_32",
+        "vlnv": "xilinx.com:ip:floating_point:7.1",
+        "params": "CONFIG.a_precision_type Single CONFIG.a_tuser_width 1 CONFIG.add_sub_value Both CONFIG.b_tuser_width 1 CONFIG.c_a_exponent_width 8 CONFIG.c_a_fraction_width 24 CONFIG.c_compare_operation Programmable CONFIG.c_has_divide_by_zero false CONFIG.c_has_invalid_op false CONFIG.c_has_overflow false CONFIG.c_has_underflow false CONFIG.c_latency 0 CONFIG.c_mult_usage No_Usage CONFIG.c_optimization Speed_Optimized CONFIG.c_rate 1 CONFIG.c_result_exponent_width 1 CONFIG.c_result_fraction_width 0 CONFIG.component_name in_circle_in_circle_ap_fcmp_0_no_dsp_32 CONFIG.flow_control NonBlocking CONFIG.has_a_tlast false CONFIG.has_a_tuser false CONFIG.has_aclken false CONFIG.has_aresetn false CONFIG.has_b_tlast false CONFIG.has_b_tuser false CONFIG.has_operation_tlast false CONFIG.has_operation_tuser false CONFIG.has_result_tready false CONFIG.maximum_latency false CONFIG.operation_tuser_width 1 CONFIG.operation_type Compare CONFIG.result_precision_type Custom CONFIG.result_tlast_behv Null"
+      },
+      {
+        "name": "in_circle_in_circle_ap_fmul_0_max_dsp_32",
+        "vlnv": "xilinx.com:ip:floating_point:7.1",
+        "params": "CONFIG.a_precision_type Single CONFIG.a_tuser_width 1 CONFIG.add_sub_value Both CONFIG.b_tuser_width 1 CONFIG.c_a_exponent_width 8 CONFIG.c_a_fraction_width 24 CONFIG.c_compare_operation Programmable CONFIG.c_has_divide_by_zero false CONFIG.c_has_invalid_op false CONFIG.c_has_overflow false CONFIG.c_has_underflow false CONFIG.c_latency 0 CONFIG.c_mult_usage Max_Usage CONFIG.c_optimization Speed_Optimized CONFIG.c_rate 1 CONFIG.c_result_exponent_width 8 CONFIG.c_result_fraction_width 24 CONFIG.component_name in_circle_in_circle_ap_fmul_0_max_dsp_32 CONFIG.flow_control NonBlocking CONFIG.has_a_tlast false CONFIG.has_a_tuser false CONFIG.has_aclken false CONFIG.has_aresetn false CONFIG.has_b_tlast false CONFIG.has_b_tuser false CONFIG.has_operation_tlast false CONFIG.has_operation_tuser false CONFIG.has_result_tready false CONFIG.maximum_latency false CONFIG.operation_tuser_width 1 CONFIG.operation_type Multiply CONFIG.result_precision_type Single CONFIG.result_tlast_behv Null"
+      },
+      {
+        "name": "in_circle_in_circle_ap_fsub_0_full_dsp_32",
+        "vlnv": "xilinx.com:ip:floating_point:7.1",
+        "params": "CONFIG.a_precision_type Single CONFIG.a_tuser_width 1 CONFIG.add_sub_value Subtract CONFIG.b_tuser_width 1 CONFIG.c_a_exponent_width 8 CONFIG.c_a_fraction_width 24 CONFIG.c_compare_operation Programmable CONFIG.c_has_divide_by_zero false CONFIG.c_has_invalid_op false CONFIG.c_has_overflow false CONFIG.c_has_underflow false CONFIG.c_latency 0 CONFIG.c_mult_usage Full_Usage CONFIG.c_optimization Speed_Optimized CONFIG.c_rate 1 CONFIG.c_result_exponent_width 8 CONFIG.c_result_fraction_width 24 CONFIG.component_name in_circle_in_circle_ap_fsub_0_full_dsp_32 CONFIG.flow_control NonBlocking CONFIG.has_a_tlast false CONFIG.has_a_tuser false CONFIG.has_aclken false CONFIG.has_aresetn false CONFIG.has_b_tlast false CONFIG.has_b_tuser false CONFIG.has_operation_tlast false CONFIG.has_operation_tuser false CONFIG.has_result_tready false CONFIG.maximum_latency false CONFIG.operation_tuser_width 1 CONFIG.operation_type Add_Subtract CONFIG.result_precision_type Single CONFIG.result_tlast_behv Null"
+      }
+    ]
+  },
+  "Interfaces": {
+    "ap_clk": {
+      "type": "clock",
+      "ctype": {"CLK": {"Type": "bool"}},
+      "bundle_name": "ap_clk",
+      "bundle_role": "default",
+      "reset": "ap_rst"
+    },
+    "ap_ctrl": {
+      "type": "ap_ctrl",
+      "ctrl_ports": "ap_start ap_done ap_idle ap_ready",
+      "ctype": {
+        "start": {"Type": "bool"},
+        "done": {"Type": "bool"},
+        "idle": {"Type": "bool"},
+        "ready": {"Type": "bool"}
+      }
+    },
+    "ap_return": {
+      "type": "data",
+      "dir": "out",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "32"
+        }},
+      "bundle_name": "ap_return",
+      "bundle_role": "default"
+    },
+    "ap_rst": {
+      "type": "reset",
+      "polarity": "ACTIVE_HIGH",
+      "ctype": {"RST": {"Type": "bool"}},
+      "bundle_name": "ap_rst",
+      "bundle_role": "default"
+    },
+    "d_id": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "32"
+        }},
+      "bundle_name": "d_id",
+      "bundle_role": "default"
+    },
+    "d_x": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "d_x",
+      "bundle_role": "default"
+    },
+    "d_y": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "d_y",
+      "bundle_role": "default"
+    },
+    "t_p1_id": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p1_id",
+      "bundle_role": "default"
+    },
+    "t_p1_x": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p1_x",
+      "bundle_role": "default"
+    },
+    "t_p1_y": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p1_y",
+      "bundle_role": "default"
+    },
+    "t_p2_id": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p2_id",
+      "bundle_role": "default"
+    },
+    "t_p2_x": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p2_x",
+      "bundle_role": "default"
+    },
+    "t_p2_y": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p2_y",
+      "bundle_role": "default"
+    },
+    "t_p3_id": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "integer signed",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p3_id",
+      "bundle_role": "default"
+    },
+    "t_p3_x": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p3_x",
+      "bundle_role": "default"
+    },
+    "t_p3_y": {
+      "type": "data",
+      "dir": "in",
+      "width": "32",
+      "ctype": {"DATA": {
+          "Type": "real float",
+          "Width": "32"
+        }},
+      "bundle_name": "t_p3_y",
+      "bundle_role": "default"
+    }
+  },
+  "RtlPorts": {
+    "ap_clk": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_rst": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_start": {
+      "dir": "in",
+      "width": "1"
+    },
+    "ap_done": {
+      "dir": "out",
+      "width": "1"
+    },
+    "ap_idle": {
+      "dir": "out",
+      "width": "1"
+    },
+    "ap_ready": {
+      "dir": "out",
+      "width": "1"
+    },
+    "ap_return": {
+      "dir": "out",
+      "width": "32"
+    },
+    "t_p1_id": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p1_x": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p1_y": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p2_id": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p2_x": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p2_y": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p3_id": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p3_x": {
+      "dir": "in",
+      "width": "32"
+    },
+    "t_p3_y": {
+      "dir": "in",
+      "width": "32"
+    },
+    "d_id": {
+      "dir": "in",
+      "width": "32"
+    },
+    "d_x": {
+      "dir": "in",
+      "width": "32"
+    },
+    "d_y": {
+      "dir": "in",
+      "width": "32"
+    }
+  },
+  "ModuleInfo": {
+    "Hierarchy": {"ModuleName": "in_circle"},
+    "Info": {"in_circle": {
+        "FunctionProtocol": "ap_ctrl_hs",
+        "isTaskLevelControl": "1",
+        "isPipelined": "0",
+        "isCombinational": "0",
+        "isOneStateSeq": "0"
+      }},
+    "Metrics": {"in_circle": {
+        "Latency": {
+          "LatencyBest": "12",
+          "LatencyAvg": "12",
+          "LatencyWorst": "12",
+          "PipelineII": "13",
+          "PipelineDepth": "",
+          "PipelineType": "none"
+        },
+        "Timing": {
+          "Target": "10.00",
+          "Uncertainty": "1.25",
+          "Estimate": "7.379"
+        },
+        "Area": {
+          "DSP48E": "48",
+          "FF": "3187",
+          "LUT": "2697",
+          "BRAM_18K": "0",
+          "URAM": "0"
+        }
+      }}
+  },
+  "Sdx": {
+    "Target": "none",
+    "ProfileOption": "0",
+    "ProfileType": "none",
+    "XO": "",
+    "KernelName": "in_circle",
+    "EnableXoSwEmu": "1"
+  },
+  "GenData": {
+    "DataVersion": "0.2",
+    "Time": "2020-05-16 20:27:42 CEST",
+    "ToolName": "vivado_hls",
+    "ToolVersion": "2019.2"
+  }
+}

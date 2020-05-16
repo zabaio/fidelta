@@ -1,0 +1,195 @@
+
+
+================================================================
+== Vivado HLS Report for 'in_circle'
+================================================================
+* Date:           Sat May 16 20:27:41 2020
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        merge_round
+* Solution:       solution1
+* Product family: virtexuplus
+* Target device:  xcu200-fsgd2104-2-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  | 10.00 ns | 7.379 ns |   1.25 ns  |
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |       12|       12| 0.120 us | 0.120 us |   12|   12|   none  |
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++---------------------+---------+-------+---------+---------+-----+
+|         Name        | BRAM_18K| DSP48E|    FF   |   LUT   | URAM|
++---------------------+---------+-------+---------+---------+-----+
+|DSP                  |        -|      -|        -|        -|    -|
+|Expression           |        -|      -|        -|        -|    -|
+|FIFO                 |        -|      -|        -|        -|    -|
+|Instance             |        -|     48|     2598|     2326|    -|
+|Memory               |        -|      -|        -|        -|    -|
+|Multiplexer          |        -|      -|        -|      371|    -|
+|Register             |        -|      -|      589|        -|    -|
++---------------------+---------+-------+---------+---------+-----+
+|Total                |        0|     48|     3187|     2697|    0|
++---------------------+---------+-------+---------+---------+-----+
+|Available SLR        |     1440|   2280|   788160|   394080|  320|
++---------------------+---------+-------+---------+---------+-----+
+|Utilization SLR (%)  |        0|      2|    ~0   |    ~0   |    0|
++---------------------+---------+-------+---------+---------+-----+
+|Available            |     4320|   6840|  2364480|  1182240|  960|
++---------------------+---------+-------+---------+---------+-----+
+|Utilization (%)      |        0|   ~0  |    ~0   |    ~0   |    0|
++---------------------+---------+-------+---------+---------+-----+
+
++ Detail: 
+    * Instance: 
+    +-------------------------------------------------+----------------------------------------------+---------+-------+-----+-----+-----+
+    |                     Instance                    |                    Module                    | BRAM_18K| DSP48E|  FF | LUT | URAM|
+    +-------------------------------------------------+----------------------------------------------+---------+-------+-----+-----+-----+
+    |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1_U1  |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1  |        0|      2|  177|  226|    0|
+    |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1_U2  |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1  |        0|      2|  177|  226|    0|
+    |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1_U3  |in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1  |        0|      2|  177|  226|    0|
+    |in_circle_fcmp_32ns_32ns_1_1_1_U19               |in_circle_fcmp_32ns_32ns_1_1_1                |        0|      0|    0|   46|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U7       |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U8       |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U9       |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U10      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U11      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U12      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U13      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U14      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U15      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U16      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U17      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fmul_32ns_32ns_32_2_max_dsp_1_U18      |in_circle_fmul_32ns_32ns_32_2_max_dsp_1       |        0|      3|  128|   77|    0|
+    |in_circle_fsub_32ns_32ns_32_2_full_dsp_1_U4      |in_circle_fsub_32ns_32ns_32_2_full_dsp_1      |        0|      2|  177|  226|    0|
+    |in_circle_fsub_32ns_32ns_32_2_full_dsp_1_U5      |in_circle_fsub_32ns_32ns_32_2_full_dsp_1      |        0|      2|  177|  226|    0|
+    |in_circle_fsub_32ns_32ns_32_2_full_dsp_1_U6      |in_circle_fsub_32ns_32ns_32_2_full_dsp_1      |        0|      2|  177|  226|    0|
+    +-------------------------------------------------+----------------------------------------------+---------+-------+-----+-----+-----+
+    |Total                                            |                                              |        0|     48| 2598| 2326|    0|
+    +-------------------------------------------------+----------------------------------------------+---------+-------+-----+-----+-----+
+
+    * DSP48E: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    N/A
+
+    * Multiplexer: 
+    +------------------+----+-----------+-----+-----------+
+    |       Name       | LUT| Input Size| Bits| Total Bits|
+    +------------------+----+-----------+-----+-----------+
+    |ap_NS_fsm         |  59|         14|    1|         14|
+    |grp_fu_102_p0     |  15|          3|   32|         96|
+    |grp_fu_102_p1     |  15|          3|   32|         96|
+    |grp_fu_108_p0     |  15|          3|   32|         96|
+    |grp_fu_108_p1     |  15|          3|   32|         96|
+    |grp_fu_114_p0     |  15|          3|   32|         96|
+    |grp_fu_114_p1     |  15|          3|   32|         96|
+    |grp_fu_120_p1     |  15|          3|   32|         96|
+    |grp_fu_124_p0     |  15|          3|   32|         96|
+    |grp_fu_124_p1     |  15|          3|   32|         96|
+    |grp_fu_128_p0     |  15|          3|   32|         96|
+    |grp_fu_128_p1     |  15|          3|   32|         96|
+    |grp_fu_84_opcode  |  15|          3|    2|          6|
+    |grp_fu_84_p0      |  21|          4|   32|        128|
+    |grp_fu_84_p1      |  21|          4|   32|        128|
+    |grp_fu_90_opcode  |  15|          3|    2|          6|
+    |grp_fu_90_p0      |  15|          3|   32|         96|
+    |grp_fu_90_p1      |  15|          3|   32|         96|
+    |grp_fu_96_opcode  |  15|          3|    2|          6|
+    |grp_fu_96_p0      |  15|          3|   32|         96|
+    |grp_fu_96_p1      |  15|          3|   32|         96|
+    +------------------+----+-----------+-----+-----------+
+    |Total             | 371|         76|  551|       1728|
+    +------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +----------------+----+----+-----+-----------+
+    |      Name      | FF | LUT| Bits| Const Bits|
+    +----------------+----+----+-----+-----------+
+    |ap_CS_fsm       |  13|   0|   13|          0|
+    |reg_173         |  32|   0|   32|          0|
+    |reg_183         |  32|   0|   32|          0|
+    |reg_192         |  32|   0|   32|          0|
+    |reg_201         |  32|   0|   32|          0|
+    |reg_210         |  32|   0|   32|          0|
+    |reg_219         |  32|   0|   32|          0|
+    |reg_228         |  32|   0|   32|          0|
+    |reg_233         |  32|   0|   32|          0|
+    |reg_238         |  32|   0|   32|          0|
+    |tmp_10_reg_332  |  32|   0|   32|          0|
+    |tmp_3_reg_292   |  32|   0|   32|          0|
+    |tmp_4_reg_297   |  32|   0|   32|          0|
+    |tmp_5_reg_302   |  32|   0|   32|          0|
+    |tmp_6_reg_307   |  32|   0|   32|          0|
+    |tmp_7_reg_312   |  32|   0|   32|          0|
+    |tmp_8_reg_317   |  32|   0|   32|          0|
+    |tmp_9_reg_322   |  32|   0|   32|          0|
+    |tmp_s_reg_327   |  32|   0|   32|          0|
+    +----------------+----+----+-----+-----------+
+    |Total           | 589|   0|  589|          0|
+    +----------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------+-----+-----+------------+--------------+--------------+
+| RTL Ports | Dir | Bits|  Protocol  | Source Object|    C Type    |
++-----------+-----+-----+------------+--------------+--------------+
+|ap_clk     |  in |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_rst     |  in |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_start   |  in |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_done    | out |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_idle    | out |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_ready   | out |    1| ap_ctrl_hs |   in_circle  | return value |
+|ap_return  | out |   32| ap_ctrl_hs |   in_circle  | return value |
+|t_p1_id    |  in |   32|   ap_none  |    t_p1_id   |    pointer   |
+|t_p1_x     |  in |   32|   ap_none  |    t_p1_x    |    pointer   |
+|t_p1_y     |  in |   32|   ap_none  |    t_p1_y    |    pointer   |
+|t_p2_id    |  in |   32|   ap_none  |    t_p2_id   |    pointer   |
+|t_p2_x     |  in |   32|   ap_none  |    t_p2_x    |    pointer   |
+|t_p2_y     |  in |   32|   ap_none  |    t_p2_y    |    pointer   |
+|t_p3_id    |  in |   32|   ap_none  |    t_p3_id   |    pointer   |
+|t_p3_x     |  in |   32|   ap_none  |    t_p3_x    |    pointer   |
+|t_p3_y     |  in |   32|   ap_none  |    t_p3_y    |    pointer   |
+|d_id       |  in |   32|   ap_none  |     d_id     |    pointer   |
+|d_x        |  in |   32|   ap_none  |      d_x     |    pointer   |
+|d_y        |  in |   32|   ap_none  |      d_y     |    pointer   |
++-----------+-----+-----+------------+--------------+--------------+
+
