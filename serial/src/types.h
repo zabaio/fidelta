@@ -21,11 +21,6 @@ typedef struct{
     point p1,p2,p3;
 } triangle;
 
-typedef struct pt_node{
-    point pt;
-    struct pt_node *next;
-} pt_node;
-
 // node of a dll of triangles with dll of points
 // fenc is the first encroached point. lenc the last (in order of id)
 typedef struct t_node{
@@ -63,9 +58,6 @@ void set_t(triangle *t,point a,point b,point c);
 
 // add triangle to the front of the list
 void push_t(t_node **ref, point p1, point p2, point p3);
-
-// add point to the back of the list, returns the end of the list
-void push_ptint(t_node *ref, point pt);
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
