@@ -1,23 +1,29 @@
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/vivado_hls'
-INFO: [HLS 200-10] For user 'alberto.giusti' on host 'NAGS21' (Linux_x86_64 version 3.10.0-862.14.4.el7.x86_64) on Sat May 16 20:27:28 CEST 2020
+INFO: [HLS 200-10] For user 'alberto.giusti' on host 'NAGS21' (Linux_x86_64 version 3.10.0-862.14.4.el7.x86_64) on Wed Jun 03 15:35:55 CEST 2020
 INFO: [HLS 200-10] On os "CentOS Linux release 7.7.1908 (Core)"
 INFO: [HLS 200-10] In directory '/home/users/alberto.giusti/FIDELTA/parallel'
 Sourcing Tcl script '/home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1/csynth.tcl'
 INFO: [HLS 200-10] Opening project '/home/users/alberto.giusti/FIDELTA/parallel/merge_round'.
 INFO: [HLS 200-10] Adding design file 'merge_round.c' to the project
+INFO: [HLS 200-10] Adding design file 'types.c' to the project
+INFO: [HLS 200-10] Adding design file 'types.h' to the project
 INFO: [HLS 200-10] Adding test bench file 'checkresult.c' to the project
-INFO: [HLS 200-10] Adding test bench file '../serial/src/types.c' to the project
-INFO: [HLS 200-10] Adding test bench file '../serial/src/types.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'types.c' to the project
+INFO: [HLS 200-10] Adding test bench file 'types.h' to the project
 INFO: [HLS 200-10] Opening solution '/home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1'.
 INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 2.7ns.
 INFO: [HLS 200-10] Setting target device to 'xcu200-fsgd2104-2-e'
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
 INFO: [XFORM 203-1161] The maximum of name length is set into 80.
 INFO: [XFORM 203-1172] Optimizing floating point zeros and discarding its signedness.
 INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
 INFO: [XFORM 203-1172] Optimizing floating point zeros and discarding its signedness.
 INFO: [XFORM 203-1173] Reordering floating point operations aggressively.
 INFO: [XFORM 203-1176] Optimizing floating point comparison without checking NaN.
-INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
 INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
 INFO: [XFORM 203-1172] Optimizing floating point zeros and discarding its signedness.
 INFO: [XFORM 203-1172] Optimizing floating point zeros and discarding its signedness.
@@ -25,61 +31,34 @@ INFO: [XFORM 203-1173] Reordering floating point operations aggressively.
 INFO: [XFORM 203-1176] Optimizing floating point comparison without checking NaN.
 INFO: [XFORM 203-1161] The maximum of name length is set into 80.
 INFO: [SCHED 204-61] Option 'relax_ii_for_timing' is enabled, will increase II to preserve clock frequency constraints.
+INFO: [HLS 200-10] Analyzing design file 'types.c' ... 
 INFO: [HLS 200-10] Analyzing design file 'merge_round.c' ... 
-INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147154 ; free virtual = 332761
-INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147154 ; free virtual = 332761
+WARNING: [HLS 200-40] In file included from merge_round.c:1:
+merge_round.c:45:10: warning: passing 'const point *' to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types]
+  memcpy(&pts[0], inpts, 300*sizeof(point));
+         ^~~~~~~
+/usr/include/string.h:42:39: note: passing argument to parameter '__dest' here
+extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+                                      ^
+1 warning generated.
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 77308 ; free virtual = 282702
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 77308 ; free virtual = 282702
 INFO: [HLS 200-10] Starting code transformations ...
-INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147155 ; free virtual = 332762
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:21 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 77281 ; free virtual = 282675
 INFO: [HLS 200-10] Checking synthesizability ...
-INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147155 ; free virtual = 332762
-INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147137 ; free virtual = 332744
-INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147144 ; free virtual = 332751
-INFO: [HLS 200-10] Starting hardware synthesis ...
-INFO: [HLS 200-10] Synthesizing 'in_circle' ...
-INFO: [HLS 200-10] ----------------------------------------------------------------
-INFO: [HLS 200-42] -- Implementing module 'in_circle' 
-INFO: [HLS 200-10] ----------------------------------------------------------------
-INFO: [SCHED 204-11] Starting scheduling ...
-INFO: [SCHED 204-11] Finished scheduling.
-INFO: [HLS 200-111]  Elapsed time: 12.62 seconds; current allocated memory: 114.123 MB.
-INFO: [BIND 205-100] Starting micro-architecture generation ...
-INFO: [BIND 205-101] Performing variable lifetime analysis.
-INFO: [BIND 205-101] Exploring resource sharing.
-INFO: [BIND 205-101] Binding ...
-INFO: [BIND 205-100] Finished micro-architecture generation.
-INFO: [HLS 200-111]  Elapsed time: 0.09 seconds; current allocated memory: 114.457 MB.
-INFO: [HLS 200-10] ----------------------------------------------------------------
-INFO: [HLS 200-10] -- Generating RTL for module 'in_circle' 
-INFO: [HLS 200-10] ----------------------------------------------------------------
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p1_id' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p1_x' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p1_y' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p2_id' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p2_x' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p2_y' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p3_id' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p3_x' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/t_p3_y' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/d_id' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/d_x' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on port 'in_circle/d_y' to 'ap_none'.
-INFO: [RTGEN 206-500] Setting interface mode on function 'in_circle' to 'ap_ctrl_hs'.
-WARNING: [RTGEN 206-101] Port 'in_circle/t_p1_id' has no fanin or fanout and is left dangling.
-               Please use C simulation to confirm this function argument can be read from or written to.
-WARNING: [RTGEN 206-101] Port 'in_circle/t_p2_id' has no fanin or fanout and is left dangling.
-               Please use C simulation to confirm this function argument can be read from or written to.
-WARNING: [RTGEN 206-101] Port 'in_circle/t_p3_id' has no fanin or fanout and is left dangling.
-               Please use C simulation to confirm this function argument can be read from or written to.
-WARNING: [RTGEN 206-101] Port 'in_circle/d_id' has no fanin or fanout and is left dangling.
-               Please use C simulation to confirm this function argument can be read from or written to.
-INFO: [RTGEN 206-100] Generating core module 'in_circle_faddfsub_32ns_32ns_32_2_full_dsp_1': 3 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'in_circle_fcmp_32ns_32ns_1_1_1': 1 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'in_circle_fmul_32ns_32ns_32_2_max_dsp_1': 12 instance(s).
-INFO: [RTGEN 206-100] Generating core module 'in_circle_fsub_32ns_32ns_32_2_full_dsp_1': 3 instance(s).
-INFO: [RTGEN 206-100] Finished creating RTL model for 'in_circle'.
-INFO: [HLS 200-111]  Elapsed time: 0.19 seconds; current allocated memory: 115.170 MB.
-INFO: [HLS 200-789] **** Estimated Fmax: 135.52 MHz
-INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:12 ; elapsed = 00:00:15 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 147148 ; free virtual = 332757
-INFO: [VHDL 208-304] Generating VHDL RTL for in_circle with prefix in_circle_.
-INFO: [VLOG 209-307] Generating Verilog RTL for in_circle with prefix in_circle_.
-INFO: [HLS 200-112] Total elapsed time: 14.63 seconds; peak allocated memory: 115.170 MB.
+INFO: [XFORM 203-602] Inlining function 'in_circle' into 'accel' (merge_round.c:51) automatically.
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:22 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 77317 ; free virtual = 282711
+INFO: [XFORM 203-510] Pipelining loop 'Loop-4' (merge_round.c:50) in function 'accel' automatically.
+ERROR: [XFORM 203-103] Cannot partition array 'printf' : variable is not an array.
+ERROR: [HLS 200-70] Pre-synthesis failed.
+command 'ap_source' returned error code
+    while executing
+"source /home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1/csynth.tcl"
+    invoked from within
+"hls::main /home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1/csynth.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel 1 hls::main {*}$args"
+    (procedure "hls_proc" line 5)
+    invoked from within
+"hls_proc $argv"

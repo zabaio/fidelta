@@ -2,10 +2,12 @@
 <autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
   <source>
     <originFiles name="merge_round.c" path="/home/users/alberto.giusti/FIDELTA/parallel/merge_round.c"/>
+    <originFiles name="types.c" path="/home/users/alberto.giusti/FIDELTA/parallel/types.c"/>
+    <originFiles name="types.h" path="/home/users/alberto.giusti/FIDELTA/parallel/types.h"/>
   </source>
   <testbench>
     <originFiles name="checkresult.c" path="/home/users/alberto.giusti/FIDELTA/parallel/checkresult.c"/>
-    <originFiles name="types.c" path="/home/users/alberto.giusti/FIDELTA/serial/src/types.c"/>
-    <originFiles name="types.h" path="/home/users/alberto.giusti/FIDELTA/serial/src/types.h"/>
+    <originFiles name="types.c" path="/home/users/alberto.giusti/FIDELTA/parallel/types.c"/>
+    <originFiles name="types.h" path="/home/users/alberto.giusti/FIDELTA/parallel/types.h"/>
   </testbench>
 </autopilotfilemapping:AutoPilotFileMapping>

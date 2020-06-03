@@ -6,6 +6,8 @@ CSIM_DESIGN = 1
 
 __SIM_FPO__ = 1
 
+__HLS_FPO_v6_1__ = 1
+
 __SIM_MATHHLS__ = 1
 
 __SIM_OPENCV__ = 1
@@ -18,7 +20,7 @@ __SIM_DDS__ = 1
 
 ObjDir = obj
 
-HLS_SOURCES = ../../../../checkresult.c ../../../../../serial/src/types.c ../../../../merge_round.c
+HLS_SOURCES = ../../../../checkresult.c ../../../../types.c ../../../../merge_round.c
 
 TARGET := csim.exe
 
@@ -46,6 +48,8 @@ IFLAG += -I "${AUTOPILOT_TECH}/generic/SystemC/AESL_FP_comp"
 IFLAG += -I "${AUTOPILOT_TECH}/generic/SystemC/AESL_comp"
 IFLAG += -I "${AUTOPILOT_TOOL}/auto_cc/include"
 IFLAG += -D__SIM_FPO__
+
+IFLAG += -D__HLS_FPO_v6_1__
 
 IFLAG += -D__SIM_OPENCV__
 
@@ -78,8 +82,8 @@ $(ObjDir)/checkresult.o: ../../../../checkresult.c $(ObjDir)/.dir
 
 -include $(ObjDir)/checkresult.d
 
-$(ObjDir)/types.o: ../../../../../serial/src/types.c $(ObjDir)/.dir
-	$(Echo) "   Compiling(apcc) ../../../../../serial/src/types.c in $(BuildMode) mode" $(AVE_DIR_DLOG)
+$(ObjDir)/types.o: ../../../../types.c $(ObjDir)/.dir
+	$(Echo) "   Compiling(apcc) ../../../../types.c in $(BuildMode) mode" $(AVE_DIR_DLOG)
 	$(Verb)  $(AUTOCC) -c -MMD  $(IFLAG) $(DFLAG) $< -o $@ ; \
 
 -include $(ObjDir)/types.d

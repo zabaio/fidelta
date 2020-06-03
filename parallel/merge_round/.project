@@ -37,11 +37,6 @@
 			<location>/home/users/alberto.giusti/FIDELTA/parallel/merge_round/.apc/.tb</location>
 		</link>
 		<link>
-			<name>.reference/types.h</name>
-			<type>1</type>
-			<location>/home/users/alberto.giusti/FIDELTA/parallel/types.h</location>
-		</link>
-		<link>
 			<name>solution1/constraints</name>
 			<type>2</type>
 			<location>/home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1/.tcls</location>
@@ -52,6 +47,16 @@
 			<location>/home/users/alberto.giusti/FIDELTA/parallel/merge_round.c</location>
 		</link>
 		<link>
+			<name>source/types.c</name>
+			<type>1</type>
+			<location>/home/users/alberto.giusti/FIDELTA/parallel/types.c</location>
+		</link>
+		<link>
+			<name>source/types.h</name>
+			<type>1</type>
+			<location>/home/users/alberto.giusti/FIDELTA/parallel/types.h</location>
+		</link>
+		<link>
 			<name>testbench/checkresult.c</name>
 			<type>1</type>
 			<location>/home/users/alberto.giusti/FIDELTA/parallel/checkresult.c</location>
@@ -59,12 +64,12 @@
 		<link>
 			<name>testbench/types.c</name>
 			<type>1</type>
-			<location>/home/users/alberto.giusti/FIDELTA/serial/src/types.c</location>
+			<location>/home/users/alberto.giusti/FIDELTA/parallel/types.c</location>
 		</link>
 		<link>
 			<name>testbench/types.h</name>
 			<type>1</type>
-			<location>/home/users/alberto.giusti/FIDELTA/serial/src/types.h</location>
+			<location>/home/users/alberto.giusti/FIDELTA/parallel/types.h</location>
 		</link>
 		<link>
 			<name>solution1/constraints/.xml.directive</name>

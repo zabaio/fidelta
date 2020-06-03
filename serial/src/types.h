@@ -3,6 +3,9 @@
 
 #include "uthash.h"
 
+#define DIM 300
+#define MAX_QUERY 100
+
 typedef struct{
     int id;
     float x,y;

@@ -1,6 +1,20 @@
 INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/apcc'
-INFO: [HLS 200-10] For user 'alberto.giusti' on host 'NAGS21' (Linux_x86_64 version 3.10.0-862.14.4.el7.x86_64) on Sat May 16 20:27:13 CEST 2020
+INFO: [HLS 200-10] For user 'alberto.giusti' on host 'NAGS21' (Linux_x86_64 version 3.10.0-862.14.4.el7.x86_64) on Wed Jun 03 15:30:38 CEST 2020
 INFO: [HLS 200-10] On os "CentOS Linux release 7.7.1908 (Core)"
 INFO: [HLS 200-10] In directory '/home/users/alberto.giusti/FIDELTA/parallel/merge_round/solution1/csim/build'
-INFO: [APCC 202-3] Tmp directory is /tmp/apcc_db_alberto.giusti/175851589653633333486
+../../../../merge_round.c:45:10: warning: passing 'const point *' to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types]
+                memcpy(&pts[0], inpts, DIM*sizeof(point));
+                       ^~~~~~~
+/usr/include/string.h:42:39: note: passing argument to parameter '__dest' here
+extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+                                      ^
+1 warning generated.
+../../../../merge_round.c:45:10: warning: passing 'const point *' to parameter of type 'void *' discards qualifiers [-Wincompatible-pointer-types]
+                memcpy(&pts[0], inpts, DIM*sizeof(point));
+                       ^~~~~~~
+/usr/include/string.h:42:39: note: passing argument to parameter '__dest' here
+extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+                                      ^
+1 warning generated.
+INFO: [APCC 202-3] Tmp directory is /tmp/apcc_db_alberto.giusti/240051591191038689408
 INFO: [APCC 202-1] APCC is done.
