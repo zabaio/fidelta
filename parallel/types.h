@@ -2,7 +2,7 @@
 #define TYPES_H_INCLUDED
 
 #define DIM 300
-#define MAX_QUERY 100
+#define MAXQUERY 100
 
 typedef struct{
     int id;

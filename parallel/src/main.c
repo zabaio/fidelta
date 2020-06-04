@@ -7,9 +7,77 @@
 #include "types.h"
 #include "display.h"
 
+#ifndef MAXQUERY
+    #define MAXQUERY 2
+#endif
+#ifndef PTSLIM
+    #define PTSLIM 300000
+#endif
+
+
+int in_circle(const point *p1,const point *p2,const point *p3 ,const point *d){
+
+    float xda = p1->x - d->x;
+    float xdb = p2->x - d->x;
+    float xdc = p3->x - d->x;
+    float yda = p1->y - d->y;
+    float ydb = p2->y - d->y;
+    float ydc = p3->y - d->y;
+    float da2da2 = xda*xda + yda*yda;
+    float db2db2 = xdb*xdb + ydb*ydb;
+    float dc2dc2 = xdc*xdc + ydc*ydc;
+
+    // calcolo i minimi complementari
+    float min1 = xdb*ydc - xdc*ydb;
+    float min2 = xda*ydc - xdc*yda;
+    float min3 = xda*ydb - xdb*yda;
+
+    float det = da2da2*min1 - db2db2*min2 + dc2dc2*min3;
+    return (det>0);
+}
+
+void accel_in_circle(int init, point *inpts, int *indata){
+
+    #pragma HLS INTERFACE m_axi port=inpts offset=slave bundle=gmem0
+	#pragma HLS INTERFACE m_axi port=indata offset=slave bundle=gmem0
+    #pragma HLS INTERFACE m_axi port=outresult offset=slave bundle=gmem0
+
+	#pragma HLS INTERFACE s_axilite port=init bundle=control
+	#pragma HLS INTERFACE s_axilite port=inpts bundle=control
+	#pragma HLS INTERFACE s_axilite port=indata bundle=control
+	#pragma HLS INTERFACE s_axilite port=outresult bundle=control
+	#pragma HLS INTERFACE s_axilite port=return bundle=control
+
+	static point pts[PTSLIM + 3];
+	#pragma HLS array_partition variable=points complete dim=1
+
+	if (init == 1){
+
+		memcpy(&pts[0], inpts, (PTSLIM + 3)*sizeof(point));
+
+	}
+	else{
+		int data[4][MAXQUERY];
+
+		memcpy(&data[0][0], indata, 4*MAXQUERY*sizeof(int));
+
+		int i;
+		for (i = 0; i < MAXQUERY; i++){
+			if (data[0][i] != -1 && in_circle(&pts[data[1][i]], &pts[data[2][i]], &pts[data[3][i]], &pts[data[0][i]]))
+				data[0][i] = pts[data[0][i]].id;
+			else
+				data[0][i] = -1;
+		}
+		memcpy(indata, data, MAXQUERY*sizeof(int));
+	}
+	return;
+}
+
+
+
 // Creates and adds the list of points encroaching triangle "son":
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
-void merge (t_node *father, int *fid, t_node *uncle, int *uid, int *accel_data[MAX_QUERY], int *bookmark);
+void merge (t_node *father, int *fid, t_node *uncle, int *uid, int accel_data[][MAXQUERY], int *bookmark);
 
 int main(int argc, char *argv[])
 {
@@ -124,7 +192,9 @@ int main(int argc, char *argv[])
     }
 
     fclose (node);
-    
+
+    accel_in_circle(1, pts, NULL);
+
     // Initialization of the hash table segs
     // It stores every segment generated, hashed on the points ids,
     // and their (up to two) adjacent triangle
@@ -145,9 +215,9 @@ int main(int argc, char *argv[])
     act_node *acts = NULL;
     act_node *nextround = NULL;
 
-    push_act (&acts, segs, tris->t.p1, tris->t.p2, tris);
-    push_act (&acts, segs, tris->t.p2, tris->t.p3, tris);
-    push_act (&acts, segs, tris->t.p3, tris->t.p1, tris);
+    push_act (&nextround, segs, tris->t.p1, tris->t.p2, tris);
+    push_act (&nextround, segs, tris->t.p2, tris->t.p3, tris);
+    push_act (&nextround, segs, tris->t.p3, tris->t.p1, tris);
     
     // Initialization is over, we start timing the construction
 
@@ -177,31 +247,31 @@ int main(int argc, char *argv[])
             act_node *aprobe = acts;
             t_node *tprobe = tris;
 
+            push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]); 
+            
+            int alldim = 0;
+            if(aprobe->act->tfirst != NULL)
+                alldim += aprobe->act->tfirst->dim;
+            if(aprobe->act->tsecond != NULL)
+                alldim += aprobe->act->tsecond->dim;
+            tprobe->enc = malloc(alldim*sizeof(point));
+            
+            int fid = 1, uid = 0;
             while (aprobe != NULL){
                 
-                int accel_data[4][MAX_QUERY];
+                int accel_data[4][MAXQUERY];
                 int bookmark = 0;
                 int ndone;
-                int complete = 1;
-                int fid = 1, uid = 0;
-                t_node *data_ref[MAX_QUERY];
+                int complete;
+                t_node *data_ref[MAXQUERY];
 
-                while (bookmark < MAX_QUERY || aprobe == NULL){
-                    
-                    if (complete){
-                        push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]);
-                    
-                        int alldim = 0;
-                        if(aprobe->act->tfirst != NULL)
-                            alldim += aprobe->act->tfirst->dim;
-                        if(aprobe->act->tsecond != NULL)
-                            alldim += aprobe->act->tsecond->dim;
-                        tprobe->enc = malloc(alldim*sizeof(point));
-                    }
+                while (bookmark < MAXQUERY && aprobe != NULL){
 
-                    merge (&aprobe->father, &fid, &aprobe->uncle, &uid, accel_data, &bookmark);
-                    
-                    if (fid + uid < aprobe->father->dim + aprobe->uncle->dim)
+                    ndone = bookmark;
+                    merge (aprobe->father, &fid, aprobe->uncle, &uid, accel_data, &bookmark);
+                    ndone = bookmark - ndone;
+
+                    if (fid + uid < alldim)
                         complete = 0;
                     else{
                         complete = 1;
@@ -209,29 +279,59 @@ int main(int argc, char *argv[])
                         uid = 0;
                     }
 
-                    for (i = 0; i < ndone; i++){
-                        data_ref[bookmark + i] = tprobe;
-                        accel_data[1][bookmark + i] = tprobe->t.p1.id;
-                        accel_data[2][bookmark + i] = tprobe->t.p2.id;
-                        accel_data[3][bookmark + i] = tprobe->t.p3.id;
+                    for (i = 1; i <= ndone; i++){
+                        data_ref[bookmark - i] = tprobe;
+                        accel_data[1][bookmark - i] = tprobe->t.p1.id;
+                        accel_data[2][bookmark - i] = tprobe->t.p2.id;
+                        accel_data[3][bookmark - i] = tprobe->t.p3.id;
+                    }
+
+                    if (complete){
+                        aprobe = aprobe->next;
+                        if (aprobe != NULL){
+                            push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]);
+                        
+                            alldim = 0;
+                            if(aprobe->act->tfirst != NULL)
+                                alldim += aprobe->act->tfirst->dim;
+                            if(aprobe->act->tsecond != NULL)
+                                alldim += aprobe->act->tsecond->dim;
+                            tprobe->enc = malloc(alldim*sizeof(point));
+                        }
                     }
 
                 }
 
-                for(; bookmark < MAX_QUERY; bookmark ++){
+                for(; bookmark < MAXQUERY; bookmark ++){
                     accel_data[0][bookmark] = -1;
                 }
                         
-                accel_in_circle (0, NULL, accel_data);
+                accel_in_circle (0, NULL, accel_data[0]);
                 
-                for (i = 0; i < MAX_QUERY; i++){
+                #ifdef DEBUG
+                    printf("Prima\n");
+                    print_tris_id(tprobe);
+                #endif
+
+                for (i = 0; i < MAXQUERY; i++){
                     if (accel_data[0][i] != -1){
                         data_ref[i]->enc[data_ref[i]->dim] = pts[accel_data[0][i]];
                         data_ref[i]->dim ++;
                     }
                 }
+
+                #ifdef DEBUG
+                    printf("Dopo\n");
+                    print_tris_id(tprobe);
+                #endif
+            
                 
             }
+
+            #ifdef DEBUG
+                print_tris_id(tprobe);
+            #endif
+
         }
 
         #ifdef LOG
@@ -242,6 +342,7 @@ int main(int argc, char *argv[])
             printf("\nAttivo: %d %d\n", acts->act->seg.a.id, acts->act->seg.b.id);
         #endif
         
+        tris = tris->prev;
         t_node *encroached = NULL;
 
         #ifdef DEBUG
@@ -363,19 +464,25 @@ int main(int argc, char *argv[])
     else
         printf ("Generated %d triangles: Incorrect\n", soldim);
 
+
+    int b =MAXQUERY;
+    printf ("%d\n", b);
     return 0;
 }
 
-void merge (t_node *father, int *fid, t_node *uncle, int *uid, int *accel_data[MAX_QUERY], int *bookmark){
+void merge (t_node *father, int *infid, t_node *uncle, int *inuid, int accel_data[][MAXQUERY], int *inbookmark){
 
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
     point *fenc = father->enc;
+    int fid = *infid;
+    int uid = *inuid;
+    int bookmark = *inbookmark;
     
     if (uncle == NULL){
-        for(; *fid < father->dim || bookmark == MAX_QUERY; *fid++){
-            accel_data[0][*bookmark] = fenc[*fid].id;
-            *bookmark ++;
+        for(; fid < father->dim && bookmark < MAXQUERY; fid++){
+            accel_data[0][bookmark] = fenc[fid].id;
+            (bookmark) ++;
         }
     }
     else{
@@ -383,28 +490,32 @@ void merge (t_node *father, int *fid, t_node *uncle, int *uid, int *accel_data[M
         // If uncle exists we merge its and father's encroaching point lists
         // and add it to son, while maintaining the order of the ids
         point *uenc = uncle->enc;
-        while (*fid < father->dim || *uid < uncle->dim){
+        while ((fid < father->dim || uid < uncle->dim) && bookmark < MAXQUERY){
             
-            if (*uid == uncle->dim || (*fid < father->dim && fenc[*fid].id < uenc[*uid].id)){
-                accel_data[0][*bookmark] = fenc[*fid].id;
-                *bookmark ++;
-                *fid ++;
+            if (uid == uncle->dim || (fid < father->dim && fenc[fid].id < uenc[uid].id)){
+                accel_data[0][bookmark] = fenc[fid].id;
+                bookmark ++;
+                fid ++;
             }
             
-            else if (*fid == father->dim || (*uid < uncle->dim && uenc[*uid].id < fenc[*fid].id)){
-                accel_data[0][*bookmark] = uenc[*uid].id;
-                *bookmark ++;
-                *uid ++;
+            else if (fid == father->dim || (uid < uncle->dim && uenc[uid].id < fenc[fid].id)){
+                accel_data[0][bookmark] = uenc[uid].id;
+                bookmark ++;
+                uid ++;
             }
 
-            else if (*fid < father->dim && *uid < uncle->dim && fenc[*fid].id == uenc[*uid].id){
-                accel_data[0][*bookmark] = fenc[*fid].id;
-                *bookmark ++;
-                *uid ++;
-                *fid ++;
+            else if (fid < father->dim && uid < uncle->dim && fenc[fid].id == uenc[uid].id){
+                accel_data[0][bookmark] = fenc[fid].id;
+                (bookmark) ++;
+                (uid) ++;
+                (fid) ++;
             }
         }
     }
+
+    *infid = fid;
+    *inuid = uid;
+    *inbookmark = bookmark;
     return;
 }
 

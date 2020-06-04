@@ -5,7 +5,13 @@
 
 #ifndef RESPATHNOEXT
     #define RESPATHNOEXT "result"
-#endif 
+#endif
+#ifndef CORLIM
+    #define CORLIM 200000000
+#endif
+#ifndef PTSLIM
+    #define PTSLIM 300000
+#endif
 
 //--------------------------------------//
 //  Input output and user interaction   //

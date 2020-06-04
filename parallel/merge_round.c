@@ -44,19 +44,19 @@ void accel(int *init, point *inpts, int *indata, int *outresult){
 
 	}
 	else{
-		int data[4][MAX_QUERY];
-		int result[MAX_QUERY];
+		int data[4][MAXQUERY];
+		int result[MAXQUERY];
 
-		memcpy(&data[0][0], indata, 4*MAX_QUERY*sizeof(int));
+		memcpy(&data[0][0], indata, 4*MAXQUERY*sizeof(int));
 
 		int i;
-		for (i = 0; i < MAX_QUERY; i++){
+		for (i = 0; i < MAXQUERY; i++){
 			if (in_circle(&pts[data[1][i]], &pts[data[2][i]], &pts[data[3][i]], &pts[data[0][i]]))
 				result[i] = pts[data[0][i]].id;
 			else
 				result[i] = -1;
 		}
-		memcpy(outresult, result, MAX_QUERY*sizeof(int));
+		memcpy(outresult, result, MAXQUERY*sizeof(int));
 	}
 	return;
 }

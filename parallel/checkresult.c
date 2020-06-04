@@ -49,8 +49,8 @@ int main(){
 		set_t(&t[i], pts[r_1], pts[r_2], pts[r_3]);
 	}
 
-	int data[4][MAX_QUERY];
-	for (i = 0; i<MAX_QUERY; i++){
+	int data[4][MAXQUERY];
+	for (i = 0; i<MAXQUERY; i++){
 		r_1 = rand() % DIM;
 		r_2 = rand() % 3;
 		data[0][i] = pts[r_1].id;
@@ -63,8 +63,8 @@ int main(){
 	accel (&init, pts, NULL, NULL);
 	init = 0;
 
-	int result[MAX_QUERY], inresult[MAX_QUERY];
-	for (i = 0; i<MAX_QUERY; i++){
+	int result[MAXQUERY], inresult[MAXQUERY];
+	for (i = 0; i<MAXQUERY; i++){
 		triangle dummy;
 		set_t(&dummy, pts[data[1][i]], pts[data[2][i]], pts[data[3][i]]);
 		if (in_circle_seq(&dummy, &pts[i])){
@@ -77,7 +77,7 @@ int main(){
 	accel (&init, NULL, data[0], inresult);
 
 	/*
-	for (i = 0; i < MAX_QUERY; i++){
+	for (i = 0; i < MAXQUERY; i++){
 		if (inresult[i] != result[i]){
 			printf ("ERROR\n");
 			return 0;

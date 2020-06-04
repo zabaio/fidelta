@@ -3,12 +3,6 @@
 
 #include "uthash.h"
 
-#define MAX_QUERY 1000
-#define CORLIM 200000000
-#ifndef PTSLIM
-    #define PTSLIM 300000
-#endif
-
 typedef struct{
     int id;
     float x,y;
@@ -32,6 +26,7 @@ typedef struct{
 typedef struct t_node{
     triangle t;
     struct t_node *next;
+    struct t_node *prev;
     int dim;
     point *enc;
 } t_node;                     
