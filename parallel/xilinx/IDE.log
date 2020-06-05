@@ -1,0 +1,7 @@
+10:10:05 INFO  : Launching XSCT server: xsct -n  -interactive /home/users/alberto.giusti/FIDELTA/parallel/xilinx/temp_xsdb_launch_script.tcl
+10:10:09 INFO  : XSCT server has started successfully.
+10:10:09 INFO  : plnx-install-location is set to ''
+10:10:09 INFO  : Successfully done setting XSCT server connection channel  
+10:10:10 INFO  : Successfully done setting workspace for the tool. 
+10:10:10 INFO  : Successfully done query RDI_DATADIR 
+10:10:11 INFO  : Registering command handlers for Vitis TCF services

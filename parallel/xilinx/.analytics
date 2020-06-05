@@ -1,0 +1,9 @@
+timestamp=[2020-06-05 09:42:51], mode=WORKBENCH_START, duration=0:00:04.407, duration_ms=4407, data={}
+timestamp=[2020-06-05 09:42:56], mode=WORKBENCH_UI_INIT, duration=0:00:05.521, duration_ms=5521, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
+timestamp=[2020-06-05 09:55:14], mode=APP_CREATION, duration=0:00:03.406, duration_ms=3406, data={name=fidelta, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u200_xdma_201830_2, application_type=application}
+timestamp=[2020-06-05 09:58:35], mode=WORKBENCH_START, duration=0:00:22.023, duration_ms=22023, data={}
+timestamp=[2020-06-05 09:58:38], mode=WORKBENCH_UI_INIT, duration=0:00:02.449, duration_ms=2449, data={editors_count=2, platform_editors_count=0, projects_count=3, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,fidelta,fidelta_system}
+timestamp=[2020-06-05 10:10:03], mode=WORKBENCH_START, duration=0:00:07.482, duration_ms=7482, data={}
+timestamp=[2020-06-05 10:10:05], mode=WORKBENCH_UI_INIT, duration=0:00:02.153, duration_ms=2153, data={editors_count=0, platform_editors_count=0, projects_count=1, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles}
+timestamp=[2020-06-05 10:10:50], mode=APP_CREATION, duration=0:00:02.886, duration_ms=2886, data={name=fidelta, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u200_xdma_201830_2, application_type=application}
+timestamp=[2020-06-05 10:33:48], mode=APP_CREATION, duration=0:00:01.824, duration_ms=1824, data={name=fidelta, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u200_xdma_201830_2, application_type=application}

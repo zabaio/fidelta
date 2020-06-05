@@ -1,0 +1,44 @@
+Fri Jun  5 10:10:07 2020: Server was asked to start on port: '42452'
+Fri Jun  5 10:10:07 2020: Server is using token UUID: '633918bb-5528-401d-9acb-9202e0123f92'
+Fri Jun  5 10:10:07 2020: Attempting to start server on port '42452'
+Fri Jun  5 10:10:07 2020: XRC main fifo: created main fifo '/tmp/xrcmain633918bb-5528-401d-9acb-9202e0123f92', fd read = 11
+Fri Jun  5 10:10:07 2020: Running Rule Check Server
+Fri Jun  5 10:10:07 2020: Version 1.5.1
+Fri Jun  5 10:10:08 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 10:10:08 2020: EXCHANGE_TOKEN received, server token: 633918bb-5528-401d-9acb-9202e0123f92, passed token: 633918bb-5528-401d-9acb-9202e0123f92
+Fri Jun  5 10:10:49 2020: SESSION_MGR: creating session with session uuid: 'c15f7a0a-6f7c-4400-a779-b0de64adab68' and name 'Emulation-SW'
+Fri Jun  5 10:10:49 2020: SESSION_MGR: closing session for UUID 'c15f7a0a-6f7c-4400-a779-b0de64adab68' with name 'Emulation-SW'
+Fri Jun  5 10:10:49 2020: SESSION_MGR: creating session with session uuid: '49cb4e67-19d1-4e1f-9d99-a197fc249489' and name 'Emulation-HW'
+Fri Jun  5 10:10:50 2020: SESSION_MGR: closing session for UUID '49cb4e67-19d1-4e1f-9d99-a197fc249489' with name 'Emulation-HW'
+Fri Jun  5 10:10:50 2020: SESSION_MGR: creating session with session uuid: '1f534e76-6f24-4e9e-9b46-ea9eacc27434' and name 'Hardware'
+Fri Jun  5 10:10:50 2020: SESSION_MGR: closing session for UUID '1f534e76-6f24-4e9e-9b46-ea9eacc27434' with name 'Hardware'
+Fri Jun  5 10:33:47 2020: SESSION_MGR: creating session with session uuid: '56728076-1d55-4772-9dd4-a60098357bf7' and name 'Emulation-SW'
+Fri Jun  5 10:33:48 2020: SESSION_MGR: closing session for UUID '56728076-1d55-4772-9dd4-a60098357bf7' with name 'Emulation-SW'
+Fri Jun  5 10:33:48 2020: SESSION_MGR: creating session with session uuid: '02214aef-1898-41eb-a999-22808617d174' and name 'Emulation-HW'
+Fri Jun  5 10:33:48 2020: SESSION_MGR: closing session for UUID '02214aef-1898-41eb-a999-22808617d174' with name 'Emulation-HW'
+Fri Jun  5 10:33:48 2020: SESSION_MGR: creating session with session uuid: 'f510bd72-93aa-4622-9b35-2a78c47493d7' and name 'Hardware'
+Fri Jun  5 10:33:48 2020: SESSION_MGR: closing session for UUID 'f510bd72-93aa-4622-9b35-2a78c47493d7' with name 'Hardware'
+Fri Jun  5 10:47:04 2020: SESSION_MGR: creating session with session uuid: '9be72c0c-ee6d-4d56-b029-7d3c3dbdcfe4' and name 'Hardware'
+Fri Jun  5 10:47:04 2020: SESSION_MGR: closing session for UUID '9be72c0c-ee6d-4d56-b029-7d3c3dbdcfe4' with name 'Hardware'
+Fri Jun  5 10:47:04 2020: SESSION_MGR: creating session with session uuid: '642838aa-f6fb-4f12-9525-2134968f6c33' and name 'Hardware'
+Fri Jun  5 10:47:09 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 10:47:37 2020: SESSION_MGR: closing session for UUID '642838aa-f6fb-4f12-9525-2134968f6c33' with name 'Hardware'
+Fri Jun  5 10:49:06 2020: SESSION_MGR: creating session with session uuid: '3932eb27-44d5-4bf2-b4ab-30b5241f4424' and name 'Hardware'
+Fri Jun  5 10:49:11 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 10:49:39 2020: SESSION_MGR: closing session for UUID '3932eb27-44d5-4bf2-b4ab-30b5241f4424' with name 'Hardware'
+Fri Jun  5 10:54:32 2020: SESSION_MGR: creating session with session uuid: '6f3f9f6b-8d17-4a1f-a930-f4aa9ad2375b' and name 'Hardware'
+Fri Jun  5 10:54:37 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 10:55:06 2020: SESSION_MGR: closing session for UUID '6f3f9f6b-8d17-4a1f-a930-f4aa9ad2375b' with name 'Hardware'
+Fri Jun  5 10:58:59 2020: SESSION_MGR: creating session with session uuid: '9cfbfc1f-f4ec-44e0-8e48-be7f51070e4f' and name 'Hardware'
+Fri Jun  5 10:59:04 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 10:59:43 2020: SESSION_MGR: closing session for UUID '9cfbfc1f-f4ec-44e0-8e48-be7f51070e4f' with name 'Hardware'
+Fri Jun  5 11:13:32 2020: SESSION_MGR: creating session with session uuid: '6f66c9af-a488-47d9-828e-22dc698abea1' and name 'Hardware'
+Fri Jun  5 11:13:37 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 11:14:15 2020: SESSION_MGR: closing session for UUID '6f66c9af-a488-47d9-828e-22dc698abea1' with name 'Hardware'
+Fri Jun  5 11:14:41 2020: SESSION_MGR: creating session with session uuid: '52e0079c-ee35-44f3-8258-b18829a58c74' and name 'Hardware'
+Fri Jun  5 11:14:46 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 11:26:00 2020: Rule Check Server: Accepted socket connection from client
+Fri Jun  5 11:46:28 2020: SESSION_MGR: closing session for UUID '52e0079c-ee35-44f3-8258-b18829a58c74' with name 'Hardware'
+Fri Jun  5 15:31:39 2020: STOP_SERVER received, server token: 633918bb-5528-401d-9acb-9202e0123f92, passed token: 633918bb-5528-401d-9acb-9202e0123f92
+Fri Jun  5 15:31:39 2020: Socket received request to stop server.
+Fri Jun  5 15:31:39 2020: SERVER: destructor for server bound to port 42452

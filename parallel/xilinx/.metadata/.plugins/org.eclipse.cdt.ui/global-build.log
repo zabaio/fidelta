@@ -1,0 +1,22 @@
+11:14:41 **** Incremental Build of configuration Hardware for project fidelta ****
+make -j40 incremental 
+/opt/Xilinx/Vitis/2019.2/bin/v++ --target hw --compile -I"../src" --config common-config.ini --config binary_container_1-accel_in_circle-compile.ini -o"binary_container_1.build/accel_in_circle.xo" "../src/incircle.c"
+Option Map File Used: '/opt/Xilinx/Vitis/2019.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/reports/accel_in_circle
+	Log files: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/logs/accel_in_circle
+Running Dispatch Server on port:39942
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/accel_in_circle.xo.compile_summary, at Fri Jun  5 11:14:46 2020
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Jun  5 11:14:46 2020
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u200_xdma_201830_2/xilinx_u200_xdma_201830_2.xpfm
+INFO: [v++ 60-1578]   This platform contains Device Support Archive '/opt/xilinx/platforms/xilinx_u200_xdma_201830_2/hw/xilinx_u200_xdma_201830_2.dsa'
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u200_xdma_201830_2
+INFO: [v++ 60-242] Creating kernel: 'accel_in_circle'
+make: *** [binary_container_1.build/accel_in_circle.xo] Terminated
+Command canceled
