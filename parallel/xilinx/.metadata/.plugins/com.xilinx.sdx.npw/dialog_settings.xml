@@ -6,7 +6,7 @@
 	<item value="1" key="sdx.device.count"/>
 	<item value="false" key="sdx.is.shared.library"/>
 	<item value="OpenCL" key="sdx.runtime"/>
-	<item value="fidelta" key="sdx.project.name"/>
+	<item value="kertest" key="sdx.project.name"/>
 	<item value="linux" key="sdx.os"/>
 	<item value="config0_0" key="sdx.system.configuration"/>
 </section>

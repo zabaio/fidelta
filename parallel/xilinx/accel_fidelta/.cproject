@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+    	
+    <storageModule moduleId="org.eclipse.cdt.core.settings">
+        		
+        <cconfiguration id="com.xilinx.accelerated.config.sw_emu.2025508376">
+            			
+            <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.xilinx.accelerated.config.sw_emu.2025508376" moduleId="org.eclipse.cdt.core.settings" name="Emulation-SW">
+                				
+                <externalSettings/>
+                				
+                <extensions>
+                    					
+                    <extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="com.xilinx.accelerated.managedbuild.VppErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    				
+                </extensions>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+                				
+                <configuration buildArtefactType="com.xilinx.accelerated.buildArtefactType.hostExe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.xilinx.accelerated.buildArtefactType.hostExe" description="" id="com.xilinx.accelerated.config.sw_emu.2025508376" name="Emulation-SW" parent="com.xilinx.accelerated.config.sw_emu">
+                    					
+                    <folderInfo id="com.xilinx.accelerated.config.sw_emu.2025508376." name="/" resourcePath="">
+                        						
+                        <toolChain id="com.xilinx.accelerated.toolchain.sw_emu.debug.92289776" name="Xilinx Accelerated Toolchain (x86_64)" superClass="com.xilinx.accelerated.toolchain.sw_emu.debug">
+                            							
+                            <option id="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug.264075070" name="Enable debugging by default for kernel code" superClass="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug"/>
+                            							
+                            <targetPlatform id="com.xilinx.accelerated.config.sw_emu.2025508376..762394839" name=""/>
+                            							
+                            <builder buildPath="${workspace_loc:/accel_fidelta}/Emulation-SW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1725829270" managedBuildOn="true" name="Xilinx V++ Builder.Emulation-SW" superClass="com.xilinx.accelerated.make_builder"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_compiler.316765080" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
+                                								
+                                <inputType id="com.xilinx.accelerated.toolchain.hw_compiler.input.cl.725752187" name="OpenCL files" superClass="com.xilinx.accelerated.toolchain.hw_compiler.input.cl"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.1539012800" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.2122451596" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" value="/home/users/alberto.giusti/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.emconfigutil.438875498" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.sw_emu.debug.31012214" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.sw_emu.debug">
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.cpp.435553086" superClass="com.xilinx.accelerated.managedbuild.input.cpp"/>
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.c.894068506" superClass="com.xilinx.accelerated.managedbuild.input.c"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_linker.hw.1545064907" name="GCC Host Linker (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_linker.hw">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.509454988" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+                                    									
+                                    <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+                                    									
+                                    <additionalInput kind="additionalinput" paths="$(LIBS)"/>
+                                    								
+                                </inputType>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    				
+                </configuration>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+            		
+        </cconfiguration>
+        		
+        <cconfiguration id="com.xilinx.accelerated.config.hw_emu.1161616110">
+            			
+            <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.xilinx.accelerated.config.hw_emu.1161616110" moduleId="org.eclipse.cdt.core.settings" name="Emulation-HW">
+                				
+                <externalSettings/>
+                				
+                <extensions>
+                    					
+                    <extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="com.xilinx.accelerated.managedbuild.VppErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    				
+                </extensions>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+                				
+                <configuration buildArtefactType="com.xilinx.accelerated.buildArtefactType.hostExe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.xilinx.accelerated.buildArtefactType.hostExe" description="" id="com.xilinx.accelerated.config.hw_emu.1161616110" name="Emulation-HW" parent="com.xilinx.accelerated.config.hw_emu">
+                    					
+                    <folderInfo id="com.xilinx.accelerated.config.hw_emu.1161616110." name="/" resourcePath="">
+                        						
+                        <toolChain id="com.xilinx.accelerated.toolchain.hw_emu.debug.1560167102" name="Xilinx Accelerated Toolchain (x86_64)" superClass="com.xilinx.accelerated.toolchain.hw_emu.debug">
+                            							
+                            <option id="com.xilinx.accelerated.toolchain.hw_emu.debug.option.kernel_debug.1424367626" name="Enable debugging by default for kernel code" superClass="com.xilinx.accelerated.toolchain.hw_emu.debug.option.kernel_debug"/>
+                            							
+                            <targetPlatform id="com.xilinx.accelerated.config.hw_emu.1161616110..1136737158" name=""/>
+                            							
+                            <builder buildPath="${workspace_loc:/accel_fidelta}/Emulation-HW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1640398085" managedBuildOn="true" name="Xilinx V++ Builder.Emulation-HW" superClass="com.xilinx.accelerated.make_builder"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_compiler.2032527140" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
+                                								
+                                <inputType id="com.xilinx.accelerated.toolchain.hw_compiler.input.cl.539935273" name="OpenCL files" superClass="com.xilinx.accelerated.toolchain.hw_compiler.input.cl"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.1054199727" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.129617414" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" value="/home/users/alberto.giusti/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.emconfigutil.1861200764" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.hw_emu.debug.125621708" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.hw_emu.debug">
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.cpp.1528869053" superClass="com.xilinx.accelerated.managedbuild.input.cpp"/>
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.c.2069697549" superClass="com.xilinx.accelerated.managedbuild.input.c"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_linker.hw.639165521" name="GCC Host Linker (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_linker.hw">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1887698591" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+                                    									
+                                    <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+                                    									
+                                    <additionalInput kind="additionalinput" paths="$(LIBS)"/>
+                                    								
+                                </inputType>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    				
+                </configuration>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+            		
+        </cconfiguration>
+        		
+        <cconfiguration id="com.xilinx.accelerated.config.hw.1928007747">
+            			
+            <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.xilinx.accelerated.config.hw.1928007747" moduleId="org.eclipse.cdt.core.settings" name="Hardware">
+                				
+                <externalSettings/>
+                				
+                <extensions>
+                    					
+                    <extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="com.xilinx.accelerated.managedbuild.VppErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+                    					
+                    <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+                    				
+                </extensions>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+                				
+                <configuration artifactName="${ProjName}" buildArtefactType="com.xilinx.accelerated.buildArtefactType.hostExe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.xilinx.accelerated.buildArtefactType.hostExe" cleanCommand="rm -rf" description="" id="com.xilinx.accelerated.config.hw.1928007747" name="Hardware" parent="com.xilinx.accelerated.config.hw">
+                    					
+                    <folderInfo id="com.xilinx.accelerated.config.hw.1928007747." name="/" resourcePath="">
+                        						
+                        <toolChain id="com.xilinx.accelerated.toolchain.hw.1333887175" name="Xilinx Accelerated Toolchain (x86_64)" superClass="com.xilinx.accelerated.toolchain.hw">
+                            							
+                            <targetPlatform id="com.xilinx.accelerated.config.hw.1928007747..1814251750" name=""/>
+                            							
+                            <builder buildPath="${workspace_loc:/accel_fidelta}/Hardware" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.666563200" managedBuildOn="true" name="Xilinx V++ Builder.Hardware" superClass="com.xilinx.accelerated.make_builder"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_compiler.658140974" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
+                                								
+                                <inputType id="com.xilinx.accelerated.toolchain.hw_compiler.input.cl.1645977768" name="OpenCL files" superClass="com.xilinx.accelerated.toolchain.hw_compiler.input.cl"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.1655394273" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.1533242856" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" value="/home/users/alberto.giusti/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.emconfigutil.288202569" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.hw.938317409" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.hw">
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.cpp.781761115" superClass="com.xilinx.accelerated.managedbuild.input.cpp"/>
+                                								
+                                <inputType id="com.xilinx.accelerated.managedbuild.input.c.1973499926" superClass="com.xilinx.accelerated.managedbuild.input.c"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="com.xilinx.accelerated.toolchain.gcc_linker.hw.433076565" name="GCC Host Linker (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_linker.hw">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1002224817" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+                                    									
+                                    <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+                                    									
+                                    <additionalInput kind="additionalinput" paths="$(LIBS)"/>
+                                    								
+                                </inputType>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    				
+                </configuration>
+                			
+            </storageModule>
+            			
+            <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+            		
+        </cconfiguration>
+        	
+    </storageModule>
+    	
+    <storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+    	
+    <storageModule moduleId="cdtBuildSystem" version="4.0.0">
+        		
+        <project id="accel_fidelta.com.xilinx.accelerated.project.232367113" name="Xilinx Accelerated Project (x86_64)" projectType="com.xilinx.accelerated.project"/>
+        	
+    </storageModule>
+    	
+    <storageModule moduleId="scannerConfiguration">
+        		
+        <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+        	
+    </storageModule>
+    	
+    <storageModule moduleId="refreshScope"/>
+    
+</cproject>

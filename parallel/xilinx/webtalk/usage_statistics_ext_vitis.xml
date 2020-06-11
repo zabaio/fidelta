@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<webTalkData  fileName='usage_statistics_ext_vitis.xml'  majorVersion='1' minorVersion='0' timeStamp='Fri Jun  5 15:31:40 2020'>
+<webTalkData  fileName='usage_statistics_ext_vitis.xml'  majorVersion='1' minorVersion='0' timeStamp='Wed Jun 10 12:42:50 2020'>
 <section name="__ROOT__" level="0" order="1" description="">
  <section name="software_version_and_target_device" level="1" order="1" description="">
   <keyValuePair key="beta" value="false" description="" />
   <keyValuePair key="build_version" value="2019.2" description="" />
-  <keyValuePair key="date_generated" value="2020-06-05 15:31:38" description="" />
+  <keyValuePair key="date_generated" value="2020-06-10 12:42:47" description="" />
   <keyValuePair key="os_platform" value="amd64" description="" />
   <keyValuePair key="product_version" value="Vitis v2019.2" description="" />
-  <keyValuePair key="project_id" value="2019.2_2" description="" />
-  <keyValuePair key="project_iteration" value="2" description="" />
-  <keyValuePair key="random_id" value="90rob5t5jipus65kqu8prf58aq" description="" />
+  <keyValuePair key="project_id" value="2019.2_5" description="" />
+  <keyValuePair key="project_iteration" value="5" description="" />
+  <keyValuePair key="random_id" value="dl8gi8mcf5tkep1kjbgm0la7do" description="" />
   <keyValuePair key="registration_id" value="179647164_179659368_210651386_802" description="" />
   <keyValuePair key="route_design" value="NA" description="" />
   <keyValuePair key="target_device" value="NA" description="" />
@@ -20,42 +20,14 @@
  </section>
  <section name="user_environment" level="1" order="2" description="">
   <keyValuePair key="cpu_name" value="Intel(R) Xeon(R) CPU E5-2680 v2 @ 2.80GHz" description="" />
-  <keyValuePair key="cpu_speed" value="3132.226 MHz" description="" />
+  <keyValuePair key="cpu_speed" value="3099.926 MHz" description="" />
   <keyValuePair key="os_name" value="CentOS" description="" />
   <keyValuePair key="os_release" value="CentOS Linux release 7.7.1908 (Core)" description="" />
-  <keyValuePair key="system_ram" value="405.543 GB" description="" />
+  <keyValuePair key="system_ram" value="405.541 GB" description="" />
   <keyValuePair key="total_processors" value="2" description="" />
  </section>
  <section name="vitis" level="1" order="3" description="">
-  <section name="application/1591344649000" level="2" order="1" description="">
-   <keyValuePair key="application_type" value="application" description="" />
-   <keyValuePair key="device_family" value="virtexuplus" description="" />
-   <keyValuePair key="fpga" value="xcu200" description="" />
-   <keyValuePair key="os" value="NA" description="" />
-   <keyValuePair key="platform" value="xilinx_u200_xdma_201830_2" description="" />
-   <keyValuePair key="platform_source" value="platform" description="" />
-   <keyValuePair key="platform_type" value="extensible" description="" />
-   <keyValuePair key="processor" value="NA" description="" />
-   <keyValuePair key="project_type" value="datacenter" description="" />
-   <keyValuePair key="runtime" value="OpenCL" description="" />
-   <keyValuePair key="template" value="empty" description="" />
-   <keyValuePair key="uid" value="1591344649000" description="" />
-  </section>
-  <section name="application/1591346027000" level="2" order="2" description="">
-   <keyValuePair key="application_type" value="application" description="" />
-   <keyValuePair key="device_family" value="virtexuplus" description="" />
-   <keyValuePair key="fpga" value="xcu200" description="" />
-   <keyValuePair key="os" value="NA" description="" />
-   <keyValuePair key="platform" value="xilinx_u200_xdma_201830_2" description="" />
-   <keyValuePair key="platform_source" value="platform" description="" />
-   <keyValuePair key="platform_type" value="extensible" description="" />
-   <keyValuePair key="processor" value="NA" description="" />
-   <keyValuePair key="project_type" value="datacenter" description="" />
-   <keyValuePair key="runtime" value="OpenCL" description="" />
-   <keyValuePair key="template" value="empty" description="" />
-   <keyValuePair key="uid" value="1591346027000" description="" />
-  </section>
-  <section name="tool/1591363898683" level="2" order="3" description="">
+  <section name="tool/1591785766831" level="2" order="1" description="">
    <keyValuePair key="application_platform_change_count" value="0" description="" />
    <keyValuePair key="application_sys_config_change_count" value="0" description="" />
    <keyValuePair key="bootgen_count" value="0" description="" />
@@ -68,10 +40,10 @@
    <keyValuePair key="qemu_debug_count" value="0" description="" />
    <keyValuePair key="recordtype" value="ToolUsage" description="" />
    <keyValuePair key="sdsoc_trace_count" value="0" description="" />
-   <keyValuePair key="sdx_build_count" value="6" description="" />
+   <keyValuePair key="sdx_build_count" value="1" description="" />
    <keyValuePair key="sdx_export_count" value="0" description="" />
    <keyValuePair key="sdx_import_count" value="0" description="" />
-   <keyValuePair key="sdx_no_op_build_count" value="1" description="" />
+   <keyValuePair key="sdx_no_op_build_count" value="0" description="" />
    <keyValuePair key="spm_analysis_count" value="0" description="" />
    <keyValuePair key="system_platform_change_count" value="0" description="" />
    <keyValuePair key="tcf_app_debug_count" value="0" description="" />

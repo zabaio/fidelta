@@ -1,6 +1,6 @@
-11:14:41 **** Incremental Build of configuration Hardware for project fidelta ****
+19:56:46 **** Incremental Build of configuration Emulation-HW for project kertest ****
 make -j40 incremental 
-/opt/Xilinx/Vitis/2019.2/bin/v++ --target hw --compile -I"../src" --config common-config.ini --config binary_container_1-accel_in_circle-compile.ini -o"binary_container_1.build/accel_in_circle.xo" "../src/incircle.c"
+/opt/Xilinx/Vitis/2019.2/bin/v++ --target hw_emu --compile -I"../src" --config common-config.ini --config binary_container_1-accel_in_circle-compile.ini -o"binary_container_1.build/accel_in_circle.xo" "../src/incircle.cpp"
 Option Map File Used: '/opt/Xilinx/Vitis/2019.2/data/vitis/vpp/optMap.xml'
 
 ****** v++ v2019.2 (64-bit)
@@ -8,15 +8,30 @@ Option Map File Used: '/opt/Xilinx/Vitis/2019.2/data/vitis/vpp/optMap.xml'
     ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 
 INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
-	Reports: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/reports/accel_in_circle
-	Log files: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/logs/accel_in_circle
-Running Dispatch Server on port:39942
-INFO: [v++ 60-1548] Creating build summary session with primary output /home/users/alberto.giusti/FIDELTA/parallel/xilinx/fidelta/Hardware/binary_container_1.build/accel_in_circle.xo.compile_summary, at Fri Jun  5 11:14:46 2020
-INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Fri Jun  5 11:14:46 2020
+	Reports: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/kertest/Emulation-HW/binary_container_1.build/reports/accel_in_circle
+	Log files: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/kertest/Emulation-HW/binary_container_1.build/logs/accel_in_circle
+Running Dispatch Server on port:38500
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/users/alberto.giusti/FIDELTA/parallel/xilinx/kertest/Emulation-HW/binary_container_1.build/accel_in_circle.xo.compile_summary, at Tue Jun  9 19:56:54 2020
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Tue Jun  9 19:56:54 2020
 INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u200_xdma_201830_2/xilinx_u200_xdma_201830_2.xpfm
 INFO: [v++ 60-1578]   This platform contains Device Support Archive '/opt/xilinx/platforms/xilinx_u200_xdma_201830_2/hw/xilinx_u200_xdma_201830_2.dsa'
-INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-585] Compiling for hardware emulation target
 INFO: [v++ 60-423]   Target device: xilinx_u200_xdma_201830_2
 INFO: [v++ 60-242] Creating kernel: 'accel_in_circle'
-make: *** [binary_container_1.build/accel_in_circle.xo] Terminated
-Command canceled
+
+===>The following messages were generated while  performing high-level synthesis for kernel: accel_in_circle Log file: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/kertest/Emulation-HW/binary_container_1.build/accel_in_circle/accel_in_circle/vivado_hls.log :
+INFO: [v++ 204-61] Option 'relax_ii_for_timing' is enabled, will increase II to preserve clock frequency constraints.
+INFO: [v++ 204-61] Pipelining loop 'memcpy.data.indata'.
+INFO: [v++ 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 3.
+INFO: [v++ 204-61] Pipelining loop 'memcpy.state.instate'.
+INFO: [v++ 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 2.
+INFO: [v++ 204-61] Pipelining loop 'memcpy.instate.state.gep'.
+INFO: [v++ 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 2.
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 366.37 MHz
+ERROR: [v++ 200-79] Could not find kernel function 'accel_in_circle'. Possible causes include: 1) Misspelled kernel name; 2) Missing 'extern "C"' linkage for C++ kernels.
+ERROR: [v++ 200-70] command 'transform' returned error code
+ERROR: [v++ 60-300] Failed to build kernel(ip) accel_in_circle, see log for details: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/kertest/Emulation-HW/binary_container_1.build/accel_in_circle/accel_in_circle/vivado_hls.log
+ERROR: [v++ 60-599] Kernel compilation failed to complete
+ERROR: [v++ 60-592] Failed to finish compilation
+make: *** [binary_container_1.build/accel_in_circle.xo] Error 1

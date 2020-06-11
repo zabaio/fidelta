@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# 
+# Start of session at: Fri Jun  5 15:31:40 2020
+# Process ID: 28924
+# Current directory: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/webtalk
+# Command line: wbtcv -mode batch -source vitis_webtalk.tcl
+# Log file: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/webtalk/webtalk.log
+# Journal file: /home/users/alberto.giusti/FIDELTA/parallel/xilinx/webtalk/webtalk.jou
+#-----------------------------------------------------------
+source vitis_webtalk.tcl

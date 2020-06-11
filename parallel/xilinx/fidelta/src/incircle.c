@@ -2,17 +2,17 @@
 
 #include "types.h"
 
-#define MAXQUERY 3
+#define MAXQUERY 30
 #define PTSLIM 300000
 
-int in_circle(const point *p1,const point *p2,const point *p3 ,const point *d){
+int in_circle(const point p1,const point p2,const point p3 ,const point d){
 
-    float xda = p1->x - d->x;
-    float xdb = p2->x - d->x;
-    float xdc = p3->x - d->x;
-    float yda = p1->y - d->y;
-    float ydb = p2->y - d->y;
-    float ydc = p3->y - d->y;
+    float xda = p1.x - d.x;
+    float xdb = p2.x - d.x;
+    float xdc = p3.x - d.x;
+    float yda = p1.y - d.y;
+    float ydb = p2.y - d.y;
+    float ydc = p3.y - d.y;
     float da2da2 = xda*xda + yda*yda;
     float db2db2 = xdb*xdb + ydb*ydb;
     float dc2dc2 = xdc*xdc + ydc*ydc;
@@ -46,15 +46,18 @@ void accel_in_circle(int init, point *inpts, int *indata){
 	}
 	else{
 		int data[4][MAXQUERY];
-
+#pragma HLS array_partition variable=data complete dim=1
 		memcpy(&data[0][0], indata, 4*MAXQUERY*sizeof(int));
 
 		int i;
 		mainloop: for (i = 0; i < MAXQUERY; i++){
 
-			#pragma HLS unroll
-
-			if (data[0][i] != -1 && in_circle(&pts[data[1][i]], &pts[data[2][i]], &pts[data[3][i]], &pts[data[0][i]]))
+			#pragma HLS pipeline
+			point uno = pts[data[1][i]];
+			point due = pts[data[2][i]];
+			point tre = pts[data[3][i]];
+			point zero =pts[data[0][i]];
+			if (data[0][i] != -1 && in_circle(uno, due, tre, zero))
 				data[0][i] = pts[data[0][i]].id;
 			else
 				data[0][i] = -1;

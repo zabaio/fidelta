@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vivadoHLSLog:LogRoot xmlns:vivadoHLSLog="www.xilinx.com/vivadoHLSLog">
+  <errorLogs>
+    <logs>
+      <synLog/>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </errorLogs>
+  <warningLogs>
+    <logs>
+      <synLog>
+        <logs message="WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:84) in function 'accel_in_circle'." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:53.619+0200" type="Warning"/>
+        <logs message="WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:57) in function 'accel_in_circle'." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:53.616+0200" type="Warning"/>
+        <logs message="WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:56) in function 'accel_in_circle'." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:53.612+0200" type="Warning"/>
+        <logs message="WARNING: [SYNCHK 200-18] incircle.cpp:64: unsafe type casting from type 'ap_int_base&lt;64, false>' to type 'float' on variable '__Result__'." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:53.535+0200" type="Warning"/>
+        <logs message="WARNING: [SYNCHK 200-23] incircle.cpp:64: variable-indexed range selection may cause suboptimal QoR." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:53.529+0200" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:32.430+0200" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="fidelta_apint" solutionName="solution1" date="2020-06-11T16:52:32.392+0200" type="Warning"/>
+      </synLog>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </warningLogs>
+</vivadoHLSLog:LogRoot>

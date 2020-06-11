@@ -1,0 +1,23 @@
+<InterfaceSummary>
+<RtlPorts>
+<name>gmem1</name>
+<CType>
+<TypeName>ap_uint 512</TypeName>
+<TypeWidth>512</TypeWidth>
+<PhysicalWidth>512</PhysicalWidth>
+</CType>
+<CFractionWidth>0</CFractionWidth>
+<InvalidType>0</InvalidType>
+</RtlPorts>
+<RtlPorts>
+<name>gmem0</name>
+<CType>
+<TypeName>ap_uint 64</TypeName>
+<TypeWidth>64</TypeWidth>
+<PhysicalWidth>64</PhysicalWidth>
+</CType>
+<CFractionWidth>0</CFractionWidth>
+<InvalidType>0</InvalidType>
+</RtlPorts>
+</InterfaceSummary>
+

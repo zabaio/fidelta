@@ -1,0 +1,98 @@
+INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'alberto.giusti' on host 'NAGS21' (Linux_x86_64 version 3.10.0-1062.12.1.el7.x86_64) on Thu Jun 11 16:56:30 CEST 2020
+INFO: [HLS 200-10] On os "CentOS Linux release 7.7.1908 (Core)"
+INFO: [HLS 200-10] In directory '/home/users/alberto.giusti/Desktop/backup/float8_ii8'
+Sourcing Tcl script '/home/users/alberto.giusti/Desktop/backup/float8_ii8/fidelta_float8/solution1/csynth.tcl'
+INFO: [HLS 200-10] Opening project '/home/users/alberto.giusti/Desktop/backup/float8_ii8/fidelta_float8'.
+INFO: [HLS 200-10] Adding design file 'incircle.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'bench.cpp' to the project
+INFO: [HLS 200-10] Opening solution '/home/users/alberto.giusti/Desktop/backup/float8_ii8/fidelta_float8/solution1'.
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-10] Setting target device to 'xcu200-fsgd2104-2-e'
+INFO: [HLS 200-435] Setting 'config_sdx -optimization_level' configuration: config_export -vivado_optimization_level=2
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=none
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_compile -pipeline_loops=64
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_compile -name_max_length=80
+INFO: [XFORM 203-1161] The maximum of name length is set into 80.
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_schedule -enable_dsp_full_reg=1
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_rtl -module_auto_prefix=1
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_interface -m_axi_addr64=1
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 2.7ns.
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement.
+INFO: [HLS 200-435] Setting 'config_sdx -optimization_level' configuration: config_export -vivado_optimization_level=2
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=place
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=none
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
+WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release.
+INFO: [SCHED 204-61] Option 'relax_ii_for_timing' is enabled, will increase II to preserve clock frequency constraints.
+INFO: [HLS 200-10] Analyzing design file 'incircle.cpp' ... 
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314924 ; free virtual = 333064
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314924 ; free virtual = 333064
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314923 ; free virtual = 333063
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [XFORM 203-602] Inlining function 'in_circle' into 'accel_in_circle' (incircle.cpp:75) automatically.
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314923 ; free virtual = 333063
+INFO: [XFORM 203-1101] Packing variable 'temp_data' (incircle.cpp:47) into a 256-bit variable.
+WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:80) in function 'accel_in_circle'.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'mainloop' (incircle.cpp:58) in function 'accel_in_circle' for pipelining.
+INFO: [HLS 200-489] Unrolling loop 'memcpy.instate.' (incircle.cpp:80) in function 'accel_in_circle' completely with a factor of 1.
+INFO: [XFORM 203-101] Partitioning array 'data' (incircle.cpp:48) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'state' (incircle.cpp:49) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'temp_data' (incircle.cpp:47) in dimension 1 completely.
+INFO: [XFORM 203-602] Inlining function 'in_circle' into 'accel_in_circle' (incircle.cpp:75) automatically.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314904 ; free virtual = 333044
+INFO: [HLS 200-444] Inferring multiple bus burst read of a total cumulative length 30 on port 'gmem0' (incircle.cpp:64:3). These data requests might be further partitioned to multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.
+INFO: [HLS 200-444] Inferring multiple bus burst write of a total cumulative length 30 on port 'gmem0' (incircle.cpp:80:3). These data requests might be further partitioned to multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314903 ; free virtual = 333044
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'accel_in_circle' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'accel_in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'mainloop'.
+WARNING: [SCHED 204-69] Unable to schedule bus request on port 'gmem1' (incircle.cpp:63) due to limited memory ports. Please consider using a memory core with more ports or partitioning the array.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 8, Depth = 47.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 40.88 seconds; current allocated memory: 128.658 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 1.61 seconds; current allocated memory: 136.107 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'accel_in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/gmem1' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/gmem0' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f0' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f1' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f2' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f3' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f4' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f5' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f6' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_f7' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/instate' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'accel_in_circle' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return', 'indata_f0', 'indata_f1', 'indata_f2', 'indata_f3', 'indata_f4', 'indata_f5', 'indata_f6', 'indata_f7' and 'instate' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_faddfsub_32ns_32ns_32_3_full_dsp_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fcmp_32ns_32ns_1_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_mux_305_32_1_1': 9 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'accel_in_circle'.
+INFO: [HLS 200-111]  Elapsed time: 2.5 seconds; current allocated memory: 145.250 MB.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 136.99 MHz
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:44 ; elapsed = 00:00:52 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314829 ; free virtual = 332994
+INFO: [VHDL 208-304] Generating VHDL RTL for accel_in_circle with prefix accel_in_circle_.
+INFO: [VLOG 209-307] Generating Verilog RTL for accel_in_circle with prefix accel_in_circle_.
+INFO: [HLS 200-112] Total elapsed time: 51.86 seconds; peak allocated memory: 145.250 MB.
