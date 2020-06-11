@@ -1,4 +1,0 @@
-#!/bin/sh
-lli=${LLVMINTERP-lli}
-exec $lli \
-    /home/users/alberto.giusti/Desktop/backup/float8_ii8/fidelta_float8/solution1/.autopilot/db/a.g.0.bc ${1+"$@"}

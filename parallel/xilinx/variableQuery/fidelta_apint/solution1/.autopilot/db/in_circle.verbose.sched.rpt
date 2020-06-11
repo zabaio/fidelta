@@ -1,0 +1,327 @@
+
+
+================================================================
+== Vivado HLS Report for 'in_circle'
+================================================================
+* Date:           Fri Jun 12 01:38:56 2020
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        fidelta_apint
+* Solution:       solution1
+* Product family: virtexuplus
+* Target device:  xcu200-fsgd2104-2-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  | 10.00 ns | 6.992 ns |   2.70 ns  |
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+----------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline |
+    |   min   |   max   |    min   |    max   | min | max |   Type   |
+    +---------+---------+----------+----------+-----+-----+----------+
+    |       16|       16| 0.160 us | 0.160 us |    1|    1| function |
+    +---------+---------+----------+----------+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 0
+IsPipeline: 1
+IsRtlPipelined: 1
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 17
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 17
+* Pipeline : 1
+  Pipeline-0 : II = 1, D = 17, States = { 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 6.14>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%father_5_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_5_read)" [incircle.cpp:9]   --->   Operation 18 'read' 'father_5_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%father_4_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_4_read)" [incircle.cpp:9]   --->   Operation 19 'read' 'father_4_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%father_3_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_3_read)" [incircle.cpp:9]   --->   Operation 20 'read' 'father_3_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%father_2_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_2_read)" [incircle.cpp:9]   --->   Operation 21 'read' 'father_2_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%father_1_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_1_read)" [incircle.cpp:9]   --->   Operation 22 'read' 'father_1_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%father_0_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %father_0_read)" [incircle.cpp:9]   --->   Operation 23 'read' 'father_0_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%innerdata_1_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %innerdata_1_read)" [incircle.cpp:9]   --->   Operation 24 'read' 'innerdata_1_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%innerdata_0_read_1 = call float @_ssdm_op_Read.ap_auto.float(float %innerdata_0_read)" [incircle.cpp:9]   --->   Operation 25 'read' 'innerdata_0_read_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [3/3] (6.14ns)   --->   "%xda = fsub float %father_0_read_1, %innerdata_0_read_1" [incircle.cpp:14]   --->   Operation 26 'fsub' 'xda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 27 [3/3] (6.14ns)   --->   "%xdb = fsub float %father_2_read_1, %innerdata_0_read_1" [incircle.cpp:15]   --->   Operation 27 'fsub' 'xdb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 28 [3/3] (6.14ns)   --->   "%xdc = fsub float %father_4_read_1, %innerdata_0_read_1" [incircle.cpp:16]   --->   Operation 28 'fsub' 'xdc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 29 [3/3] (6.14ns)   --->   "%yda = fsub float %father_1_read_1, %innerdata_1_read_1" [incircle.cpp:17]   --->   Operation 29 'fsub' 'yda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 30 [3/3] (6.14ns)   --->   "%ydb = fsub float %father_3_read_1, %innerdata_1_read_1" [incircle.cpp:18]   --->   Operation 30 'fsub' 'ydb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 31 [3/3] (6.14ns)   --->   "%ydc = fsub float %father_5_read_1, %innerdata_1_read_1" [incircle.cpp:19]   --->   Operation 31 'fsub' 'ydc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 2 <SV = 1> <Delay = 6.14>
+ST_2 : Operation 32 [2/3] (6.14ns)   --->   "%xda = fsub float %father_0_read_1, %innerdata_0_read_1" [incircle.cpp:14]   --->   Operation 32 'fsub' 'xda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 33 [2/3] (6.14ns)   --->   "%xdb = fsub float %father_2_read_1, %innerdata_0_read_1" [incircle.cpp:15]   --->   Operation 33 'fsub' 'xdb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 34 [2/3] (6.14ns)   --->   "%xdc = fsub float %father_4_read_1, %innerdata_0_read_1" [incircle.cpp:16]   --->   Operation 34 'fsub' 'xdc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 35 [2/3] (6.14ns)   --->   "%yda = fsub float %father_1_read_1, %innerdata_1_read_1" [incircle.cpp:17]   --->   Operation 35 'fsub' 'yda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 36 [2/3] (6.14ns)   --->   "%ydb = fsub float %father_3_read_1, %innerdata_1_read_1" [incircle.cpp:18]   --->   Operation 36 'fsub' 'ydb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 37 [2/3] (6.14ns)   --->   "%ydc = fsub float %father_5_read_1, %innerdata_1_read_1" [incircle.cpp:19]   --->   Operation 37 'fsub' 'ydc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 3 <SV = 2> <Delay = 6.14>
+ST_3 : Operation 38 [1/3] (6.14ns)   --->   "%xda = fsub float %father_0_read_1, %innerdata_0_read_1" [incircle.cpp:14]   --->   Operation 38 'fsub' 'xda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 39 [1/3] (6.14ns)   --->   "%xdb = fsub float %father_2_read_1, %innerdata_0_read_1" [incircle.cpp:15]   --->   Operation 39 'fsub' 'xdb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 40 [1/3] (6.14ns)   --->   "%xdc = fsub float %father_4_read_1, %innerdata_0_read_1" [incircle.cpp:16]   --->   Operation 40 'fsub' 'xdc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 41 [1/3] (6.14ns)   --->   "%yda = fsub float %father_1_read_1, %innerdata_1_read_1" [incircle.cpp:17]   --->   Operation 41 'fsub' 'yda' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 42 [1/3] (6.14ns)   --->   "%ydb = fsub float %father_3_read_1, %innerdata_1_read_1" [incircle.cpp:18]   --->   Operation 42 'fsub' 'ydb' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 43 [1/3] (6.14ns)   --->   "%ydc = fsub float %father_5_read_1, %innerdata_1_read_1" [incircle.cpp:19]   --->   Operation 43 'fsub' 'ydc' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 4.90>
+ST_4 : Operation 44 [2/2] (4.90ns)   --->   "%tmp = fmul float %xda, %xda" [incircle.cpp:20]   --->   Operation 44 'fmul' 'tmp' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 45 [2/2] (4.90ns)   --->   "%tmp_1 = fmul float %yda, %yda" [incircle.cpp:20]   --->   Operation 45 'fmul' 'tmp_1' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 46 [2/2] (4.90ns)   --->   "%tmp_2 = fmul float %xdb, %xdb" [incircle.cpp:21]   --->   Operation 46 'fmul' 'tmp_2' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 47 [2/2] (4.90ns)   --->   "%tmp_3 = fmul float %ydb, %ydb" [incircle.cpp:21]   --->   Operation 47 'fmul' 'tmp_3' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 48 [2/2] (4.90ns)   --->   "%tmp_4 = fmul float %xdc, %xdc" [incircle.cpp:22]   --->   Operation 48 'fmul' 'tmp_4' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 49 [2/2] (4.90ns)   --->   "%tmp_5 = fmul float %ydc, %ydc" [incircle.cpp:22]   --->   Operation 49 'fmul' 'tmp_5' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 50 [2/2] (4.90ns)   --->   "%tmp_6 = fmul float %xdb, %ydc" [incircle.cpp:25]   --->   Operation 50 'fmul' 'tmp_6' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 51 [2/2] (4.90ns)   --->   "%tmp_7 = fmul float %xdc, %ydb" [incircle.cpp:25]   --->   Operation 51 'fmul' 'tmp_7' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 52 [2/2] (4.90ns)   --->   "%tmp_8 = fmul float %xda, %ydc" [incircle.cpp:26]   --->   Operation 52 'fmul' 'tmp_8' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 53 [2/2] (4.90ns)   --->   "%tmp_9 = fmul float %xdc, %yda" [incircle.cpp:26]   --->   Operation 53 'fmul' 'tmp_9' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 54 [2/2] (4.90ns)   --->   "%tmp_s = fmul float %xda, %ydb" [incircle.cpp:27]   --->   Operation 54 'fmul' 'tmp_s' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 55 [2/2] (4.90ns)   --->   "%tmp_10 = fmul float %xdb, %yda" [incircle.cpp:27]   --->   Operation 55 'fmul' 'tmp_10' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 5 <SV = 4> <Delay = 4.90>
+ST_5 : Operation 56 [1/2] (4.90ns)   --->   "%tmp = fmul float %xda, %xda" [incircle.cpp:20]   --->   Operation 56 'fmul' 'tmp' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 57 [1/2] (4.90ns)   --->   "%tmp_1 = fmul float %yda, %yda" [incircle.cpp:20]   --->   Operation 57 'fmul' 'tmp_1' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 58 [1/2] (4.90ns)   --->   "%tmp_2 = fmul float %xdb, %xdb" [incircle.cpp:21]   --->   Operation 58 'fmul' 'tmp_2' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 59 [1/2] (4.90ns)   --->   "%tmp_3 = fmul float %ydb, %ydb" [incircle.cpp:21]   --->   Operation 59 'fmul' 'tmp_3' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 60 [1/2] (4.90ns)   --->   "%tmp_4 = fmul float %xdc, %xdc" [incircle.cpp:22]   --->   Operation 60 'fmul' 'tmp_4' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 61 [1/2] (4.90ns)   --->   "%tmp_5 = fmul float %ydc, %ydc" [incircle.cpp:22]   --->   Operation 61 'fmul' 'tmp_5' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 62 [1/2] (4.90ns)   --->   "%tmp_6 = fmul float %xdb, %ydc" [incircle.cpp:25]   --->   Operation 62 'fmul' 'tmp_6' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 63 [1/2] (4.90ns)   --->   "%tmp_7 = fmul float %xdc, %ydb" [incircle.cpp:25]   --->   Operation 63 'fmul' 'tmp_7' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 64 [1/2] (4.90ns)   --->   "%tmp_8 = fmul float %xda, %ydc" [incircle.cpp:26]   --->   Operation 64 'fmul' 'tmp_8' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 65 [1/2] (4.90ns)   --->   "%tmp_9 = fmul float %xdc, %yda" [incircle.cpp:26]   --->   Operation 65 'fmul' 'tmp_9' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 66 [1/2] (4.90ns)   --->   "%tmp_s = fmul float %xda, %ydb" [incircle.cpp:27]   --->   Operation 66 'fmul' 'tmp_s' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 67 [1/2] (4.90ns)   --->   "%tmp_10 = fmul float %xdb, %yda" [incircle.cpp:27]   --->   Operation 67 'fmul' 'tmp_10' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 6 <SV = 5> <Delay = 6.14>
+ST_6 : Operation 68 [3/3] (6.14ns)   --->   "%da2da2 = fadd float %tmp, %tmp_1" [incircle.cpp:20]   --->   Operation 68 'fadd' 'da2da2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 69 [3/3] (6.14ns)   --->   "%db2db2 = fadd float %tmp_2, %tmp_3" [incircle.cpp:21]   --->   Operation 69 'fadd' 'db2db2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 70 [3/3] (6.14ns)   --->   "%dc2dc2 = fadd float %tmp_4, %tmp_5" [incircle.cpp:22]   --->   Operation 70 'fadd' 'dc2dc2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 71 [3/3] (6.14ns)   --->   "%min1 = fsub float %tmp_6, %tmp_7" [incircle.cpp:25]   --->   Operation 71 'fsub' 'min1' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 72 [3/3] (6.14ns)   --->   "%min2 = fsub float %tmp_8, %tmp_9" [incircle.cpp:26]   --->   Operation 72 'fsub' 'min2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 73 [3/3] (6.14ns)   --->   "%min3 = fsub float %tmp_s, %tmp_10" [incircle.cpp:27]   --->   Operation 73 'fsub' 'min3' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 6.14>
+ST_7 : Operation 74 [2/3] (6.14ns)   --->   "%da2da2 = fadd float %tmp, %tmp_1" [incircle.cpp:20]   --->   Operation 74 'fadd' 'da2da2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 75 [2/3] (6.14ns)   --->   "%db2db2 = fadd float %tmp_2, %tmp_3" [incircle.cpp:21]   --->   Operation 75 'fadd' 'db2db2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 76 [2/3] (6.14ns)   --->   "%dc2dc2 = fadd float %tmp_4, %tmp_5" [incircle.cpp:22]   --->   Operation 76 'fadd' 'dc2dc2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 77 [2/3] (6.14ns)   --->   "%min1 = fsub float %tmp_6, %tmp_7" [incircle.cpp:25]   --->   Operation 77 'fsub' 'min1' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 78 [2/3] (6.14ns)   --->   "%min2 = fsub float %tmp_8, %tmp_9" [incircle.cpp:26]   --->   Operation 78 'fsub' 'min2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 79 [2/3] (6.14ns)   --->   "%min3 = fsub float %tmp_s, %tmp_10" [incircle.cpp:27]   --->   Operation 79 'fsub' 'min3' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 6.14>
+ST_8 : Operation 80 [1/3] (6.14ns)   --->   "%da2da2 = fadd float %tmp, %tmp_1" [incircle.cpp:20]   --->   Operation 80 'fadd' 'da2da2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 81 [1/3] (6.14ns)   --->   "%db2db2 = fadd float %tmp_2, %tmp_3" [incircle.cpp:21]   --->   Operation 81 'fadd' 'db2db2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 82 [1/3] (6.14ns)   --->   "%dc2dc2 = fadd float %tmp_4, %tmp_5" [incircle.cpp:22]   --->   Operation 82 'fadd' 'dc2dc2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 83 [1/3] (6.14ns)   --->   "%min1 = fsub float %tmp_6, %tmp_7" [incircle.cpp:25]   --->   Operation 83 'fsub' 'min1' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 84 [1/3] (6.14ns)   --->   "%min2 = fsub float %tmp_8, %tmp_9" [incircle.cpp:26]   --->   Operation 84 'fsub' 'min2' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 85 [1/3] (6.14ns)   --->   "%min3 = fsub float %tmp_s, %tmp_10" [incircle.cpp:27]   --->   Operation 85 'fsub' 'min3' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 4.90>
+ST_9 : Operation 86 [2/2] (4.90ns)   --->   "%tmp_11 = fmul float %da2da2, %min1" [incircle.cpp:29]   --->   Operation 86 'fmul' 'tmp_11' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 87 [2/2] (4.90ns)   --->   "%tmp_12 = fmul float %db2db2, %min2" [incircle.cpp:29]   --->   Operation 87 'fmul' 'tmp_12' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 88 [2/2] (4.90ns)   --->   "%tmp_14 = fmul float %dc2dc2, %min3" [incircle.cpp:29]   --->   Operation 88 'fmul' 'tmp_14' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 4.90>
+ST_10 : Operation 89 [1/2] (4.90ns)   --->   "%tmp_11 = fmul float %da2da2, %min1" [incircle.cpp:29]   --->   Operation 89 'fmul' 'tmp_11' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 90 [1/2] (4.90ns)   --->   "%tmp_12 = fmul float %db2db2, %min2" [incircle.cpp:29]   --->   Operation 90 'fmul' 'tmp_12' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 91 [1/2] (4.90ns)   --->   "%tmp_14 = fmul float %dc2dc2, %min3" [incircle.cpp:29]   --->   Operation 91 'fmul' 'tmp_14' <Predicate = true> <Delay = 4.90> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 1> <II = 1> <Delay = 4.90> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 6.14>
+ST_11 : Operation 92 [3/3] (6.14ns)   --->   "%tmp_13 = fsub float %tmp_11, %tmp_12" [incircle.cpp:29]   --->   Operation 92 'fsub' 'tmp_13' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 6.14>
+ST_12 : Operation 93 [2/3] (6.14ns)   --->   "%tmp_13 = fsub float %tmp_11, %tmp_12" [incircle.cpp:29]   --->   Operation 93 'fsub' 'tmp_13' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 13 <SV = 12> <Delay = 6.14>
+ST_13 : Operation 94 [1/3] (6.14ns)   --->   "%tmp_13 = fsub float %tmp_11, %tmp_12" [incircle.cpp:29]   --->   Operation 94 'fsub' 'tmp_13' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 14 <SV = 13> <Delay = 6.14>
+ST_14 : Operation 95 [3/3] (6.14ns)   --->   "%det = fadd float %tmp_13, %tmp_14" [incircle.cpp:29]   --->   Operation 95 'fadd' 'det' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 14> <Delay = 6.14>
+ST_15 : Operation 96 [2/3] (6.14ns)   --->   "%det = fadd float %tmp_13, %tmp_14" [incircle.cpp:29]   --->   Operation 96 'fadd' 'det' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 15> <Delay = 6.14>
+ST_16 : Operation 97 [1/3] (6.14ns)   --->   "%det = fadd float %tmp_13, %tmp_14" [incircle.cpp:29]   --->   Operation 97 'fadd' 'det' <Predicate = true> <Delay = 6.14> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 2> <II = 1> <Delay = 6.14> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 16> <Delay = 6.99>
+ST_17 : Operation 98 [1/1] (0.00ns)   --->   "%bitcast_ln30 = bitcast float %det to i32" [incircle.cpp:30]   --->   Operation 98 'bitcast' 'bitcast_ln30' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 99 [1/1] (0.00ns)   --->   "%tmp_15 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %bitcast_ln30, i32 23, i32 30)" [incircle.cpp:30]   --->   Operation 99 'partselect' 'tmp_15' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 100 [1/1] (0.00ns)   --->   "%trunc_ln30 = trunc i32 %bitcast_ln30 to i23" [incircle.cpp:30]   --->   Operation 100 'trunc' 'trunc_ln30' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 101 [1/1] (0.58ns)   --->   "%icmp_ln30 = icmp ne i8 %tmp_15, -1" [incircle.cpp:30]   --->   Operation 101 'icmp' 'icmp_ln30' <Predicate = true> <Delay = 0.58> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.75> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 102 [1/1] (0.75ns)   --->   "%icmp_ln30_1 = icmp eq i23 %trunc_ln30, 0" [incircle.cpp:30]   --->   Operation 102 'icmp' 'icmp_ln30_1' <Predicate = true> <Delay = 0.75> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 0.75> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 103 [1/1] (0.00ns) (grouped into LUT with out node and_ln30)   --->   "%or_ln30 = or i1 %icmp_ln30_1, %icmp_ln30" [incircle.cpp:30]   --->   Operation 103 'or' 'or_ln30' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.12> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 104 [1/1] (6.87ns)   --->   "%tmp_16 = fcmp ogt float %det, 0.000000e+00" [incircle.cpp:30]   --->   Operation 104 'fcmp' 'tmp_16' <Predicate = true> <Delay = 6.87> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 0> <II = 1> <Delay = 6.87> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 105 [1/1] (0.12ns) (out node of the LUT)   --->   "%and_ln30 = and i1 %or_ln30, %tmp_16" [incircle.cpp:30]   --->   Operation 105 'and' 'and_ln30' <Predicate = true> <Delay = 0.12> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.12> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 106 [1/1] (0.00ns)   --->   "ret i1 %and_ln30" [incircle.cpp:30]   --->   Operation 106 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10ns, clock uncertainty: 2.7ns.
+
+ <State 1>: 6.15ns
+The critical path consists of the following:
+	wire read on port 'father_5_read' (incircle.cpp:9) [9]  (0 ns)
+	'fsub' operation ('ydc', incircle.cpp:19) [22]  (6.15 ns)
+
+ <State 2>: 6.15ns
+The critical path consists of the following:
+	'fsub' operation ('xda', incircle.cpp:14) [17]  (6.15 ns)
+
+ <State 3>: 6.15ns
+The critical path consists of the following:
+	'fsub' operation ('xda', incircle.cpp:14) [17]  (6.15 ns)
+
+ <State 4>: 4.9ns
+The critical path consists of the following:
+	'fmul' operation ('tmp', incircle.cpp:20) [23]  (4.9 ns)
+
+ <State 5>: 4.9ns
+The critical path consists of the following:
+	'fmul' operation ('tmp', incircle.cpp:20) [23]  (4.9 ns)
+
+ <State 6>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('da2da2', incircle.cpp:20) [25]  (6.15 ns)
+
+ <State 7>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('da2da2', incircle.cpp:20) [25]  (6.15 ns)
+
+ <State 8>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('da2da2', incircle.cpp:20) [25]  (6.15 ns)
+
+ <State 9>: 4.9ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_11', incircle.cpp:29) [41]  (4.9 ns)
+
+ <State 10>: 4.9ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_11', incircle.cpp:29) [41]  (4.9 ns)
+
+ <State 11>: 6.15ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_13', incircle.cpp:29) [43]  (6.15 ns)
+
+ <State 12>: 6.15ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_13', incircle.cpp:29) [43]  (6.15 ns)
+
+ <State 13>: 6.15ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_13', incircle.cpp:29) [43]  (6.15 ns)
+
+ <State 14>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('det', incircle.cpp:29) [45]  (6.15 ns)
+
+ <State 15>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('det', incircle.cpp:29) [45]  (6.15 ns)
+
+ <State 16>: 6.15ns
+The critical path consists of the following:
+	'fadd' operation ('det', incircle.cpp:29) [45]  (6.15 ns)
+
+ <State 17>: 6.99ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_16', incircle.cpp:30) [52]  (6.87 ns)
+	'and' operation ('and_ln30', incircle.cpp:30) [53]  (0.122 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

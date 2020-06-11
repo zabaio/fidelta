@@ -1,0 +1,966 @@
+INFO-FLOW: Workspace /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1 opened at Fri Jun 12 01:38:25 CEST 2020
+Execute     config_clock -quiet -name default -period 10 -default=false 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+Execute     config_clock -quiet -name default -uncertainty 2.7 -unit % 
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 2.7ns.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.lib 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/dsp48e2.hlp 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Command         ap_source done; 0.16 sec.
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.22 sec.
+Command     ap_source done; 0.22 sec.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+Execute     set_part xcu200-fsgd2104-2-e 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data single -quiet 
+Command       ap_part_info done; 4.17 sec.
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       add_library xilinx/virtexuplus/virtexuplus:xcu200:-fsgd2104:-2-e 
+Execute         get_default_platform 
+Execute         ap_part_info -data single -name xcu200-fsgd2104-2-e 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data resources 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         config_chip_info -quiet -resource {SLICE 147780} {LUT 1182240} {FF 2364480} {DSP48E 6840} {BRAM 4320} {URAM 960} {SLR 3} 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         config_chip_info -quiet -speed medium 
+Command       add_library done; 0.15 sec.
+Execute       add_library xilinx/virtexuplus/virtexuplus_fpv7 
+Execute         get_default_platform 
+INFO: [HLS 200-10] Setting target device to 'xcu200-fsgd2104-2-e'
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       get_default_platform 
+Command     set_part done; 4.52 sec.
+Execute     ap_part_info -data single -name xcu200-fsgd2104-2-e 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data resources 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     config_chip_info -quiet -resource {SLICE 147780} {LUT 1182240} {FF 2364480} {DSP48E 6840} {BRAM 4320} {URAM 960} {SLR 3} 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     config_chip_info -quiet -speed medium 
+Execute     config_sdx -optimization_level=none 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -optimization_level' config_export -vivado_optimization_level=2 
+INFO: [HLS 200-435] Setting 'config_sdx -optimization_level' configuration: config_export -vivado_optimization_level=2
+Execute       config_export -vivado_optimization_level=2 
+Execute         get_config_export -vivado_impl_strategy 
+Execute         get_config_export -vivado_phys_opt 
+Execute         send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=place 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=place
+Execute         config_export -vivado_phys_opt=place 
+Execute     config_sdx -target=xocc 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' config_export -vivado_optimization_level=0 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+Execute       config_export -vivado_optimization_level=0 
+Execute         get_config_export -vivado_impl_strategy 
+Execute         get_config_export -vivado_phys_opt 
+Execute         send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=none 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=none
+Execute         config_export -vivado_phys_opt=none 
+Execute       get_config_compile -pipeline_loops 
+Execute       get_config_compile -name_max_length 
+Execute       get_config_schedule -enable_dsp_full_reg 
+Execute       get_config_rtl -register_reset_num 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       get_config_interface -m_axi_addr64 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' set_clock_uncertainty 27% 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
+Execute       set_clock_uncertainty 27% 
+Execute     config_export -vivado_optimization_level=0 
+Execute       get_config_export -vivado_impl_strategy 
+Execute       get_config_export -vivado_phys_opt 
+Execute     config_export -vivado_phys_opt=none 
+Execute     config_compile -name_max_length=80 
+INFO: [XFORM 203-1161] The maximum of name length is set into 80.
+Execute     config_compile -pipeline_loops=64 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
+Execute     config_schedule -enable_dsp_full_reg=1 
+Execute     config_rtl -module_auto_prefix=1 
+Execute     config_rtl -register_reset_num=3 
+Execute     config_interface -m_axi_addr64=1 
+Command   open_solution done; 5 sec.
+Execute   set_part xcu200-fsgd2104-2-e 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data single -quiet 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     add_library xilinx/virtexuplus/virtexuplus:xcu200:-fsgd2104:-2-e 
+Execute       get_default_platform 
+Execute       ap_part_info -data single -name xcu200-fsgd2104-2-e 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data resources 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       config_chip_info -quiet -resource {SLICE 147780} {LUT 1182240} {FF 2364480} {DSP48E 6840} {BRAM 4320} {URAM 960} {SLR 3} 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       config_chip_info -quiet -speed medium 
+Command     add_library done; 0.14 sec.
+Execute     add_library xilinx/virtexuplus/virtexuplus_fpv7 
+Execute       get_default_platform 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     get_default_platform 
+Command   set_part done; 0.38 sec.
+Execute   create_clock -period 10 -name default 
+Execute     config_clock -quiet -name default -period 10 -default=false 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+Execute   config_sdx -optimization_level none -target xocc 
+WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement.
+Execute     send_msg_by_id INFO @200-435@%s%s 'config_sdx -optimization_level' config_export -vivado_optimization_level=2 
+INFO: [HLS 200-435] Setting 'config_sdx -optimization_level' configuration: config_export -vivado_optimization_level=2
+Execute     config_export -vivado_optimization_level=2 
+Execute       get_config_export -vivado_impl_strategy 
+Execute       get_config_export -vivado_phys_opt 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=place 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=place
+Execute       config_export -vivado_phys_opt=place 
+Execute     send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' config_export -vivado_optimization_level=0 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+Execute     config_export -vivado_optimization_level=0 
+Execute       get_config_export -vivado_impl_strategy 
+Execute       get_config_export -vivado_phys_opt 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=none 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=none
+Execute       config_export -vivado_phys_opt=none 
+Execute     get_config_compile -pipeline_loops 
+Execute     get_config_compile -name_max_length 
+Execute     get_config_schedule -enable_dsp_full_reg 
+Execute     get_config_rtl -register_reset_num 
+Execute     get_config_rtl -module_auto_prefix 
+Execute     get_config_interface -m_axi_addr64 
+Execute     send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' set_clock_uncertainty 27% 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
+Execute     set_clock_uncertainty 27% 
+WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release.
+Execute   config_export -vivado_optimization_level 0 -vivado_phys_opt none 
+Execute     get_config_export -vivado_impl_strategy 
+Execute   config_compile -name_max_length 80 -pipeline_loops 64 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
+INFO: [XFORM 203-1161] The maximum of name length is set into 80.
+Execute   config_schedule -enable_dsp_full_reg 
+Execute   config_rtl -module_auto_prefix -register_reset_num 3 
+Execute   config_interface -m_axi_addr64 
+Execute   set_clock_uncertainty 27% 
+Execute   csynth_design 
+Execute     get_config_compile -dump_cfg 
+Execute     get_config_compile -effort 
+Execute     get_config_compile -enable_clang39 
+Execute     get_config_compile -g 
+Execute     get_config_compile -ng 
+Execute     get_config_compile -opt_fp 
+Execute     get_config_compile -skip_cdt 
+Execute     get_config_compile -skip_syncheck 
+Execute     get_config_compile -skip_transform 
+Execute     get_config_compile -keep_printf 
+Execute     elaborate -effort=medium -skip_syncheck=0 -keep_printf=0 -skip_cdt=0 -skip_transform=0 -ng=0 -g=0 -opt_fp=0 -from_csynth_design=1 
+Execute       get_config_schedule -relax_ii_for_timing 
+INFO: [SCHED 204-61] Option 'relax_ii_for_timing' is enabled, will increase II to preserve clock frequency constraints.
+Execute       get_config_schedule -suppress_dependence_error_break 
+INFO: [HLS 200-10] Analyzing design file 'incircle.cpp' ... 
+INFO-FLOW: Compiling one TU...
+Execute       is_m_axi_addr64 
+INFO-FLOW: Handling incircle.cpp as C++
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       is_encrypted incircle.cpp 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+INFO-FLOW: Running: GCC PP
+INFO-FLOW: Source preprocessing
+Execute       clang  -fno-limit-debug-info -gcc-toolchain "/opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc" -hls  -fno-exceptions  -D__llvm__  -E "incircle.cpp"     -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit  -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__  -o "/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp" 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain /opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc -hls -fno-exceptions -D__llvm__ -E incircle.cpp -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp
+Command       clang done; 2.37 sec.
+Execute       tidy_31 xilinx-xfmat-array-geometry /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp std=gnu++98 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-xfmat-array-geometry -quiet -fix /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
+Command       tidy_31 done; 1.66 sec.
+INFO-FLOW: Syntax Checking before pre-processing...
+Execute       clang -syntaxcheck -src /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp  -fno-limit-debug-info -gcc-toolchain "/opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc" -hls    -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit  -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__  "/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp"  -o "/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/useless.bc"  
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain /opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc -hls -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -fno-threadsafe-statics -fno-use-cxa-atexit -D__CLANG_3_1__ -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/useless.bc
+Command       clang done; 3.3 sec.
+INFO-FLOW: Done: GCC PP time: 7.3 seconds per iteration
+Execute       source /opt/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/yaml/huddle.tcl 
+Execute       source /opt/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/yaml/json2huddle.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/try/try.tcl 
+Execute       list_core -type functional_unit 
+Execute       tidy_31 xilinx-systemc-detector /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp std=gnu++98 -directive=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/.systemc_flag 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-systemc-detector -import-directive=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/.systemc_flag -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
+Command       tidy_31 done; 1.39 sec.
+INFO-FLOW: Running: tidy-3.1 CDT preprocess
+Execute       tidy_31 xilinx-directive2pragma /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp std=gnu++98 -directive=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/all.directive.json 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-directive2pragma -import-directive=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/all.directive.json -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0
+Command       tidy_31 done; 1.4 sec.
+Execute       get_config_dataflow -strict_mode 
+Execute       ap_eval exec -ignorestderr /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/xilinx-dataflow-lawyer -export-fixes=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/xilinx-dataflow-lawyer.incircle.pp.0.cpp.diag.yml /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 -fstrict-dataflow > /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/xilinx-dataflow-lawyer.incircle.pp.0.cpp.out.log 2> /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/xilinx-dataflow-lawyer.incircle.pp.0.cpp.err.log 
+Command       ap_eval done; 1.69 sec.
+Execute       tidy_31 -errorcheck xilinx-constantarray-param,xilinx-resource-pragma-transformer,xilinx-xfmat-array-geometry /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp std=gnu++98 
+Execute         ap_eval exec -ignorestderr /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -export-fixes=/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/tidy-3.1.incircle.pp.0.cpp.diag.yml -header-filter=.* -checks=-*,xilinx-constantarray-param,xilinx-resource-pragma-transformer,xilinx-xfmat-array-geometry -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 > /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/tidy-3.1.incircle.pp.0.cpp.out.log 2> /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/tidy-3.1.incircle.pp.0.cpp.err.log 
+Command         ap_eval done; 1.8 sec.
+Execute         ap_eval exec -ignorestderr /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/xilinx-legacy-rewriter /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pp.0.cpp -- -std=gnu++98 -fhls -ferror-limit=0 > /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/xilinx-legacy-rewriter.incircle.pp.0.cpp.out.log 2> /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/xilinx-legacy-rewriter.incircle.pp.0.cpp.err.log 
+Command         ap_eval done; 1.17 sec.
+Command       tidy_31 done; 2.99 sec.
+INFO-FLOW: Done: tidy-3.1 CDT preprocess time: 6.1 seconds per iteration
+INFO-FLOW: Pragma Handling...
+Execute       tidy_31 xilinx-ssdm-intrinsics-arguments /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pragma.1.cpp std=gnu++98 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-ssdm-intrinsics-arguments -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pragma.1.cpp -- -std=gnu++98 -fhls -ferror-limit=0
+Command       tidy_31 done; 2.62 sec.
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+INFO-FLOW: Processing labels
+Execute       clang -src /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pragma.2.cpp  -fno-limit-debug-info -gcc-toolchain /opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc -hls -hls-analyze-label -hls-analyze-pragma -fno-exceptions  -D__llvm__  -w  "/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pragma.2.cpp"    -fno-math-errno -c -emit-llvm -O0  -mllvm -disable-llvm-optzns -fno-threadsafe-statics  -fno-use-cxa-atexit -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot" -I "/opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc" -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -g -o "/home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.bc" 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang/bin/clang -fno-limit-debug-info -gcc-toolchain /opt/Xilinx/Vivado/2019.2/lnx64/tools/gcc -hls -hls-analyze-label -hls-analyze-pragma -fno-exceptions -D__llvm__ -w /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.pragma.2.cpp -fno-math-errno -c -emit-llvm -O0 -mllvm -disable-llvm-optzns -fno-threadsafe-statics -fno-use-cxa-atexit -DAESL_SYN -D__SYNTHESIS__ -D__HLS_SYN__ -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot -I /opt/Xilinx/Vivado/2019.2/common/technology/autopilot/ap_sysc -include etc/autopilot_ssdm_op.h -D__DSP48E2__ -g -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.bc
+Command       clang done; 3.15 sec.
+INFO-FLOW: Linking Debug ...
+Execute       llvm-ld /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/incircle.g.bc -hls-opt -except-internalize accel_in_circle -L/opt/Xilinx/Vivado/2019.2/lnx64/lib -lhlsm -lhlsmc++ -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g 
+Command       llvm-ld done; 1.23 sec.
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314370 ; free virtual = 332796
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314370 ; free virtual = 332796
+Execute       get_config_sdx -target 
+Execute       get_config_rtl -kernel_profile 
+Execute       get_config_rtl -stall_sig_gen 
+Execute       get_config_rtl -profile 
+Execute       opt_and_import_c a -opt_level=2 -skip_syncheck=0 -ng=0 -keep_printf=0 
+Execute         cleanup_all_models 
+INFO: [HLS 200-10] Starting code transformations ...
+Execute         transform -promote-dbg-pointer /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.pp.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.pp.0.bc -f 
+Execute         llvm-ld /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.pp.0.bc -disable-opt -L/opt/Xilinx/Vivado/2019.2/lnx64/lib -lfloatconversion -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.0 
+Command         llvm-ld done; 1.13 sec.
+INFO-FLOW: Running Standard Transforms...
+Execute         transform -hls -share-std-xform -demangle-name -inline-byval-memcpy -always-inline -promote-dbg-pointer -interface-preproc -mem2reg -scalarrepl -mem2reg -keep-read-access -instcombine -dce -promote-dbg-pointer -bitop-raise -loop-simplify -indvarspre -indvars -loop-simplify -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -basicaa -simplifycfg -mem2reg -globalopt -global-constprop -deadargelim -instcombine -simplifycfg -prune-eh -simplifycfg -scalarrepl -instcombine -reassociate -licm -simplifycfg -loop-simplify -indvars -instcombine -simplifycfg -mem2reg -loop-simplify -indvars -instcombine -gvn -gvn -instcombine -adce -break-crit-edges -simplifycfg -loop-delete -global-array-opt -dce -dse -adce -find-syn-modules -top accel_in_circle -deadargelim -mem2reg -instcombine -dce -presyn-prepare -auto-rom-infer -interface-preproc -syn-check -check-rec-only -find-region -simplifycfg -func-extr -function-inline -globaldce -mem2reg -instcombine -dce -gvn -globaldce -adce -adse -constprop -instcombine -bit-constprop -instcombine -dce -simplifycfg -bitop-raise -simplifycfg -dce -loop-delete -reassociate -globalopt -global-privatize -mem2reg -dce -global-constprop -pointer-simplify -constprop -dce -func-inst -deadargelim -auto-shift-reg-idiom -promote-dbg-pointer -norm-name /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.0.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.1.bc -f -phase std-opt 
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314369 ; free virtual = 332795
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO-FLOW: Checking Synthesizability 1/2..
+Execute         transform -hls -syn-check -check-rec-only -disaggr -scalarrepl -norm-name -dce -mem2reg -instcombine -function-uniquify -directive-preproc -mem2reg -dse -dce -auto-rom-infer -dce -pag -array-normalize -instcombine -dce -warn-fifo-pointer -array-seg-normalize -instcombine -dce -array-flatten -instcombine -dce -array-burst -dce -deadargelim -promote-global-argument -simplifycfg -mem2reg -globaldce -dce -deadargelim -dce -instcombine -function-inline -globaldce -dce -doublePtrSimplify -doublePtrElim -dce -doublePtrSimplify -promote-dbg-pointer -dce -scalarrepl -dse -adse -instcombine -ptrLegalization -simplifycfg -dce -instcombine -pointer-simplify -ptrArgReplace -dce -instcombine -resolve-double-ptr -disaggr -scalarrepl -norm-name -dce -mem2reg -instcombine -ptrLegalization -simplifycfg -deadargelim -instcombine -dce -inst-simplify -function-uniquify -directive-preproc -mem2reg -dse -dce -globaldce -check-dspbuiltin /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.1.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.2.prechk.bc -f 
+INFO: [XFORM 203-602] Inlining function 'in_circle' into 'accel_in_circle' (incircle.cpp:105) automatically.
+INFO-FLOW: Checking Synthesizability 2/2..
+Execute         transform -syn-check /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.2.prechk.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.2.bc -f -phase syn-check 
+WARNING: [SYNCHK 200-23] incircle.cpp:67: variable-indexed range selection may cause suboptimal QoR.
+INFO: [SYNCHK 200-10] 0 error(s), 1 warning(s).
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314356 ; free virtual = 332783
+INFO-FLOW: Compiler optimizing ...
+INFO-FLOW: Share syncheck's 1.bc for syn flow: copy /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.g.1.bc to /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.1.bc
+INFO-FLOW: Presyn 1...
+Execute         transform -hls -tmp /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db -interface-port-rename -type-info -function-uniquify -directive-preproc -mem2reg -dse -dce -disaggr -scalarrepl -norm-name -deadargelim -mem2reg -instcombine -dce -simplifycfg -auto-rom-infer -dce -function-uniquify -resource-proc -clib-intrinsic-prepare -dce -func-buffer -dce -pag -array-normalize -func-legal -instcombine -gvn -constprop -dce -simplifycfg -mem2reg -globaldce -resolve-double-ptr -dce -deadargelim -dce -instcombine -ptrArgReplace -mem2reg -dce -array-seg-normalize -deadargelim -instcombine -dce -pointer-simplify -dce -port-alignment -dce -interface-preproc -data-pack -instcombine -dce -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -loop-simplify -indvars -instcombine -gvn -loop-simplify -mem2reg -dce -find-region -instcombine -auto-loop-pipeline -inst-simplify -interface-preproc -cfgopt -instcombine -indvars -auto-loop-unroll -loop-simplify -loop-bound -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -clean-region -attach-range -gvn -inst-simplify -constprop -simplifycfg -dce -pointer-simplify -dce -globalopt -constprop -dce -array-promote -constprop -dce -ptrArgReplace -mem2reg -simplifycfg -dce -auto-par -instcombine -dce -array-transform-check -array-reshape -instcombine -simplifycfg -dce -ptrArgReplace -deadargelim -mem2reg -instcombine -simplifycfg -dce -indvars -loop-simplify -loop-bound -xunroll -constprop -instcombine -simplifycfg -indvars -simplifycfg -dce -globaldce -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -duplicate-dataflow-processes -globaldce -instcombine -array-partition -instcombine -simplifycfg -dce -ptrArgReplace -global-constprop -deadargelim -mem2reg -func-legal -dce -global-constprop -deadargelim -mem2reg -simplifycfg -dce -merge-param -deadargelim -globalopt -constprop -dce -array-promote -constprop -dce -ptrArgReplace -mem2reg -simplifycfg -dce -mem-intrinsic-preproc -dce -global-internalize -global-privatize -mem2reg -globaldce -promote-global-argument -ptrArgReplace -mem2reg -dce -globalopt -mergereturn -simplify-global-access -mem2reg -dce -pointer-simplify -dce -functionattrs -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -dce -norm-name -function-inline -complex-op-raise -inst-simplify -globaldce -func-inst -constprop -instcombine -simplifycfg -dce -func-legal -dce -loop-bound -arraycheck -bitwidthmin -on-by-dataflow -loop-delete -instcombine -simplifycfg -globaldce -dce -gvn -deadargelim -dce -loop-simplify -clean-region -simplifycfg -propagate-stable-arguments -loop-stream -instcombine -simplifycfg -dce -globaldce -duplicate-dataflow-processes -stream-intrinsic-preproc -dce -check-ap-stream -loop-simplify -eliminate-keepreads -extract-dataflow-in-loop -loop-simplify -dce -gvn -deadargelim -dse -check-dataflow-syntax -legalize-stream-variable -legalize-global -extract-subproc -dce -dead-channel-elimination -canonicalize-gep -globaldce -dce -gvn -deadargelim -annotate-dataflow-channels -scalar-propagation -deadargelim -globaldce -mem2reg -check-dataflow-channels -function-stream -dce -globaldce -prop-fifo-spec -internal-stream-gen -canonicalize-gep -globaldce -dce -gvn -deadargelim -mergereturn -indvars -loop-simplify -instcombine -array-stream -array-seg-normalize -array-partition -func-legal -instcombine -simplifycfg -dce -bundle-memfifo-ops -deadargelim -function-uniquify -directive-preproc -mem2reg -dse -dce -group-axi-access -licm -simplifycfg -dce -loop-delete -norm-name /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.1.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.1.tmp.bc -f 
+WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:59) in function 'accel_in_circle'.
+WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:76) in function 'accel_in_circle'.
+WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:77) in function 'accel_in_circle'.
+WARNING: [XFORM 203-505] Ignore pipeline pragma in Loop whose tripcount is only 1 (incircle.cpp:118) in function 'accel_in_circle'.
+INFO: [XFORM 203-502] Unrolling small iteration loop 'memcpy.temp_father.V.addr.infather.V' (incircle.cpp:59) in function 'accel_in_circle' automatically.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'mainloop' (incircle.cpp:72) in function 'accel_in_circle' for pipelining.
+WARNING: [XFORM 203-505] Ignored pipeline directive for loop 'Loop-3.3' (incircle.cpp:81) because its parent loop or function is pipelined.
+WARNING: [XFORM 203-505] Ignored pipeline directive for loop 'Loop-3.4' (incircle.cpp:94) because its parent loop or function is pipelined.
+WARNING: [XFORM 203-505] Ignored pipeline directive for loop 'Loop-3.6' (incircle.cpp:111) because its parent loop or function is pipelined.
+INFO: [HLS 200-489] Unrolling loop 'memcpy.temp_father.V.addr.infather.V' (incircle.cpp:59) in function 'accel_in_circle' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'memcpy.temp_data.V.addr.indata.V' (incircle.cpp:76) in function 'accel_in_circle' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'memcpy.temp_state.V.addr.instate.V' (incircle.cpp:77) in function 'accel_in_circle' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.3' (incircle.cpp:81) in function 'accel_in_circle' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.3.1' (incircle.cpp:83) in function 'accel_in_circle' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.4' (incircle.cpp:94) in function 'accel_in_circle' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.5' (incircle.cpp:102) in function 'accel_in_circle' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.6' (incircle.cpp:111) in function 'accel_in_circle' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'memcpy.instate.V.temp_state.V.addr' (incircle.cpp:118) in function 'accel_in_circle' completely with a factor of 1.
+INFO: [XFORM 203-102] Partitioning array 'temp_data.V' (incircle.cpp:45) automatically.
+INFO: [XFORM 203-102] Partitioning array 'temp_father.V' (incircle.cpp:47) automatically.
+INFO: [XFORM 203-102] Automatically partitioning small array 'temp_state.V' (incircle.cpp:46) completely based on array size.
+INFO: [XFORM 203-101] Partitioning array 'data' (incircle.cpp:49) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'state.V' (incircle.cpp:50) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'father' (incircle.cpp:51) in dimension 1 completely.
+INFO: [XFORM 203-102] Automatically partitioning small array 'temp_state.V' (incircle.cpp:46) completely based on array size.
+INFO: [XFORM 203-102] Partitioning array 'data.0' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.1' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.2' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.3' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.4' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.5' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.6' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Partitioning array 'data.7' (incircle.cpp:49) automatically.
+INFO: [XFORM 203-102] Automatically partitioning small array 'temp_state.V' (incircle.cpp:46) completely based on array size.
+Command         transform done; 0.54 sec.
+INFO-FLOW: Presyn 2...
+Execute         transform -hls -keep-callgraph -scalarrepl -mem2reg -port-alignment -attach-range -dce -pipe-mux-gen -indvars -loop-bound -inst-simplify -instcombine -dce -merge-array-access -mem2reg -dce -clean-region -mergereturn -if-conv -instcombine -dce -constprop -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -gvn -gvn -basicaa -aggr-aa -aggrmodref-aa -aggr-aa -dse -adse -adce -scalarrepl -mem2reg -global-constprop -deadargelim -deadargelim -instcombine -dce -simplifycfg -ptrArgReplace -mem2reg -function-inline -globaldce -mem2reg -instcombine -dce -expr-balance -instcombine -dce -bitwidthmin -interface-preproc -directive-preproc -inst-rectify -instcombine -dce -functionattrs -constprop -instcombine -bit-constprop -simplify-global-access -globalopt -globaldce -inst-simplify -instcombine -elimdeaddata -dce -loop-delete -simplifycfg -loop-simplify -auto-burst -norm-name /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.1.tmp.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.2.bc -f -phase presyn 
+Command         transform done; 0.28 sec.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314347 ; free virtual = 332774
+INFO-FLOW: Building ssdm...
+Execute         transform -hls -function-uniquify -auto-function-inline -globaldce -ptrArgReplace -mem2reg -dce -reset-lda -loop-simplify -indvars -licm -loop-dep -loop-bound -licm -loop-simplify -flattenloopnest -array-flatten -gvn -instcombine -dce -array-map -dce -func-legal -gvn -adce -instcombine -cfgopt -simplifycfg -loop-simplify -array-burst -promote-global-argument -dce -ptrLegalization -axi4-lower -array-seg-normalize -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -gvn -gvn -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -dse -adse -adce -licm -inst-simplify -dce -globaldce -instcombine -array-stream -eliminate-keepreads -instcombine -dce -deadargelim -doublePtrSimplify -doublePtrElim -dce -doublePtrSimplify -promote-dbg-pointer -dce -scalarrepl -mem2reg -disaggr -norm-name -mem2reg -instcombine -dse -adse -adce -ptrLegalization -dce -auto-rom-infer -array-flatten -dce -instcombine -check-doubleptr -loop-rot -constprop -cfgopt -simplifycfg -loop-simplify -indvars -pointer-simplify -dce -loop-bound -loop-simplify -loop-preproc -constprop -global-constprop -gvn -mem2reg -instcombine -dce -loop-bound -loop-merge -dce -bitwidthmin -deadargelim -dce -canonicalize-dataflow -dce -scalar-propagation -deadargelim -globaldce -mem2reg -read-loop-dep -interface-preproc -directive-preproc -interface-gen -bram-byte-enable -deadargelim -inst-simplify -dce -gvn -mem2reg -instcombine -dce -adse -loop-bound -instcombine -cfgopt -simplifycfg -loop-simplify -clean-region -io-protocol -find-region -mem2reg -bitop-raise -complex-op-raise -inst-simplify -inst-rectify -instcombine -adce -deadargelim -loop-simplify -phi-opt -bitop-raise -cfgopt -simplifycfg -strip-dead-prototypes -interface-lower -bitop-lower -intrinsic-lower -auto-function-inline -basicaa -aggrmodref-aa -globalsmodref-aa -aggr-aa -inst-simplify -simplifycfg -loop-simplify -mergereturn -inst-simplify -inst-rectify -dce -load-elim -bitop-lower -loop-rewind -pointer-simplify -dce -cfgopt -dce -loop-bound -loop-dep -read-loop-dep -dce -check-stream -norm-name -legalize -validate-dataflow -inst-clarity -bitwidth -dump-loop-dep-to-ir -check-all-ssdm -cdfg-build /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.2.bc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/a.o.3.bc -f -phase build-ssdm 
+INFO: [HLS 200-444] Inferring multiple bus burst read of variable length on port 'gmem0' (incircle.cpp:77:3). These data requests might be further partitioned to multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.
+INFO: [HLS 200-444] Inferring multiple bus burst read of variable length on port 'gmem1' (incircle.cpp:76:2). These data requests might be further partitioned to multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.
+INFO: [HLS 200-444] Inferring multiple bus burst write of variable length on port 'gmem0' (incircle.cpp:118:3). These data requests might be further partitioned to multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings.
+Command         transform done; 0.55 sec.
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:27 ; elapsed = 00:00:31 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314345 ; free virtual = 332773
+INFO-FLOW: Finish building internal data model.
+Command       opt_and_import_c done; 2.75 sec.
+Command     elaborate done; 24.89 sec.
+Execute     autosyn -from_csynth_design=1 
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO-FLOW: Synthesizing C/C++ design ...
+INFO: [HLS 200-10] Synthesizing 'accel_in_circle' ...
+Execute       ap_set_top_model accel_in_circle 
+Execute       get_model_list accel_in_circle -filter all-wo-channel -topdown 
+Execute       preproc_iomode -model accel_in_circle 
+Execute       preproc_iomode -model in_circle 
+Execute       get_model_list accel_in_circle -filter all-wo-channel 
+INFO-FLOW: Model list for configure: in_circle accel_in_circle
+INFO-FLOW: Configuring Module : in_circle ...
+Execute       set_default_model in_circle 
+Execute       apply_spec_resource_limit in_circle 
+INFO-FLOW: Configuring Module : accel_in_circle ...
+Execute       set_default_model accel_in_circle 
+Execute       apply_spec_resource_limit accel_in_circle 
+INFO-FLOW: Model list for preprocess: in_circle accel_in_circle
+INFO-FLOW: Preprocessing Module: in_circle ...
+Execute       set_default_model in_circle 
+Execute       cdfg_preprocess -model in_circle 
+Execute       rtl_gen_preprocess in_circle 
+INFO-FLOW: Preprocessing Module: accel_in_circle ...
+Execute       set_default_model accel_in_circle 
+Execute       cdfg_preprocess -model accel_in_circle 
+Execute       rtl_gen_preprocess accel_in_circle 
+INFO-FLOW: Model list for synthesis: in_circle accel_in_circle
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       set_default_model in_circle 
+Execute       schedule -model in_circle 
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'in_circle'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 17.
+INFO: [SCHED 204-11] Finished scheduling.
+Command       schedule done; 0.63 sec.
+INFO: [HLS 200-111]  Elapsed time: 31.38 seconds; current allocated memory: 134.916 MB.
+Execute       syn_report -verbosereport -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.verbose.sched.rpt 
+Command       syn_report done; 0.15 sec.
+Execute       db_write -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.sched.adb -f 
+INFO-FLOW: Finish scheduling in_circle.
+Execute       set_default_model in_circle 
+Execute       bind -model in_circle 
+BIND OPTION: model=in_circle
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.27 seconds; current allocated memory: 135.225 MB.
+Execute       syn_report -verbosereport -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.verbose.bind.rpt 
+Command       syn_report done; 0.38 sec.
+Execute       db_write -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.bind.adb -f 
+INFO-FLOW: Finish binding in_circle.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'accel_in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       set_default_model accel_in_circle 
+Execute       schedule -model accel_in_circle 
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'initfather'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-61] Pipelining loop 'mainloop'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 22.
+INFO: [SCHED 204-11] Finished scheduling.
+Command       schedule done; 0.25 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.65 seconds; current allocated memory: 136.203 MB.
+Execute       syn_report -verbosereport -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.verbose.sched.rpt 
+Command       syn_report done; 0.15 sec.
+Execute       db_write -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.sched.adb -f 
+INFO-FLOW: Finish scheduling accel_in_circle.
+Execute       set_default_model accel_in_circle 
+Execute       bind -model accel_in_circle 
+BIND OPTION: model=accel_in_circle
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+Command       bind done; 0.69 sec.
+INFO: [HLS 200-111]  Elapsed time: 0.91 seconds; current allocated memory: 138.334 MB.
+Execute       syn_report -verbosereport -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.verbose.bind.rpt 
+Command       syn_report done; 1.76 sec.
+Execute       db_write -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.bind.adb -f 
+INFO-FLOW: Finish binding accel_in_circle.
+Execute       get_model_list accel_in_circle -filter all-wo-channel 
+INFO-FLOW: Preprocessing for RTLGen ...
+Execute       rtl_gen_preprocess in_circle 
+Execute       rtl_gen_preprocess accel_in_circle 
+INFO-FLOW: Model list for RTL generation: in_circle accel_in_circle
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       get_config_rtl -module_prefix 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       create_rtl_model in_circle -module_prefix accel_in_circle_ -vendor xilinx -mg_file /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_0': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fcmp_32ns_32ns_1_1_0': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_0': 15 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_0': 10 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'in_circle'.
+INFO: [HLS 200-111]  Elapsed time: 1.86 seconds; current allocated memory: 139.805 MB.
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       gen_rtl in_circle -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/systemc/accel_in_circle_in_circle -synmodules in_circle accel_in_circle 
+Execute       gen_rtl in_circle -style xilinx -f -lang vhdl -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/vhdl/accel_in_circle_in_circle 
+Execute       gen_rtl in_circle -style xilinx -f -lang vlog -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/verilog/accel_in_circle_in_circle 
+Execute       syn_report -csynth -model in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/report/in_circle_csynth.rpt 
+Command       syn_report done; 0.13 sec.
+Execute       syn_report -rtlxml -model in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/report/in_circle_csynth.xml 
+Execute       syn_report -verbosereport -model in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.verbose.rpt 
+Command       syn_report done; 0.4 sec.
+Execute       db_write -model in_circle -f -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.adb 
+Command       db_write done; 0.12 sec.
+Execute       gen_tb_info in_circle -p /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'accel_in_circle' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+Execute       get_config_rtl -module_prefix 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       create_rtl_model accel_in_circle -module_prefix accel_in_circle_ -vendor xilinx -mg_file /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/gmem1' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/gmem0' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/gmem2' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/indata_V' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/instate_V' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/infather_V' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'accel_in_circle/inmaxquery' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'accel_in_circle' to 's_axilite & ap_ctrl_hs'.
+INFO: [RTGEN 206-100] Bundling port 'return', 'indata_V', 'instate_V', 'infather_V' and 'inmaxquery' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'accel_in_circle'.
+Command       create_rtl_model done; 0.69 sec.
+INFO: [HLS 200-111]  Elapsed time: 1.43 seconds; current allocated memory: 146.926 MB.
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       gen_rtl accel_in_circle -istop -style xilinx -tracefl mytrace -tracefmt vcd -traceopt all -f -lang sc -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/systemc/accel_in_circle_accel_in_circle -synmodules in_circle accel_in_circle 
+Execute       gen_rtl accel_in_circle -istop -style xilinx -f -lang vhdl -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/vhdl/accel_in_circle_accel_in_circle 
+Command       gen_rtl done; 0.24 sec.
+Execute       gen_rtl accel_in_circle -istop -style xilinx -f -lang vlog -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/verilog/accel_in_circle_accel_in_circle 
+Command       gen_rtl done; 0.14 sec.
+Execute       syn_report -csynth -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/report/accel_in_circle_csynth.rpt 
+Command       syn_report done; 0.14 sec.
+Execute       syn_report -rtlxml -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/syn/report/accel_in_circle_csynth.xml 
+Command       syn_report done; 0.14 sec.
+Execute       syn_report -verbosereport -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.verbose.rpt 
+Command       syn_report done; 2.06 sec.
+Execute       db_write -model accel_in_circle -f -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.adb 
+Command       db_write done; 0.2 sec.
+Execute       gen_tb_info accel_in_circle -p /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle 
+Execute       export_constraint_db -f -tool general -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.constraint.tcl 
+Execute       syn_report -designview -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.design.xml 
+Command       syn_report done; 0.34 sec.
+Execute       get_config_rtl -disable_wave_debug 
+Execute       syn_report -wcfg -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle_dataflow_ana.wcfg 
+Execute       syn_report -protoinst -model accel_in_circle -o /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.protoinst 
+Execute       get_config_debug -directory 
+Execute       sc_get_clocks accel_in_circle 
+Execute       get_config_export -vivado_clock 
+Execute       sc_get_portdomain accel_in_circle 
+INFO-FLOW: Model list for RTL component generation: in_circle accel_in_circle
+INFO-FLOW: Handling components in module [in_circle] ... 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_0.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_0
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_0.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_0
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_0.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_0
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_fcmp_32ns_32ns_1_1_0.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_fcmp_32ns_32ns_1_1_0
+INFO-FLOW: Handling components in module [accel_in_circle] ... 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_control_s_axi.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_control_s_axi
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_gmem1_m_axi.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_gmem1_m_axi
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_gmem0_m_axi.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_gmem0_m_axi
+INFO-FLOW: Found component accel_in_circle_accel_in_circle_gmem2_m_axi.
+INFO-FLOW: Append model accel_in_circle_accel_in_circle_gmem2_m_axi
+INFO-FLOW: Append model in_circle
+INFO-FLOW: Append model accel_in_circle
+INFO-FLOW: Generating RTL model list ...
+INFO-FLOW: All models in this session: accel_in_circle_accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_0 accel_in_circle_accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_0 accel_in_circle_accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_0 accel_in_circle_accel_in_circle_fcmp_32ns_32ns_1_1_0 accel_in_circle_accel_in_circle_control_s_axi accel_in_circle_accel_in_circle_gmem1_m_axi accel_in_circle_accel_in_circle_gmem0_m_axi accel_in_circle_accel_in_circle_gmem2_m_axi in_circle accel_in_circle
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_0
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_0
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_fmul_32ns_32ns_32_2_max_dsp_0
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_fcmp_32ns_32ns_1_1_0
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_control_s_axi
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_gmem1_m_axi
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_gmem0_m_axi
+INFO-FLOW: To file: write model accel_in_circle_accel_in_circle_gmem2_m_axi
+INFO-FLOW: To file: write model in_circle
+INFO-FLOW: To file: write model accel_in_circle
+INFO-FLOW: Finished generating RTL model list.
+
+
+INFO-FLOW: RTL Generation done.
+INFO-FLOW: CAS Generation done.
+INFO-FLOW: CBC Generation done.
+Execute       syn_report -model accel_in_circle -printsummary 
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 136.99 MHz
+INFO-FLOW: DBG:CMD: auto_generate_csynth_design
+INFO-FLOW: DBG:CMD:     auto_generate --sim-model -phase csynth_design -d /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command         ap_source done; 0.17 sec.
+Command       ap_source done; 0.17 sec.
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=1 export=0 expOnly=0 dstVlogDir=syn/verilog
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Command       ap_source done; 0.42 sec.
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+Execute         source ./control.slave.tcl 
+Execute         is_m_axi_addr64 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Command       ap_source done; 0.44 sec.
+INFO-FLOW: DBG:CMD:     auto_generate -export -impltomg_flag -rtl both -tool Vivado -pcore_version 1.00.a -phase csynth_design -d /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command         ap_source done; 0.18 sec.
+Command       ap_source done; 0.18 sec.
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:       initCTypeInfo top_module=accel_in_circle xml_exists=0
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       export_impl_rtl
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.verilog
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Command       ap_source done; 0.35 sec.
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=1 expOnly=1 dstVlogDir=impl/.pcores/verilog
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Command       ap_source done; 0.33 sec.
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+INFO-FLOW: DBG:CMD:       generate_ip_cores sim=0 export=0 expOnly=0 dstVlogDir=impl/.pcores/verilog_sim
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.compgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.tcl 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.constraint.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+INFO-FLOW: DBG:CMD:       hasPcoreIpAdapter=false #gSsdmPorts=0
+INFO-FLOW: DBG:CMD: Skipping loadAnalyze_DB, #g_database=7
+INFO-FLOW: DBG:CMD:       generate_json is_phase_csynth=1 g_has_adaptors=false generate_bd_files=0 #modelList=10 #gSsdmPorts=0
+Execute       source /opt/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/fileutil/fileutil.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/tps/tcl/tcllib1.11.1/cmdline/cmdline.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       get_config_export -xo 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.dataonly.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.dataonly.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       get_config_sdx -target 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.compgen.dataonly.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.constraint.tcl 
+Execute       sc_get_clocks accel_in_circle 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute       get_config_debug -directory 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/impl/misc/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_ip.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/impl/misc/accel_in_circle_accel_in_circle_ap_fcmp_0_no_dsp_32_ip.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/impl/misc/accel_in_circle_accel_in_circle_ap_fmul_0_max_dsp_32_ip.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/impl/misc/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_ip.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/in_circle.tbgen.tcl 
+Execute       source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute       get_config_sdx -target 
+Execute       get_config_sdx -profile 
+Execute       get_config_rtl -kernel_profile 
+Execute       get_config_rtl -stall_sig_gen 
+Execute       get_config_rtl -profile 
+INFO-FLOW: DBG:CMD: add_json_sdx_info kernel file does not exist, skipping opencl info: /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/kernel.internal.xml
+INFO-FLOW: DBG:CMD:       delete-temp-dirs (skipped for debug)
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:37 ; elapsed = 00:00:43 . Memory (MB): peak = 1068.020 ; gain = 543.992 ; free physical = 314307 ; free virtual = 332742
+INFO: [VHDL 208-304] Generating VHDL RTL for accel_in_circle with prefix accel_in_circle_.
+INFO: [VLOG 209-307] Generating Verilog RTL for accel_in_circle with prefix accel_in_circle_.
+Command     autosyn done; 12.45 sec.
+Command   csynth_design done; 37.35 sec.
+Command ap_source done; 42.76 sec.
+Execute cleanup_all 
+INFO-FLOW: Workspace /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1 opened at Fri Jun 12 01:39:20 CEST 2020
+Execute     config_clock -quiet -name default -period 10 -default=false 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+Execute     config_clock -quiet -name default -uncertainty 2.7 -unit % 
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 2.7ns.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.lib 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.lib 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.lib 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/dsp48e2.hlp 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Command         ap_source done; 0.15 sec.
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.21 sec.
+Command     ap_source done; 0.21 sec.
+Execute     open_platform DefaultPlatform 
+Execute     import_lib /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.lib 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.hlp 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/target_info.tcl 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/xilinx_interface.hlp 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.hlp 
+Execute             source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.hlp 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.hlp 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+Execute     set_part xcu200-fsgd2104-2-e 
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data single -quiet 
+Command       ap_part_info done; 4.26 sec.
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       add_library xilinx/virtexuplus/virtexuplus:xcu200:-fsgd2104:-2-e 
+Execute         get_default_platform 
+Execute         ap_part_info -data single -name xcu200-fsgd2104-2-e 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data resources 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         config_chip_info -quiet -resource {SLICE 147780} {LUT 1182240} {FF 2364480} {DSP48E 6840} {BRAM 4320} {URAM 960} {SLR 3} 
+Execute         ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute         config_chip_info -quiet -speed medium 
+Execute       add_library xilinx/virtexuplus/virtexuplus_fpv7 
+Execute         get_default_platform 
+INFO: [HLS 200-10] Setting target device to 'xcu200-fsgd2104-2-e'
+Execute       ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute       get_default_platform 
+Command     set_part done; 4.54 sec.
+Execute     ap_part_info -data single -name xcu200-fsgd2104-2-e 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data resources 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     config_chip_info -quiet -resource {SLICE 147780} {LUT 1182240} {FF 2364480} {DSP48E 6840} {BRAM 4320} {URAM 960} {SLR 3} 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     config_chip_info -quiet -speed medium 
+Execute     config_sdx -optimization_level=none 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -optimization_level' config_export -vivado_optimization_level=2 
+INFO: [HLS 200-435] Setting 'config_sdx -optimization_level' configuration: config_export -vivado_optimization_level=2
+Execute       config_export -vivado_optimization_level=2 
+Execute         get_config_export -vivado_impl_strategy 
+Execute         get_config_export -vivado_phys_opt 
+Execute         send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=place 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=place
+Execute         config_export -vivado_phys_opt=place 
+Execute     config_sdx -target=xocc 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' config_export -vivado_optimization_level=0 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=0
+Execute       config_export -vivado_optimization_level=0 
+Execute         get_config_export -vivado_impl_strategy 
+Execute         get_config_export -vivado_phys_opt 
+Execute         send_msg_by_id INFO @200-435@%s%s 'config_export -vivado_optimization_level' config_export -vivado_phys_opt=none 
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level' configuration: config_export -vivado_phys_opt=none
+Execute         config_export -vivado_phys_opt=none 
+Execute       get_config_compile -pipeline_loops 
+Execute       get_config_compile -name_max_length 
+Execute       get_config_schedule -enable_dsp_full_reg 
+Execute       get_config_rtl -register_reset_num 
+Execute       get_config_rtl -module_auto_prefix 
+Execute       get_config_interface -m_axi_addr64 
+Execute       send_msg_by_id INFO @200-435@%s%s 'config_sdx -target' set_clock_uncertainty 27% 
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty 27%
+Execute       set_clock_uncertainty 27% 
+Execute     config_export -vivado_optimization_level=0 
+Execute       get_config_export -vivado_impl_strategy 
+Execute       get_config_export -vivado_phys_opt 
+Execute     config_export -vivado_phys_opt=none 
+Execute     config_compile -name_max_length=80 
+INFO: [XFORM 203-1161] The maximum of name length is set into 80.
+Execute     config_compile -pipeline_loops=64 
+INFO: [XFORM 203-1171] Pipeline the innermost loop with trip count more than 64 or its parent loop when its trip count is less than or equal 64.
+Execute     config_schedule -enable_dsp_full_reg=1 
+Execute     config_rtl -module_auto_prefix=1 
+Execute     config_rtl -register_reset_num=3 
+Execute     config_interface -m_axi_addr64=1 
+Command   open_solution done; 4.99 sec.
+Execute   cosim_design 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+INFO-FLOW: DBG:CMD: read_platform_lib /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/common.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/APCoreGen.gen 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op.gen 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/op_simcore.gen 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/generic/autopilot/interface.gen 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/plb46.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/fsl.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/axi4.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/nativeAXI4.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/saxilite.gen 
+Execute           source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/maxi.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/scripts/xilinxcoregen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/interface/XilEDKCoreGen.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/dds_compiler.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/util.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfft.gen 
+Command         ap_source done; 0.11 sec.
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/ip/xfir.gen 
+Execute         source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/dsp48.gen 
+Command       ap_source done; 0.18 sec.
+Command     ap_source done; 0.18 sec.
+Execute     source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/virtexuplus/virtexuplus_fpv7.gen 
+Execute       source /opt/Xilinx/Vivado/2019.2/common/technology/xilinx/common/xilinx_fp.gen 
+INFO-FLOW: DBG:CMD:   using AESL_AUTOCG::g_clock_period=10.000 (was NA)
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     is_encrypted /home/users/alberto.giusti/Desktop/backup/variableQuery/bench.cpp 
+Execute     is_encrypted /home/users/alberto.giusti/Desktop/backup/variableQuery/incircle.cpp 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+INFO: [COSIM 212-47] Using XSIM for RTL simulation.
+INFO: [COSIM 212-14] Instrumenting C test bench ...
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+INFO-FLOW: TB processing: /home/users/alberto.giusti/Desktop/backup/variableQuery/bench.cpp /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/bench.cpp_pre.cpp
+Execute     tidy_31 xilinx-tb-xfmat /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/bench.cpp_pre.cpp std=c++11 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-tb-xfmat -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/bench.cpp_pre.cpp -- -std=c++11 -fhls -ferror-limit=0
+Command     tidy_31 done; 3.36 sec.
+Execute     tidy_31 xilinx-tb31-process /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/bench.cpp_pre.cpp.tb.cpp std=c++11 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-tb31-process -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/bench.cpp_pre.cpp.tb.cpp -- -std=c++11 -fhls -ferror-limit=0
+Command     tidy_31 done; 4.92 sec.
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+INFO-FLOW: TB processing: /home/users/alberto.giusti/Desktop/backup/variableQuery/incircle.cpp /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp
+Execute     tidy_31 xilinx-tb-xfmat /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp std=c++11 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-tb-xfmat -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp -- -std=c++11 -fhls -ferror-limit=0
+Command     tidy_31 done; 3.31 sec.
+Execute     tidy_31 xilinx-tb31-process /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp.tb.cpp std=c++11 
+INFO-FLOW: exec /opt/Xilinx/Vivado/2019.2/lnx64/tools/clang-3.9-csynth/bin/tidy-3.1 -header-filter=.* -checks=-*,xilinx-tb31-process -quiet -fix-errors /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp.tb.cpp -- -std=c++11 -fhls -ferror-limit=0
+Command     tidy_31 done; 3.27 sec.
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/tb.status.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/global.setting.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.rtl_wrap.cfg.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+WARNING: [COSIM 212-369] AXI_master port 'gmem1' has a depth of '4'. Insufficient depth may result in simulation mismatch or freeze.
+WARNING: [COSIM 212-369] AXI_master port 'gmem0' has a depth of '4'. Insufficient depth may result in simulation mismatch or freeze.
+WARNING: [COSIM 212-368] AXI_master port 'gmem2' has a default depth of 1. Insufficient depth may cause simulation mismatch or freeze. Please specify the depth in 'set_directive_interface' using the option '-depth'.
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+Execute     source .run_sim.tcl 
+INFO: [COSIM 212-302] Starting C TB testing ... 
+Command     ap_source done; 0.3 sec.
+INFO: [COSIM 212-333] Generating C post check test bench ...
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info 
+INFO: [COSIM 212-12] Generating RTL test bench ...
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source ../tv/cdatafile/ref.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source ../tv/cdatafile/ref.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     source /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/.autopilot/db/accel_in_circle.tbgen.tcl 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data names -quiet 
+Execute     ap_part_info -name xcu200-fsgd2104-2-e -data info -quiet 
+INFO: [COSIM 212-1] *** C/RTL co-simulation file generation completed. ***
+Execute     source .run_sim.tcl 
+Execute       source check_sim.tcl 
+Execute       source .sim.status.tcl 
+INFO: [COSIM 212-323] Starting verilog simulation. 
+INFO: [COSIM 212-15] Starting XSIM ...
+INFO: [COSIM 212-316] Starting C post checking ...
+Command     ap_source done; 87.13 sec.
+INFO: [COSIM 212-1000] *** C/RTL co-simulation finished: PASS ***
+INFO: [COSIM 212-211] II is measurable only when transaction number is greater than 1 in RTL simulation. Otherwise, they will be marked as all NA. If user wants to calculate them, please make sure there are at least 2 transactions in RTL simulation.
+Command   cosim_design done; 175.47 sec.
+Command ap_source done; 180.48 sec.
+Execute cleanup_all 

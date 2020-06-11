@@ -1,0 +1,1 @@
+set ::AESL_AUTOSIM::gTopFileName /home/users/alberto.giusti/Desktop/backup/variableQuery/fidelta_apint/solution1/./sim/autowrap/testbench/incircle.cpp_pre.cpp.tb.cpp
