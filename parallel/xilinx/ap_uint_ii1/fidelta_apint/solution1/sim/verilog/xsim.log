@@ -1,0 +1,85 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Thu Jun 11 17:43:56 2020
+# Process ID: 1044
+# Current directory: /home/users/alberto.giusti/Desktop/backup/ap_uint_ii1/fidelta_apint/solution1/sim/verilog
+# Command line: xsim -mode tcl -source {xsim.dir/accel_in_circle/xsim_script.tcl}
+# Log file: /home/users/alberto.giusti/Desktop/backup/ap_uint_ii1/fidelta_apint/solution1/sim/verilog/xsim.log
+# Journal file: /home/users/alberto.giusti/Desktop/backup/ap_uint_ii1/fidelta_apint/solution1/sim/verilog/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/accel_in_circle/xsim_script.tcl
+# xsim {accel_in_circle} -autoloadwcfg -tclbatch {accel_in_circle.tcl}
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source accel_in_circle.tcl
+## run all
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 1 [0.00%] @ "125000"
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U1/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U2/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U3/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U4/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U5/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U6/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U7/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U8/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U9/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U10/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U11/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U12/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U13/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U14/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U15/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U16/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U17/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U18/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U19/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U20/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U21/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U22/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U23/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U24/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U25/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fsub_32ns_32ns_32_3_full_dsp_1_U26/accel_in_circle_accel_in_circle_ap_fsub_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U27/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+Warning: OPMODE Input Warning : The OPMODE 0110X0X with CARRYINSEL  000 to DSP48E1 instance is invalid.
+Time: 615 ns  Iteration: 11  Process: /apatb_accel_in_circle_top/AESL_inst_accel_in_circle_accel_in_circle/accel_in_circle_fadd_32ns_32ns_32_3_full_dsp_1_U28/accel_in_circle_accel_in_circle_ap_fadd_1_full_dsp_32_u/U0/i_synth/addsub_op/ADDSUB/dsp/OP/dsp48e1_body/ALIGN_ADD/DSP2/DSP/prcs_opmode_drc  File: /opt/Xilinx/Vivado/2019.2/data/vhdl/src/unisims/primitive/DSP48E1.vhd
+// RTL Simulation : 1 / 1 [100.00%] @ "1175000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 1215 ns : File "/home/users/alberto.giusti/Desktop/backup/ap_uint_ii1/fidelta_apint/solution1/sim/verilog/accel_in_circle_accel_in_circle.autotb.v" Line 584
+## quit
+INFO: [Common 17-206] Exiting xsim at Thu Jun 11 17:44:17 2020...

@@ -1,0 +1,7 @@
+Running: xsim.dir/accel_in_circle/xsimk -simmode gui -wdb accel_in_circle.wdb -simrunnum 0 -socket 34194
+Design successfully loaded
+Design Loading Memory Usage: 77580 KB (Peak: 78028 KB)
+Design Loading CPU Usage: 170 ms
+Simulation completed
+Simulation Memory Usage: 167708 KB (Peak: 216852 KB)
+Simulation CPU Usage: 1380 ms

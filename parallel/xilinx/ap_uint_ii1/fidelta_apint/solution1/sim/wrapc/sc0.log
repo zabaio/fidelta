@@ -1,0 +1,5 @@
+   Build using "/opt/Xilinx/Vivado/2019.2/tps/lnx64/gcc-6.2.0/bin/g++"
+   Compiling bench.cpp_pre.cpp.tb.cpp
+   Compiling incircle.cpp_pre.cpp.tb.cpp
+   Compiling apatb_accel_in_circle.cpp
+   Generating cosim.tv.exe
