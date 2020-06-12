@@ -290,29 +290,31 @@ int main(int argc, char *argv[])
                     accel_state[bookmark] = -1;
                 }
 
-                for (i = 0; i<MAXQUERY; i++){
-                    printf("%2d -> ",accel_state[i]);
-                    int p;
-                    for (p = 0; p < 8; p ++){
-                        printf("%6.2f ",accel_data[i][p]);
+                #ifdef DEBUG
+                    for (i = 0; i<MAXQUERY; i++){
+                        printf("%2d -> ",accel_state[i]);
+                        int p;
+                        for (p = 0; p < 8; p ++){
+                            printf("%6.2f ",accel_data[i][p]);
+                        }
+                        printf("\n");
                     }
-                    printf("\n");
-                }
-                printf("v\n");
+                    printf("v\n");
+                #endif
 
                 accel_in_circle (accel_data[0], accel_state);
-                
-                for (i = 0; i<MAXQUERY; i++){
-                    printf("%2d -> ",accel_state[i]);
-                    int p;
-                    for (p = 0; p < 8; p ++){
-                        printf("%6.2f ",accel_data[i][p]);
+    
+                #ifdef DEBUG                
+                    for (i = 0; i<MAXQUERY; i++){
+                        printf("%2d -> ",accel_state[i]);
+                        int p;
+                        for (p = 0; p < 8; p ++){
+                            printf("%6.2f ",accel_data[i][p]);
+                        }
+                        printf("\n");
                     }
                     printf("\n");
-                }
-                printf("\n");
 
-                #ifdef DEBUG
                     printf("Prima\n");
                     print_tris_id(tprobe);
                 #endif
