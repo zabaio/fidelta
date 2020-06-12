@@ -6,17 +6,17 @@
 #define DROW 8
 #define FBIT 32
 
-int in_circle(float *innerdata, float *father){
+int in_circle(float *innerdata, float *son){
 
 	//for(int y = 0; y < DCOL; y++)
 	//	printf("%.2f ", innerdata[y]);
 
-    float xda = father[0] - innerdata[0];
-    float xdb = father[2] - innerdata[0];
-    float xdc = father[4] - innerdata[0];
-    float yda = father[1] - innerdata[1];
-    float ydb = father[3] - innerdata[1];
-    float ydc = father[5] - innerdata[1];
+    float xda = son[0] - innerdata[0];
+    float xdb = son[2] - innerdata[0];
+    float xdc = son[4] - innerdata[0];
+    float yda = son[1] - innerdata[1];
+    float ydb = son[3] - innerdata[1];
+    float ydc = son[5] - innerdata[1];
     float da2da2 = xda*xda + yda*yda;
     float db2db2 = xdb*xdb + ydb*ydb;
     float dc2dc2 = xdc*xdc + ydc*ydc;
@@ -30,11 +30,11 @@ int in_circle(float *innerdata, float *father){
     return (det>0);
 }
 
-void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *infather, int *inmaxquery){
+void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *inson, int *inmaxquery){
 
     #pragma HLS INTERFACE m_axi port=instate offset=slave bundle=gmem0 depth=4
 	#pragma HLS INTERFACE m_axi port=indata offset=slave bundle=gmem1 depth=4
-	#pragma HLS INTERFACE m_axi port=infather offset=slave bundle=gmem2 depth=1
+	#pragma HLS INTERFACE m_axi port=inson offset=slave bundle=gmem2 depth=1
 
 	#pragma HLS INTERFACE s_axilite port=instate bundle=control
 	#pragma HLS INTERFACE s_axilite port=indata bundle=control
@@ -44,29 +44,29 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 
 	ap_uint<512> temp_data[1];
 	ap_uint<256> temp_state[1];
-	ap_uint<256> temp_father[1];
+	ap_uint<256> temp_son[1];
 
 	float data[DROW][DCOL];
 	ap_int<32> state[DROW];
-	float father[6];
+	float son[6];
 	int maxquery = *inmaxquery;
 	int i;
 
 	#pragma HLS ARRAY_PARTITION variable=data complete
 	#pragma HLS ARRAY_PARTITION variable=state complete
-	#pragma HLS ARRAY_PARTITION variable=father complete
+	#pragma HLS ARRAY_PARTITION variable=son complete
 
-	memcpy(temp_father, infather, sizeof(ap_uint<256>));
+	memcpy(temp_son, inson, sizeof(ap_uint<256>));
 
-	initfather: for(i = 0; i < 6; i++){
+	initson: for(i = 0; i < 6; i++){
 		#pragma HLS PIPELINE
 
 		ap_uint<32> temp;
 		int lo = FBIT*i;
 		int hi = lo + FBIT - 1;
-		temp = temp_father[0].range(hi, lo);
+		temp = temp_son[0].range(hi, lo);
 
-		father[i] = *((float *)&temp);
+		son[i] = *((float *)&temp);
 	}
 
 	mainloop: for (i = 0; i < maxquery/DROW; i++){
@@ -102,7 +102,7 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 		for(j=0; j<DROW; j++){
 
 			#pragma HLS UNROLL
-			if (state[j] != -1 && !in_circle(data[j], father)){
+			if (state[j] != -1 && !in_circle(data[j], son)){
 				state[j] = -1;
 			}
 		//	printf(" -> %d\n", state[j].to_int());

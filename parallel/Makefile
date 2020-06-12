@@ -6,7 +6,7 @@ OBJDIR = bin
 SRCDIR = src
 SHODIR = ../showme
 OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
-OUT = serial
+OUT = parallel
 INC = $(SRCDIR)/*.h
 
 RESPATHNOEXT = result
