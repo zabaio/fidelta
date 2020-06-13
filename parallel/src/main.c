@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <string.h>
 
+#include <valgrind/callgrind.h>
+
 #include "types.h"
 #include "display.h"
 
@@ -11,54 +13,13 @@
     #define PTSLIM 300000
 #endif
 
-
-int in_circle(float *innerdata, float *son){
-
-    float xda = son[0] - innerdata[0];
-    float xdb = son[2] - innerdata[0];
-    float xdc = son[4] - innerdata[0];
-    float yda = son[1] - innerdata[1];
-    float ydb = son[3] - innerdata[1];
-    float ydc = son[5] - innerdata[1];
-    float da2da2 = xda*xda + yda*yda;
-    float db2db2 = xdb*xdb + ydb*ydb;
-    float dc2dc2 = xdc*xdc + ydc*ydc;
-
-    float min1 = xdb*ydc - xdc*ydb;
-    float min2 = xda*ydc - xdc*yda;
-    float min3 = xda*ydb - xdb*yda;
-
-    float det = da2da2*min1 - db2db2*min2 + dc2dc2*min3;
-    return (det>0);
-}
-
-void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery){
-
-	float data[2];
-	int state;
-	float son[6];
-	int maxquery = *inmaxquery;
-	int i;
-
-	memcpy(son, inson, 6*sizeof(float));
-
-	for (i = 0; i < maxquery; i++){
-
-		memcpy(data, indata + 2*i, 2*sizeof(float));
-		memcpy(&state, instate + i, sizeof(int));
-
-        if (state != -1 && !in_circle(data, son))
-            state = -1;
-        
-		memcpy(instate + i, &state, sizeof(int));
-	}
-
-	return;
-}
+// c-sim of accelerated functions
+int in_circle(float *innerdata, float *son);
+void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery);
 
 // Creates and adds the list of points encroaching triangle "son":
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
-void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]);
+int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]);
 
 int main(int argc, char *argv[])
 {
@@ -156,7 +117,10 @@ int main(int argc, char *argv[])
     // The first three points in result.node form a triangle bounding all other points, which we add to tris.
     // Then, with push_ptint, we add every point to the list of points encroaching on it.
 
-    point pts[PTSLIM + 3];
+    point *pts = malloc((PTSLIM + 3) * sizeof(point));
+    int *accel_state = malloc((PTSLIM + 10) * sizeof(int));
+    float (*accel_data)[2] = malloc((PTSLIM + 10) * sizeof(*accel_data));
+    float accel_son[6];
     t_node *tris = NULL;
     
     fseek(node, 0, SEEK_SET);
@@ -203,17 +167,13 @@ int main(int argc, char *argv[])
     #endif
     a = clock() - a;
     clock_t t = clock();
+    CALLGRIND_START_INSTRUMENTATION;
 
+    int totcir = 0;
     // Initialization is over, we start timing the construction
 
     while(acts != NULL || nextround != NULL){
         
-        // arrays to pass to kernel
-        // (just to be sure) we allocate PTSLIM + 3 dummy points + 7 to grant mod 8 needed by kernel        
-        float accel_data[PTSLIM + 10][2];
-        int accel_state[PTSLIM + 10];
-        float accel_son[6];
-
         // loads next round
         if (acts == NULL){
             #ifdef LOG
@@ -243,11 +203,9 @@ int main(int argc, char *argv[])
                     alldim += aprobe->act->tsecond->dim;
                 tprobe->enc = malloc(alldim*sizeof(point));
 
-                merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
+                int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
 
-                // need to test alldim - 1 points. then we add enough to make it a multiple of 8 (due to the bitwidth of the kernel)
-                int maxquery = alldim + 7 - (alldim - 1)%8;
-                for(i = alldim - 1; i < maxquery; i ++){
+                for(i = maxquery; i < maxquery + 7; i ++){
                     accel_state[i] = -1;
                 }
 
@@ -266,6 +224,7 @@ int main(int argc, char *argv[])
                     printf("\nv\n ");
                 #endif                
 
+                totcir += alldim - 1;
                 accel_in_circle (accel_data[0], accel_state, accel_son, &maxquery);
                 
 
@@ -279,7 +238,7 @@ int main(int argc, char *argv[])
                     print_tris_id(tprobe);
                 #endif
 
-                for (i = 0; i < alldim - 1; i++){
+                for (i = 0; i < maxquery; i++){
                     if (accel_state[i] != -1){
                         tprobe->enc[tprobe->dim] = pts[accel_state[i]];
                         tprobe->dim ++;
@@ -387,8 +346,18 @@ int main(int argc, char *argv[])
 
     }
 
+    CALLGRIND_STOP_INSTRUMENTATION;
+    CALLGRIND_DUMP_STATS;
+    t += clock() - t;
+    float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
+    float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
+
+    printf("Init time: %d ms\n", (int)ini_time);
+    printf("Delaunay time: %d ms\n", (int)time_taken);
+
+
     // Output section
-    // soldim is the dimention of the triangulation, tridim of the structure tris
+    // soldim is the dimension of the triangulation, tridim of the structure tris
     // We scan through tris, every triangle who hasn't encroaching points
     // is part of the triangulation and we print it
 
@@ -408,10 +377,6 @@ int main(int argc, char *argv[])
   
     fclose (ele);
 
-    t += clock() - t;
-    float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
-    float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
-
     #ifdef DEBUG
         print_tris_id(tris);
         printf("Total number of generated triangles: %zu B x %d\n",sizeof(t_node), tridim);
@@ -420,9 +385,6 @@ int main(int argc, char *argv[])
         printf ("Number of rounds: %d\n", roundcount);
     #endif
     
-    printf("Init time: %d ms\n", (int)ini_time);
-    printf("Delaunay time: %d ms\n", (int)time_taken);
-
     // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
     // Note that we added the three bounding points
     if (soldim == 2*(n_pts +3 ) - 5)    
@@ -430,11 +392,12 @@ int main(int argc, char *argv[])
     else
         printf ("Generated %d triangles: Incorrect\n", soldim);
 
+    printf("%d chiamate a incircle\n", totcir);
 
     return 0;
 }
 
-void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]){
+int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]){
 
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
@@ -485,5 +448,49 @@ void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_stat
         }
     }
 
-    return;
+    return sid;
+}
+
+int in_circle(float *innerdata, float *son){
+
+    float xda = son[0] - innerdata[0];
+    float xdb = son[2] - innerdata[0];
+    float xdc = son[4] - innerdata[0];
+    float yda = son[1] - innerdata[1];
+    float ydb = son[3] - innerdata[1];
+    float ydc = son[5] - innerdata[1];
+    float da2da2 = xda*xda + yda*yda;
+    float db2db2 = xdb*xdb + ydb*ydb;
+    float dc2dc2 = xdc*xdc + ydc*ydc;
+
+    float min1 = xdb*ydc - xdc*ydb;
+    float min2 = xda*ydc - xdc*yda;
+    float min3 = xda*ydb - xdb*yda;
+
+    float det = da2da2*min1 - db2db2*min2 + dc2dc2*min3;
+    return (det>0);
+}
+
+void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery){
+
+	float data[2];
+	int state;
+	float son[6];
+	int maxquery = *inmaxquery;
+	int i;
+
+	memcpy(son, inson, 6*sizeof(float));
+
+	for (i = 0; i < maxquery; i++){
+
+		memcpy(data, indata + 2*i, 2*sizeof(float));
+		memcpy(&state, instate + i, sizeof(int));
+
+        if (state != -1 && !in_circle(data, son))
+            state = -1;
+        
+		memcpy(instate + i, &state, sizeof(int));
+	}
+
+	return;
 }
