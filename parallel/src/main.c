@@ -24,105 +24,32 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
 int main(int argc, char *argv[])
 {
     int rmode = 0, n_pts, i;
-    float max_cor = 0;
-    FILE *node, *ele, *extnode;
-    rmode = init (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
-    
+    float max_cor;
+
+    //internal points file, result file, eventual input point file
+    FILE *node, *ele, *extnode; 
+
+    //start init time
     clock_t a = clock();
-    point prov;
 
-    if(rmode){
+    // read mode and eventual input file from cmd, then proceed initializing node file
+    rmode = init_cmd (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
 
-        // In random mode we generate a random square cloud of points 
-        // whose max coordinate has absolute value max_cor.
-        // We then write in result.node three points that wrap the cloud
-        // and then all the other points
+    if (rmode)
+        init_random(&node, n_pts, max_cor);
+    else
+        init_from_file(&extnode, &node, &n_pts);
 
-        fprintf (node, "%d 2 0 0\n", n_pts+3);
-        srand(7);
-
-        set_pt(&prov, -max_cor*3, -max_cor*3, 0);
-        fprint_pt (node, &prov);
-        set_pt(&prov, 0, max_cor*3, 1);
-        fprint_pt (node, &prov);
-        set_pt(&prov, max_cor*3, 0, 2);
-        fprint_pt (node, &prov);        
-        #ifdef LOG
-            printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
-            printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*3);
-            printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
-        #endif
-
-        for(i = 3; i < n_pts+3; i++){
-            prov.x = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
-            prov.y = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
-            prov.id = i;
-            fprint_pt (node, &prov);
-            #ifdef LOG
-                printf("Point");
-                print_pt_id(prov);
-                printf("= ");
-                print_pt(prov);
-            #endif
-        }
-    }
-    else{
-
-        // From file mode first scans the given .node file, checking for formatting errors
-        // and finding the max coordinate of the points listed.
-        // After that we write in result.node the three points wrapping all input points,
-        // which we then copy as well
-
-        if(fscanf (extnode, "%d %*[^\n]\n", &n_pts) == EOF){
-            printf("ERROR: Input file is empty\n");
-            man(0);
-            exit(EXIT_FAILURE);
-        }
-
-        for (i = 0; i < n_pts; i++){
-            if (fscanf (extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y) != 3 || prov.id != i){
-                printf("ERROR: Error in input file format at line %d\n", i+2);
-                man(1);
-                exit(EXIT_FAILURE);
-            }
-            if (prov.x > max_cor) max_cor = prov.x;
-            if (-prov.x > max_cor) max_cor = -prov.x;
-            if (prov.y > max_cor) max_cor = prov.y;
-            if (-prov.y > max_cor) max_cor = -prov.y;
-        }
-        
-        fprintf (node, "%d 2 0 0\n", n_pts+3);
-        set_pt(&prov, -max_cor*3, -max_cor*3, 0);
-        fprint_pt (node, &prov);
-        set_pt(&prov, 0, max_cor*3, 1);
-        fprint_pt (node, &prov);
-        set_pt(&prov, max_cor*3, 0, 2);
-        fprint_pt (node, &prov);
-    
-        fseek (extnode, 0, SEEK_SET);
-        fscanf (extnode, "%*[^\n]\n");
-        for (i = 0; i < n_pts; i++){
-            fscanf (extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y);
-            prov.id += 3;
-            fprint_pt (node, &prov);
-        }
-
-        fclose (extnode);
-    }
-    
     // Now "node" stores all the points needed.
     // We create tris, the core structure of the algorithm.
-    // It is a list of triangles, each one with the list of points that encroach on it, 
+    // It is a list of triangles, each one with the array of points that encroach on it, 
     // meaning that they are inside the triangle's circumcircle
     // The first three points in result.node form a triangle bounding all other points, which we add to tris.
-    // Then, with push_ptint, we add every point to the list of points encroaching on it.
+    // Then we add every point to its encroaching points array.
 
-    point *pts = malloc((PTSLIM + 3) * sizeof(point));
-    int *accel_state = malloc((PTSLIM + 10) * sizeof(int));
-    float (*accel_data)[2] = malloc((PTSLIM + 10) * sizeof(*accel_data));
-    float accel_son[6];
     t_node *tris = NULL;
-    
+    point *pts = malloc((PTSLIM + 3) * sizeof(point));    
+
     fseek(node, 0, SEEK_SET);
     fscanf (node, "%*[^\n]\n");
     for (i = 0; i < 3; i++){
@@ -165,11 +92,16 @@ int main(int argc, char *argv[])
     #ifdef LOG
         int roundcount = 0, roundwidth = 0;
     #endif
-    a = clock() - a;
+
+    int *accel_state = malloc((PTSLIM + 10) * sizeof(int));
+    float (*accel_data)[2] = malloc((PTSLIM + 10) * sizeof(*accel_data));
+    float accel_son[6];
+
+    // end init timing, start delaunay construction timing
+    a = clock() - a; 
     clock_t t = clock();
     CALLGRIND_START_INSTRUMENTATION;
 
-    int totcir = 0;
     // Initialization is over, we start timing the construction
 
     while(acts != NULL || nextround != NULL){
@@ -224,7 +156,6 @@ int main(int argc, char *argv[])
                     printf("\nv\n ");
                 #endif                
 
-                totcir += alldim - 1;
                 accel_in_circle (accel_data[0], accel_state, accel_son, &maxquery);
                 
 
@@ -391,8 +322,6 @@ int main(int argc, char *argv[])
         printf ("Generated %d triangles: Correct\n", soldim);
     else
         printf ("Generated %d triangles: Incorrect\n", soldim);
-
-    printf("%d chiamate a incircle\n", totcir);
 
     return 0;
 }

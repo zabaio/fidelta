@@ -17,8 +17,8 @@
 //  Input output and user interaction   //
 //--------------------------------------//
 
-// initialization based on command line. Returns 1 if random mode is selected
-int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor){
+// Command line read. Returns 1 if random mode is selected
+int init_cmd (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor){
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
     if (*node == NULL){
@@ -74,6 +74,104 @@ int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *
         exit(EXIT_FAILURE);
     }
 }
+
+void init_random(FILE **node, int n_pts, float max_cor){
+
+    // In random mode we generate a random square cloud of points 
+    // whose max coordinate has absolute value max_cor.
+    // We then write in result.node three points that wrap the cloud
+    // and then all the other points
+    
+    point prov;
+    fprintf (*node, "%d 2 0 0\n", n_pts+3);
+    srand(7);
+
+    set_pt(&prov, -max_cor*3, -max_cor*3, 0);
+    fprint_pt (*node, &prov);
+    set_pt(&prov, 0, max_cor*3, 1);
+    fprint_pt (*node, &prov);
+    set_pt(&prov, max_cor*3, 0, 2);
+    fprint_pt (*node, &prov);        
+    #ifdef LOG
+        printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
+        printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*3);
+        printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
+    #endif
+
+    int i;
+    for(i = 3; i < n_pts+3; i++){
+        prov.x = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
+        prov.y = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
+        prov.id = i;
+        fprint_pt (*node, &prov);
+        #ifdef LOG
+            printf("Point");
+            print_pt_id(prov);
+            printf("= ");
+            print_pt(prov);
+        #endif
+    }
+
+    return;
+}
+
+void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
+
+    // From file mode first scans the given .node file, checking for formatting errors
+    // and finding the max coordinate of the points listed.
+    // After that we write in result.node the three points wrapping all input points,
+    // which we then copy as well
+
+    int n_pts;
+    float max_cor = 0;
+
+    point prov;
+    if(fscanf (*extnode, "%d %*[^\n]\n", &n_pts) == EOF){
+        printf("ERROR: Input file is empty\n");
+        man(0);
+        exit(EXIT_FAILURE);
+    }
+
+    int i;
+    for (i = 0; i < n_pts; i++){
+        if (fscanf (*extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y) != 3 || prov.id != i){
+            printf("ERROR: Error in input file format at line %d\n", i+2);
+            man(1);
+            exit(EXIT_FAILURE);
+        }
+
+        if (prov.x > max_cor) max_cor = prov.x;
+        if (-prov.x > max_cor) max_cor = -prov.x;
+        if (prov.y > max_cor) max_cor = prov.y;
+        if (-prov.y > max_cor) max_cor = -prov.y;
+        
+        if(max_cor > CORLIM){
+            printf("ERROR: Error in input file: coordinate too big at line %d\n", i+2);
+            man(1);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    fprintf (*node, "%d 2 0 0\n", n_pts+3);
+    set_pt(&prov, -max_cor*3, -max_cor*3, 0);
+    fprint_pt (*node, &prov);
+    set_pt(&prov, 0, max_cor*3, 1);
+    fprint_pt (*node, &prov);
+    set_pt(&prov, max_cor*3, 0, 2);
+    fprint_pt (*node, &prov);
+
+    fseek (*extnode, 0, SEEK_SET);
+    fscanf (*extnode, "%*[^\n]\n");
+    for (i = 0; i < n_pts; i++){
+        fscanf (*extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y);
+        prov.id += 3;
+        fprint_pt (*node, &prov);
+    }
+
+    (*n_pts_ptr) = n_pts;
+    fclose (*extnode);
+}
+
 
 // prints manual
 void man (int verbose){
