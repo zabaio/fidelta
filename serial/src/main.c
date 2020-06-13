@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <string.h>
 
+#include <valgrind/callgrind.h>
+
 #include "types.h"
 #include "display.h"
 
@@ -159,6 +161,8 @@ int main(int argc, char *argv[])
     #endif
     a = clock() - a;
     clock_t t = clock();
+    CALLGRIND_START_INSTRUMENTATION;
+
     while(acts != NULL || nextround != NULL){
 
         // loads next round
@@ -283,6 +287,16 @@ int main(int argc, char *argv[])
 
     }
 
+    CALLGRIND_STOP_INSTRUMENTATION;
+    CALLGRIND_DUMP_STATS;
+    t += clock() - t;
+    float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
+    float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
+
+    printf("Init time: %d ms\n", (int)ini_time);
+    printf("Delaunay time: %d ms\n", (int)time_taken);
+
+
     // Output section
     // soldim is the dimention of the triangulation, tridim of the structure tris
     // We scan through tris, every triangle who hasn't encroaching points
@@ -304,10 +318,6 @@ int main(int argc, char *argv[])
   
     fclose (ele);
 
-    t += clock() - t;
-    float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
-    float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
-
     #ifdef DEBUG
         print_tris_id(tris);
         printf("Total number of generated triangles: %zu B x %d\n",sizeof(t_node), tridim);
@@ -316,9 +326,6 @@ int main(int argc, char *argv[])
         printf ("Number of rounds: %d\n", roundcount);
     #endif
     
-    printf("Init time: %d ms\n", (int)ini_time);
-    printf("Delaunay time: %d ms\n", (int)time_taken);
-
     // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
     // Note that we added the three bounding points
     if (soldim == 2*(n_pts +3 ) - 5)    
