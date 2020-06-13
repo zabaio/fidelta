@@ -58,7 +58,7 @@ void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery)
 
 // Creates and adds the list of points encroaching triangle "son":
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
-void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]);
+int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]);
 
 int main(int argc, char *argv[])
 {
@@ -204,6 +204,7 @@ int main(int argc, char *argv[])
     a = clock() - a;
     clock_t t = clock();
 
+    int totcir = 0;
     // Initialization is over, we start timing the construction
 
     while(acts != NULL || nextround != NULL){
@@ -243,11 +244,9 @@ int main(int argc, char *argv[])
                     alldim += aprobe->act->tsecond->dim;
                 tprobe->enc = malloc(alldim*sizeof(point));
 
-                merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
+                int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
 
-                // need to test alldim - 1 points. then we add enough to make it a multiple of 8 (due to the bitwidth of the kernel)
-                int maxquery = alldim + 7 - (alldim - 1)%8;
-                for(i = alldim - 1; i < maxquery; i ++){
+                for(i = maxquery; i < maxquery + 7; i ++){
                     accel_state[i] = -1;
                 }
 
@@ -266,6 +265,7 @@ int main(int argc, char *argv[])
                     printf("\nv\n ");
                 #endif                
 
+                totcir += alldim - 1;
                 accel_in_circle (accel_data[0], accel_state, accel_son, &maxquery);
                 
 
@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
                     print_tris_id(tprobe);
                 #endif
 
-                for (i = 0; i < alldim - 1; i++){
+                for (i = 0; i < maxquery; i++){
                     if (accel_state[i] != -1){
                         tprobe->enc[tprobe->dim] = pts[accel_state[i]];
                         tprobe->dim ++;
@@ -430,11 +430,12 @@ int main(int argc, char *argv[])
     else
         printf ("Generated %d triangles: Incorrect\n", soldim);
 
+    printf("%d chiamate a incircle\n", totcir);
 
     return 0;
 }
 
-void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]){
+int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]){
 
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
@@ -485,5 +486,5 @@ void merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_stat
         }
     }
 
-    return;
+    return sid;
 }
