@@ -67,17 +67,32 @@ void set_t(triangle *t,point a,point b,point c){
 }
 
 // add triangle to the front of the list
-void push_t(t_node **ref, point p1, point p2, point p3){
-    t_node *new = (t_node*)malloc(sizeof(t_node));
+void push_t (t_node **ref, point p1, point p2, point p3){
+    t_node *newnode = (t_node*)malloc(sizeof(t_node));
     if(*ref != NULL){
-        (*ref)->prev = new;
+        (*ref)->prev = newnode;
     }
-    set_t(&(new->t), p1, p2, p3);
-    new->dim = 0;
-    new->next = *ref;
-    new->prev = NULL;
-    *ref = new;
+    set_t(&(newnode->t), p1, p2, p3);
+    newnode->dim = 0;
+    newnode->next = *ref;
+    newnode->prev = NULL;
+    *ref = newnode;
     return;
+}
+
+// delete triangle from t_node list
+void pop_t(t_node *del, t_node **head){
+    
+    if (del->prev != NULL)
+        del->prev->next = del->next;
+    else
+        *head = del->next;
+    
+    if (del->next != NULL)
+        del->next->prev = del->prev;
+
+    free (del);
+    return;    
 }
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
@@ -113,26 +128,26 @@ t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
 
 // pushes a new active segment in acts
 void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father){
-    act_node *new = (act_node *)malloc(sizeof(act_node));
+    act_node *newnode = (act_node *)malloc(sizeof(act_node));
     
     order_two_pts (&p1, &p2);
     idxkey idx;
     idx.id1 = p1.id;
     idx.id2 = p2.id;
-    HASH_FIND(hh, segs, &idx, sizeof(idxkey), new->act);
+    HASH_FIND(hh, segs, &idx, sizeof(idxkey), newnode->act);
     
-    new->father = father;
-    if (new->act->tfirst == father){
-        new->uncle = new->act->tsecond;
+    newnode->father = father;
+    if (newnode->act->tfirst == father){
+        newnode->uncle = newnode->act->tsecond;
     }
-    else if (new->act->tsecond == father){
-        new->uncle = new->act->tfirst;
+    else if (newnode->act->tsecond == father){
+        newnode->uncle = newnode->act->tfirst;
     }
     else{
         assert(0);
     }
-    new->next = *acts;
-    *acts = new;
+    newnode->next = *acts;
+    *acts = newnode;
     return;
 }
 

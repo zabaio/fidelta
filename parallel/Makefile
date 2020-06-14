@@ -1,4 +1,4 @@
-CC = gcc
+CC = g++
 CFLAGS = -g -Wall
 SHOWFLAGS = -O -DLINUX -I/usr/X11R6/include -L/usr/X11R6/lib
 
@@ -20,7 +20,7 @@ $(OBJDIR)/display.o: DEFS = -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" -DPTSLIM=$(PTSLIM
 $(OUT): $(OBJ)
 	$(CC) -o $@ $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) | $(OBJDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(INC) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(DEFS) -c $< -o $@ 
 
 $(OBJDIR):

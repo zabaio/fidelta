@@ -26,14 +26,14 @@ int main(int argc, char *argv[])
     int rmode = 0, n_pts, i;
     float max_cor;
 
-    //internal points file, result file, eventual input point file
-    FILE *node, *ele, *extnode; 
+    //constructed point file, eventual input point file
+    FILE *node, *extnode; 
 
     //start init time
     clock_t a = clock();
 
     // read mode and eventual input file from cmd, then proceed initializing node file
-    rmode = init_cmd (argc, argv, &node, &ele, &extnode, &n_pts, &max_cor);
+    rmode = init_cmd (argc, argv, &node, &extnode, &n_pts, &max_cor);
 
     if (rmode)
         init_random(&node, n_pts, max_cor);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     // Then we add every point to its encroaching points array.
 
     t_node *tris = NULL;
-    point *pts = malloc((PTSLIM + 3) * sizeof(point));    
+    point *pts = (point *) malloc((PTSLIM + 3) * sizeof(point));    
 
     fseek(node, 0, SEEK_SET);
     fscanf (node, "%*[^\n]\n");
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     }
     push_t(&tris, pts[0], pts[1], pts[2]);
     tris->dim = n_pts;
-    tris->enc = malloc(tris->dim*sizeof(point));
+    tris->enc = (point *) malloc(tris->dim*sizeof(point));
     for (i = 0; i < n_pts; i++){
         fscanf (node, "%d %f %f \n", &(tris->enc[i].id), &(tris->enc[i].x), &(tris->enc[i].y));
         pts[i+3] = tris->enc[i];    
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
         int roundcount = 0, roundwidth = 0;
     #endif
 
-    int *accel_state = malloc((PTSLIM + 10) * sizeof(int));
-    float (*accel_data)[2] = malloc((PTSLIM + 10) * sizeof(*accel_data));
+    int *accel_state = (int *) malloc((PTSLIM + 10) * sizeof(int));
+    float (*accel_data)[2] = (float (*)[2]) malloc((PTSLIM + 10) * sizeof(*accel_data));
     float accel_son[6];
 
     // end init timing, start delaunay construction timing
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
                     alldim += aprobe->act->tfirst->dim;
                 if(aprobe->act->tsecond != NULL)
                     alldim += aprobe->act->tsecond->dim;
-                tprobe->enc = malloc(alldim*sizeof(point));
+                tprobe->enc = (point *) malloc(alldim*sizeof(point));
 
                 int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
 
@@ -277,51 +277,28 @@ int main(int argc, char *argv[])
 
     }
 
+    // End of triangulation, starting output
+
     CALLGRIND_STOP_INSTRUMENTATION;
     CALLGRIND_DUMP_STATS;
     t += clock() - t;
-    float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
+    clock_t o = clock();
+
+    print_result (tris, n_pts);
+
+    o = clock() - o;
+    
+    float del_time = 1000*((float)t)/CLOCKS_PER_SEC;
     float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;
+    float out_time = 1000*((float)o)/CLOCKS_PER_SEC;
 
     printf("Init time: %d ms\n", (int)ini_time);
-    printf("Delaunay time: %d ms\n", (int)time_taken);
+    printf("Delaunay time: %d ms\n", (int)del_time);
+    printf("Writing output: %d ms\n", (int)out_time);
 
-
-    // Output section
-    // soldim is the dimension of the triangulation, tridim of the structure tris
-    // We scan through tris, every triangle who hasn't encroaching points
-    // is part of the triangulation and we print it
-
-    int soldim=0, tridim=0;
-    t_node *tail = tris;
-    
-    fprintf (ele, "%d 3 0\n", 2*(n_pts + 3) - 5);
-    while(tail != NULL){
-        if(tail->dim == 0){
-            fprintf (ele, "%d ", soldim);
-            fprint_t (ele, &tail->t);
-            soldim++;
-        } 
-        tridim++;
-        tail = tail->next;
-    }
-  
-    fclose (ele);
-
-    #ifdef DEBUG
-        print_tris_id(tris);
-        printf("Total number of generated triangles: %zu B x %d\n",sizeof(t_node), tridim);
-    #endif
     #ifdef LOG
         printf ("Number of rounds: %d\n", roundcount);
     #endif
-    
-    // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
-    // Note that we added the three bounding points
-    if (soldim == 2*(n_pts +3 ) - 5)    
-        printf ("Generated %d triangles: Correct\n", soldim);
-    else
-        printf ("Generated %d triangles: Incorrect\n", soldim);
 
     return 0;
 }

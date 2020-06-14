@@ -60,6 +60,9 @@ void set_t(triangle *t,point a,point b,point c);
 // add triangle to the front of the list
 void push_t(t_node **ref, point p1, point p2, point p3);
 
+// delete triangle from t_node list
+void pop_t(t_node *del, t_node **head);
+
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
 t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown);
 

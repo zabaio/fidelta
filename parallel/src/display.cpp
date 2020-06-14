@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "types.h"
 #include "display.h"
 
@@ -18,18 +19,12 @@
 //--------------------------------------//
 
 // Command line read. Returns 1 if random mode is selected
-int init_cmd (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor){
+int init_cmd (int argc, char *argv[], FILE **node, FILE **extnode, int *n_pts, float *max_cor){
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
     if (*node == NULL){
         printf ("ERROR: Could not find output folder. Go inside serial/ or try building again\n");
         exit (1);
-    }
-    
-    *ele = fopen (RESPATHNOEXT ".ele", "w");
-    if (*ele == NULL){
-        printf ("ERROR: Could not create result.ele\n");
-        exit(EXIT_FAILURE);
     }
     
     if (argc < 2){
@@ -84,7 +79,7 @@ void init_random(FILE **node, int n_pts, float max_cor){
     
     point prov;
     fprintf (*node, "%d 2 0 0\n", n_pts+3);
-    srand(7);
+    srand((unsigned)time(NULL));
 
     set_pt(&prov, -max_cor*3, -max_cor*3, 0);
     fprint_pt (*node, &prov);
@@ -200,6 +195,79 @@ void fprint_t(FILE *f, triangle *t){
     return;
 }
 
+// deletes wrong triangles and prints correct ones on ele file
+void print_result(t_node *tris, int n_pts){
+    
+    // Output section
+    // soldim and gendim are the dimension of the triangulation with and without dummy points, 
+    // tridim the dimension of the list tris:
+    // We scan through tris, every triangle who hasn't encroaching points
+    // is part of the triangulation and we print it
+
+    FILE *ele = fopen (RESPATHNOEXT ".ele", "w");
+    if (ele == NULL){
+        printf ("ERROR: Could not create result.ele\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int soldim=0, tridim=0, gendim=0;
+    t_node *tprobe = tris, *temp;
+    
+    // We screw triangles with vertices on artificial bound. 
+    // The triangles obtained are all part of the correct Delaunay triangulation, 
+    // but some external edges that form the convex hull may be missing 
+
+    while (tprobe != NULL){
+
+        tridim++;
+
+        if (tprobe->dim != 0){
+            temp = tprobe;
+            tprobe = tprobe->next;
+            pop_t (temp, &tris);
+        }      
+
+        else if (tprobe->t.p1.id < 3 || tprobe->t.p2.id < 3 || tprobe->t.p3.id < 3){
+            temp = tprobe;
+            tprobe = tprobe->next;
+            pop_t (temp, &tris);
+            gendim++;
+        }
+        
+        else{
+            tprobe = tprobe->next;
+            gendim++;
+            soldim++;
+        }
+
+    }
+
+    fprintf (ele, "%d 3 0\n", soldim);
+    tprobe = tris;
+
+    int i = 0;
+    while (tprobe != NULL){
+
+        fprintf (ele, "%d ", i);
+        fprint_t (ele, &tprobe->t);
+        tprobe = tprobe->next;
+        i++;
+
+    }
+  
+    fclose (ele);
+    
+    // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
+    // Note that we added the three bounding points
+
+    if (gendim == 2*(n_pts + 3) - 5)   
+        printf ("Generated %d triangles: Correct\n", soldim);
+    else
+        printf ("Generated %d triangles: Incorrect\n", soldim);
+
+    return;
+}
+
 //--------------------------------------//
 // Functions for log and debug purposes //
 //--------------------------------------//
@@ -284,7 +352,7 @@ void print_segs(record_segs *elem){
         }    
         else printf("\tnil\n");
         
-        elem = elem->hh.next;
+        elem = (record_segs *) elem->hh.next;
     }
     return;
 }
@@ -311,7 +379,7 @@ void print_segs_id(record_segs *elem){
         }    
         else printf(") (nil)");
         printf("\n");
-        elem = elem->hh.next;
+        elem = (record_segs *) elem->hh.next;
     }
     return;
 }
