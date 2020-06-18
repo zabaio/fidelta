@@ -171,8 +171,8 @@ void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
 // prints manual
 void man (int verbose){
     printf("\nAvaiable modes:\n");
-    printf("From file:\t./serial [PATH_TO_FILE]\n");
-    printf("Random: \t./serial -r [N_PTS] [MAX_COORDINATE]\n\n");
+    printf("From file:\t./fidelta [PATH_TO_FILE]\n");
+    printf("Random: \t./fidelta -r [N_PTS] [MAX_COORDINATE]\n\n");
     printf("Input files must follow .node convention defined in README\n");
 
     if(verbose){
