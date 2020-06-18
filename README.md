@@ -6,20 +6,29 @@ It's a higly parallelized **Delaunay Triangulation builder** which exploits the 
 We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://arxiv.org/pdf/1810.05303.pdf) which is an incremental approach 
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
-## Serial version
+## Directory layout
+
+ .
+ ├── serial         # Sequential implementation, for general use
+ ├── parallel       # Algorithm adaptation suitable for hw acceleration
+ │   └── xilix      # Vivado-HLS and Vitis projects
+ └── showme         # Visualization tool
+
+## Use
 ### Installation
-    
-    cd serial
+If you do that in the base folder you'll build the *serial* and *parallel* software implementations as well as the visualization tool *showme*.
+Otherwise it's possible to just use make inside the desired folder.
     make
+    *or* cd <dir> && make
 
 ### Computing a triangulation
 - From a .node file
     
-        ./serial [.node_PATH]
+        ./fidelta [.node_PATH]
 
 - Random triangulation
 
-        ./serial -r [N_PTS] [MAX_COORDINATE]
+        ./fidelta -r [N_PTS] [MAX_COORDINATE]
 
 > I/O files follow the format used by [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
 
