@@ -41,14 +41,12 @@ that lowers iteration dependency, improving the degree of **parallelization** re
     ./showme [.ele_PATH]
 
 ## Status
-|                |Log                                   |
-|----------------|--------------------------------------|
-|28/02/20        |`Start           `                    |
-|04/03/20        |`Main structures implemented`         |
-|02/04/20        |`InCircle and Counterclockwise`       |
-|04/04/20        |`Added merge encroaching points lists`|
-|14/04/20        |`Version 0.1 - Works Fine`            |
-|30/04/20        |`Version 0.2 - 2 input modes avaiable`|
+|                |Log                                             |
+|----------------|------------------------------------------------|
+|14/04/20        |`v0.1 - serial works fine`                      |
+|30/04/20        |`v0.2 - random and from file modes integrated`  |
+|15/05/20        |`v0.3 - algorithm adapted for FPGA acceleration`|
+|08/06/20        |`v0.4 - developed kernel`                       |
 
 ## Contacts
 - Alberto Giusti - BSc student, Politecnico di Milano - albertogiusti.alberto@gmail.com
