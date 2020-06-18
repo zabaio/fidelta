@@ -20,7 +20,7 @@ int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
     if (*node == NULL){
-        printf ("ERROR: Could not find output folder. Go inside serial/ or try building again\n");
+        printf ("ERROR: Could not open output file\n");
         exit (1);
     }
     
