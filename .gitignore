@@ -6,5 +6,5 @@ dbg/
 *.node
 *.ele
 serial/serial
-serial/showme
+showme/showme
 parallel/parallel
