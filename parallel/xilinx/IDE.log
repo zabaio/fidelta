@@ -1,0 +1,9 @@
+17:02:35 TRACE : Loaded library librdi_repo_manager.so
+17:02:35 TRACE : Preparing to call init_repo tcl call:  
+17:02:35 INFO  : Launching XSCT server: xsct -n  -interactive /home/users/alberto.giusti/Desktop/FIDELTA/parallel/xilinx/temp_xsdb_launch_script.tcl
+17:02:38 INFO  : XSCT server has started successfully.
+17:02:38 INFO  : plnx-install-location is set to ''
+17:02:38 INFO  : Successfully done setting XSCT server connection channel  
+17:02:38 INFO  : Successfully done query RDI_DATADIR 
+17:02:38 INFO  : Successfully done setting workspace for the tool. 
+17:02:38 INFO  : Registering command handlers for Vitis TCF services

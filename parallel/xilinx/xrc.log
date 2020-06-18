@@ -1,0 +1,14 @@
+Thu Jun 18 17:02:36 2020: Server was asked to start on port: '46784'
+Thu Jun 18 17:02:36 2020: Server is using token UUID: '88de3c31-20e7-4e99-9f6f-09f347797491'
+Thu Jun 18 17:02:36 2020: Attempting to start server on port '46784'
+Thu Jun 18 17:02:36 2020: XRC main fifo: created main fifo '/tmp/xrcmain88de3c31-20e7-4e99-9f6f-09f347797491', fd read = 11
+Thu Jun 18 17:02:36 2020: Running Rule Check Server
+Thu Jun 18 17:02:36 2020: Version 1.5.1
+Thu Jun 18 17:02:37 2020: Rule Check Server: Accepted socket connection from client
+Thu Jun 18 17:02:37 2020: EXCHANGE_TOKEN received, server token: 88de3c31-20e7-4e99-9f6f-09f347797491, passed token: 88de3c31-20e7-4e99-9f6f-09f347797491
+Thu Jun 18 17:04:09 2020: SESSION_MGR: creating session with session uuid: '78800461-3f3c-4449-84a5-a729e4cfbbd9' and name 'Emulation-SW'
+Thu Jun 18 17:04:09 2020: SESSION_MGR: closing session for UUID '78800461-3f3c-4449-84a5-a729e4cfbbd9' with name 'Emulation-SW'
+Thu Jun 18 17:04:09 2020: SESSION_MGR: creating session with session uuid: '63b88e65-3eb1-4c56-80d5-41c45ebc73e4' and name 'Emulation-HW'
+Thu Jun 18 17:04:10 2020: SESSION_MGR: closing session for UUID '63b88e65-3eb1-4c56-80d5-41c45ebc73e4' with name 'Emulation-HW'
+Thu Jun 18 17:04:10 2020: SESSION_MGR: creating session with session uuid: '576d400a-f573-4595-9bd5-cfbe11292400' and name 'Hardware'
+Thu Jun 18 17:04:10 2020: SESSION_MGR: closing session for UUID '576d400a-f573-4595-9bd5-cfbe11292400' with name 'Hardware'

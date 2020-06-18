@@ -1,10 +1,11 @@
 bin/
+dbg/
 .vscode/
+.metadata/
 callgrind.*
 massif.*
-dbg/
 *.node
 *.ele
-serial/serial
-showme/showme
-parallel/parallel
+/serial/serial
+/showme/showme
+/parallel/parallel

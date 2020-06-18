@@ -4,7 +4,9 @@
 #include <assert.h>
 #include <string.h>
 
-#include <valgrind/callgrind.h>
+#ifdef VALDEB
+	#include <valgrind/callgrind.h>
+#endif
 
 #include "types.h"
 #include "display.h"
@@ -161,7 +163,10 @@ int main(int argc, char *argv[])
     #endif
     a = clock() - a;
     clock_t t = clock();
-    CALLGRIND_START_INSTRUMENTATION;
+    
+	#ifdef VALDEB
+		CALLGRIND_START_INSTRUMENTATION;
+	#endif
 
     while(acts != NULL || nextround != NULL){
 
@@ -287,8 +292,11 @@ int main(int argc, char *argv[])
 
     }
 
-    CALLGRIND_STOP_INSTRUMENTATION;
-    CALLGRIND_DUMP_STATS;
+	#ifdef VALDEB
+		CALLGRIND_STOP_INSTRUMENTATION;
+		CALLGRIND_DUMP_STATS;
+	#endif
+
     t += clock() - t;
     float time_taken = 1000*((float)t)/CLOCKS_PER_SEC;
     float ini_time = 1000*((float)a)/CLOCKS_PER_SEC;

@@ -8,6 +8,7 @@
 	#include <valgrind/callgrind.h>
 #endif
 
+#include "xcl2.hpp"
 #include "types.h"
 #include "display.h"
 
