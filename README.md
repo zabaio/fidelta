@@ -7,19 +7,18 @@ We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
 ## Directory layout
-
- .
- ├── serial         # Sequential implementation, for general use
- ├── parallel       # Algorithm adaptation suitable for hw acceleration
- │   └── xilix      # Vivado-HLS and Vitis projects
- └── showme         # Visualization tool
+    .
+    ├── serial         # Sequential implementation, for general use
+    ├── parallel       # Algorithm adaptation suitable for hw acceleration
+    │   └── xilix      # Vivado-HLS and Vitis projects
+    └── showme         # Visualization tool
 
 ## Use
 ### Installation
-If you do that in the base folder you'll build the *serial* and *parallel* software implementations as well as the visualization tool *showme*.
-Otherwise it's possible to just use make inside the desired folder.
-    make
-    *or* cd <dir> && make
+Simply use make. If you do that in the base folder you'll build the *serial* and *parallel* software implementations as well as the visualization tool *showme*.
+Otherwise you can just build the desired folder.
+    
+    make | cd [DIR] && make
 
 ### Computing a triangulation
 - From a .node file
