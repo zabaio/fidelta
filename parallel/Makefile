@@ -6,7 +6,7 @@ OBJDIR = bin
 SRCDIR = src
 SHODIR = ../showme
 OBJ = $(addprefix $(OBJDIR)/,fidelta.o types.o display.o)
-OUT = parallel
+OUT = fidelta
 INC = $(SRCDIR)/*.h
 
 RESPATHNOEXT = result

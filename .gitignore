@@ -6,6 +6,6 @@ callgrind.*
 massif.*
 *.node
 *.ele
-/serial/serial
+/serial/fidelta
 /showme/showme
-/parallel/parallel
+/parallel/fidelta

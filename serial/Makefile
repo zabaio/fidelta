@@ -7,7 +7,7 @@ SRCDIR = src
 SHODIR = ../showme
 RESPATHNOEXT = result
 OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
-OUT = serial
+OUT = fidelta
 INC = $(SRCDIR)/*.h
 $(OBJDIR)/main.o: DEFS = 
 $(OBJDIR)/display.o: DEFS = -DPTSLIM=1000000 -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" 
