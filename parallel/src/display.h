@@ -5,7 +5,16 @@
 #define PT_FRMT "( %.2f , %.2f )"
 
 // initialization based on command line. Returns 1 if random mode is selected
-int init (int argc, char *argv[], FILE **node, FILE **ele, FILE **extnode, int *n_pts, float *max_cor);
+int init_cmd (int argc, char *argv[], FILE **node, FILE **extnode, int *n_pts, float *max_cor);
+
+// initializing node file with n_pts random points
+void init_random(FILE **node, int n_pts, float max_cor);
+
+// initializing node file with n_pts points read from extnode and 3 dummy points
+void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr);
+
+// deletes wrong triangles and prints correct ones on ele file
+void print_result(t_node *tris, int n_pts);
 
 // prints manual
 void man(int verbose);

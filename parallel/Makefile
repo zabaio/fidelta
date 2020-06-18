@@ -1,18 +1,18 @@
-CC = gcc
+CC = g++
 CFLAGS = -g -Wall
 SHOWFLAGS = -O -DLINUX -I/usr/X11R6/include -L/usr/X11R6/lib
 
 OBJDIR = bin
 SRCDIR = src
 SHODIR = ../showme
-OBJ = $(addprefix $(OBJDIR)/,main.o types.o display.o)
+OBJ = $(addprefix $(OBJDIR)/,fidelta.o types.o display.o)
 OUT = parallel
 INC = $(SRCDIR)/*.h
 
 RESPATHNOEXT = result
 MAXQUERY = 30
-PTSLIM = 300000
-$(OBJDIR)/main.o: DEFS = -DMAXQUERY=$(MAXQUERY) -DPTSLIM=$(PTSLIM) -DLOG
+PTSLIM = 1000000
+$(OBJDIR)/fidelta.o: DEFS = -DMAXQUERY=$(MAXQUERY) -DPTSLIM=$(PTSLIM)
 $(OBJDIR)/display.o: DEFS = -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" -DPTSLIM=$(PTSLIM)
 
 .PHONY = clean reset draw run
@@ -20,7 +20,7 @@ $(OBJDIR)/display.o: DEFS = -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" -DPTSLIM=$(PTSLIM
 $(OUT): $(OBJ)
 	$(CC) -o $@ $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) | $(OBJDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(INC) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(DEFS) -c $< -o $@ 
 
 $(OBJDIR):

@@ -7,3 +7,4 @@ dbg/
 *.ele
 serial/serial
 serial/showme
+parallel/parallel
