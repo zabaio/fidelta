@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     OCL_CHECK (err, context = clCreateContext (NULL, 1, &device_id, NULL, NULL, &err));
     OCL_CHECK (err, q = clCreateCommandQueue (context, device_id,
-    					CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE, &err));
+    					CL_QUEUE_PROFILING_ENABLE, &err));
 
     // Program and kernel
     char *xclbin_name = argv[1];

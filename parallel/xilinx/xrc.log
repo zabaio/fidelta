@@ -830,3 +830,7 @@ Mon Jun 22 19:40:52 2020: SESSION_MGR: creating session with session uuid: 'a498
 Mon Jun 22 19:40:59 2020: SESSION_MGR: closing session for UUID 'a4989d63-ac85-4224-a075-781141256f63' with name 'fidelta-generic launch for all flows'
 Mon Jun 22 19:41:19 2020: SESSION_MGR: creating session with session uuid: 'bd7ee71d-132d-44d8-aa4a-c01d1a518908' and name 'fidelta-generic launch for all flows'
 Mon Jun 22 19:41:26 2020: SESSION_MGR: closing session for UUID 'bd7ee71d-132d-44d8-aa4a-c01d1a518908' with name 'fidelta-generic launch for all flows'
+Mon Jun 22 21:34:07 2020: SESSION_MGR: creating session with session uuid: '41de50ab-1f7d-4de4-90f8-65f267252234' and name 'Emulation-SW'
+Mon Jun 22 21:34:08 2020: SESSION_MGR: closing session for UUID '41de50ab-1f7d-4de4-90f8-65f267252234' with name 'Emulation-SW'
+Mon Jun 22 21:34:12 2020: SESSION_MGR: creating session with session uuid: '7c84479e-74d8-4986-9934-54b2b722a08e' and name 'fidelta-generic launch for all flows'
+Mon Jun 22 21:34:19 2020: SESSION_MGR: closing session for UUID '7c84479e-74d8-4986-9934-54b2b722a08e' with name 'fidelta-generic launch for all flows'

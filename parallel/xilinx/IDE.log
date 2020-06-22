@@ -135,3 +135,4 @@ java.io.IOException: Output Stream is closed
 19:33:18 INFO  : Launching executable: Emulation-SW/fidelta ../binary_container_1.xclbin -r 100 10
 19:40:52 INFO  : Launching executable: Emulation-SW/fidelta ../binary_container_1.xclbin -r 100 10
 19:41:19 INFO  : Launching executable: Emulation-SW/fidelta ../binary_container_1.xclbin -r 100 10
+21:34:12 INFO  : Launching executable: Emulation-SW/fidelta ../binary_container_1.xclbin -r 100 10
