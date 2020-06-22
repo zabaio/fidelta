@@ -33,11 +33,11 @@
                         						
                         <toolChain id="com.xilinx.accelerated.toolchain.sw_emu.debug.1800521078" name="Xilinx Accelerated Toolchain (x86_64)" superClass="com.xilinx.accelerated.toolchain.sw_emu.debug">
                             							
-                            <option id="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug.805533590" name="Enable debugging by default for kernel code" superClass="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug"/>
+                            <option id="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug.805533590" name="Enable debugging by default for kernel code" superClass="com.xilinx.accelerated.toolchain.sw_emu.debug.option.kernel_debug" useByScannerDiscovery="false"/>
                             							
                             <targetPlatform id="com.xilinx.accelerated.config.sw_emu.2094880732..584169532" name=""/>
                             							
-                            <builder buildPath="${workspace_loc:/fidelta}/Emulation-SW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1242280911" managedBuildOn="true" name="Xilinx V++ Builder.Emulation-SW" superClass="com.xilinx.accelerated.make_builder"/>
+                            <builder buildPath="${workspace_loc:/fidelta}/Emulation-SW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1242280911" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Xilinx V++ Builder" superClass="com.xilinx.accelerated.make_builder"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.hw_compiler.1991790698" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
                                 								
@@ -45,13 +45,17 @@
                                 							
                             </tool>
                             							
-                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.227175101" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker"/>
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.227175101" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.471114871" name="IP Cache" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" useByScannerDiscovery="false" value="/home/users/alberto.giusti/Desktop/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
                             							
                             <tool id="com.xilinx.accelerated.emconfigutil.1600822370" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.sw_emu.debug.878755632" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.sw_emu.debug">
                                 								
-                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.1369070178" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.1369070178" name="Include paths (-I)" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="${workspace_loc:/${ProjName}/libs/xcl2/}"/>
                                     									
@@ -68,6 +72,20 @@
                             </tool>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.gcc_linker.hw.166431298" name="GCC Host Linker (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_linker.hw">
+                                								
+                                <option id="com.xilinx.accelerated.cpp.linker.option.libs.x86.887954233_64" name="Libraries (-l)" superClass="com.xilinx.accelerated.cpp.linker.option.libs.x86_64" useByScannerDiscovery="false" valueType="libFiles">
+                                    									
+                                    <listOptionValue builtIn="false" value="xilinxopencl"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="pthread"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="rt"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="stdc++"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="mpfr"/>
+                                    								
+                                </option>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.737176953" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
                                     									
@@ -125,7 +143,7 @@
                             							
                             <targetPlatform id="com.xilinx.accelerated.config.hw_emu.1488330525..592733616" name=""/>
                             							
-                            <builder buildPath="${workspace_loc:/fidelta}/Emulation-HW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1666703938" managedBuildOn="true" name="Xilinx V++ Builder.Emulation-HW" superClass="com.xilinx.accelerated.make_builder"/>
+                            <builder buildPath="${workspace_loc:/fidelta}/Emulation-HW" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1666703938" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Xilinx V++ Builder" superClass="com.xilinx.accelerated.make_builder"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.hw_compiler.598476869" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
                                 								
@@ -133,13 +151,17 @@
                                 							
                             </tool>
                             							
-                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.304821391" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker"/>
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.304821391" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.1256469736" name="IP Cache" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" value="/home/users/alberto.giusti/Desktop/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
                             							
                             <tool id="com.xilinx.accelerated.emconfigutil.467535505" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.hw_emu.debug.1412533178" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.hw_emu.debug">
                                 								
-                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.699919755" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.699919755" name="Include paths (-I)" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="${workspace_loc:/${ProjName}/libs/xcl2/}"/>
                                     									
@@ -211,7 +233,7 @@
                             							
                             <targetPlatform id="com.xilinx.accelerated.config.hw.1536904262..1945835192" name=""/>
                             							
-                            <builder buildPath="${workspace_loc:/fidelta}/Hardware" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1707323608" managedBuildOn="true" name="Xilinx V++ Builder.Hardware" superClass="com.xilinx.accelerated.make_builder"/>
+                            <builder buildPath="${workspace_loc:/fidelta}/Hardware" enableAutoBuild="true" id="com.xilinx.accelerated.make_builder.1707323608" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Xilinx V++ Builder" superClass="com.xilinx.accelerated.make_builder"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.hw_compiler.879598862" name="V++ Kernel Compiler" superClass="com.xilinx.accelerated.toolchain.hw_compiler">
                                 								
@@ -219,13 +241,17 @@
                                 							
                             </tool>
                             							
-                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.1607158358" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker"/>
+                            <tool id="com.xilinx.accelerated.toolchain.hw_linker.1607158358" name="V++ Kernel Linker" superClass="com.xilinx.accelerated.toolchain.hw_linker">
+                                								
+                                <option id="com.xilinx.accelerated.toolchain.hw_linker.ip_cache.1543186297" name="IP Cache" superClass="com.xilinx.accelerated.toolchain.hw_linker.ip_cache" useByScannerDiscovery="false" value="/home/users/alberto.giusti/Desktop/FIDELTA/parallel/xilinx/ip_cache" valueType="string"/>
+                                							
+                            </tool>
                             							
                             <tool id="com.xilinx.accelerated.emconfigutil.1429276760" name="emconfigutil" superClass="com.xilinx.accelerated.emconfigutil"/>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.gcc_compiler.hw.1235548238" name="GCC Host Compiler (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_compiler.hw">
                                 								
-                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.788779351" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option id="com.xilinx.accelerated.cpp.compiler.include.paths.788779351" name="Include paths (-I)" superClass="com.xilinx.accelerated.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="${workspace_loc:/${ProjName}/libs/xcl2/}"/>
                                     									
@@ -242,6 +268,46 @@
                             </tool>
                             							
                             <tool id="com.xilinx.accelerated.toolchain.gcc_linker.hw.2063483642" name="GCC Host Linker (x86_64)" superClass="com.xilinx.accelerated.toolchain.gcc_linker.hw">
+                                								
+                                <option id="com.xilinx.accelerated.cpp.linker.option.paths.1963725810" name="Library search path (-L)" superClass="com.xilinx.accelerated.cpp.linker.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+                                    									
+                                    <listOptionValue builtIn="false" value="$(XILINX_VIVADO)/lnx64/tools/fpo_v7_0"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="$(XILINX_VIVADO)/lnx64/lib/csim"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="$(XILINX_VIVADO)/lnx64/tools/dds_v6_0"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="$(XILINX_VIVADO)/lnx64/tools/fir_v7_0"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="$(XILINX_VIVADO)/lnx64/tools/fft_v9_1"/>
+                                    								
+                                </option>
+                                								
+                                <option id="com.xilinx.accelerated.cpp.linker.option.libs.x86.1943221506_64" name="Libraries (-l)" superClass="com.xilinx.accelerated.cpp.linker.option.libs.x86_64" useByScannerDiscovery="false" valueType="libFiles">
+                                    									
+                                    <listOptionValue builtIn="false" value="xilinxopencl"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="gmp"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="pthread"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="rt"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="stdc++"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="mpfr"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="hlsmc++-GCC46"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="Ip_floating_point_v7_0_bitacc_cmodel"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="Ip_xfft_v9_1_bitacc_cmodel"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="Ip_fir_compiler_v7_2_bitacc_cmodel"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="Ip_dds_compiler_v6_0_bitacc_cmodel"/>
+                                    								
+                                </option>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.964263461" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
                                     									
@@ -278,6 +344,28 @@
     <storageModule moduleId="scannerConfiguration">
         		
         <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+        	
+    </storageModule>
+    	
+    <storageModule moduleId="refreshScope" versionNumber="2">
+        		
+        <configuration configurationName="Emulation-HW">
+            			
+            <resource resourceType="PROJECT" workspacePath="/fidelta"/>
+            		
+        </configuration>
+        		
+        <configuration configurationName="Emulation-SW">
+            			
+            <resource resourceType="PROJECT" workspacePath="/fidelta"/>
+            		
+        </configuration>
+        		
+        <configuration configurationName="Hardware">
+            			
+            <resource resourceType="PROJECT" workspacePath="/fidelta"/>
+            		
+        </configuration>
         	
     </storageModule>
     

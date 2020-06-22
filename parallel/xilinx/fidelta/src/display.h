@@ -16,6 +16,9 @@ void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr);
 // deletes wrong triangles and prints correct ones on ele file
 void print_result(t_node *tris, int n_pts);
 
+// reads xclbin and copies content in result buffer
+int load_xclbin (const char *filename, char **result);
+
 // prints manual
 void man(int verbose);
 

@@ -4,6 +4,9 @@
     <configBuildOptions xsi:type="systemproject:SystemOptions">
       <applications name="fidelta" domainName="x86_0" domainPrettyName="x86_0" appBuildConfig="Emulation-SW"/>
     </configBuildOptions>
+    <lastBuildOptions xsi:type="systemproject:SystemOptions">
+      <applications name="fidelta" domainName="x86_0" domainPrettyName="x86_0" appBuildConfig="Emulation-SW"/>
+    </lastBuildOptions>
   </configuration>
   <configuration name="Release">
     <configBuildOptions xsi:type="systemproject:SystemOptions">

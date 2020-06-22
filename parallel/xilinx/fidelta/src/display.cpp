@@ -23,19 +23,19 @@ int init_cmd (int argc, char *argv[], FILE **node, FILE **extnode, int *n_pts, f
     
     *node = fopen (RESPATHNOEXT ".node" , "w+");
     if (*node == NULL){
-        printf ("ERROR: Could not find output folder. Go inside serial/ or try building again\n");
-        exit (1);
+        printf ("ERROR: Could not open output file\n");
+        exit(EXIT_FAILURE);
     }
     
-    if (argc < 2){
+    if (argc < 3){
         printf ("ERROR: Not enough arguments\n");
         man(0);
         exit(EXIT_FAILURE);
     }
-    if (argv[1][0] == '-'){
-        if(argv[1][1] == 'r' && argv[1][2] == '\0' && argc == 4){
-            *n_pts = atoi (argv[2]);
-            *max_cor = atoi (argv[3]);
+    if (argv[2][0] == '-'){
+        if(argv[2][1] == 'r' && argv[2][2] == '\0' && argc == 5){
+            *n_pts = atoi (argv[3]);
+            *max_cor = atoi (argv[4]);
             if (*n_pts <= 0 || *max_cor <= 0){
                 printf("ERROR: Parameters must be positive\n");
                 man(1);
@@ -54,8 +54,8 @@ int init_cmd (int argc, char *argv[], FILE **node, FILE **extnode, int *n_pts, f
             exit(EXIT_FAILURE);
         }
     }
-    else if (argc == 2){
-        *extnode = fopen (argv[1], "r");
+    else if (argc == 3){
+        *extnode = fopen (argv[2], "r");
         if (*extnode == NULL){
             printf("ERROR: Could not open file\n");
             man(0);
@@ -88,9 +88,9 @@ void init_random(FILE **node, int n_pts, float max_cor){
     set_pt(&prov, max_cor*3, 0, 2);
     fprint_pt (*node, &prov);        
     #ifdef LOG
-        printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
-        printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*3);
-        printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
+    	printf("Mock point 0 = " PT_FRMT "\n", (float)-max_cor*3, (float)-max_cor*3);
+        printf("Mock point 1 = " PT_FRMT "\n", (float)0, (float)max_cor*3);
+        printf("Mock point 2 = " PT_FRMT "\n", (float)max_cor*3, (float)0);
     #endif
 
     int i;
@@ -167,12 +167,34 @@ void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
     fclose (*extnode);
 }
 
+int load_xclbin (const char *filename, char **result){
+	uint size = 0;
+	FILE *f = fopen(filename, "rb");
+	if (f == NULL){
+		printf ("ERROR: Could not open xclbin file\n");
+		man (0);
+		exit(EXIT_FAILURE);
+	}
+	fseek (f, 0, SEEK_END);
+	size = ftell(f);
+	fseek (f, 0, SEEK_SET);
+	*result = (char *)malloc(size+1);
+	if(size != fread(*result, sizeof(char), size, f)){
+		free (*result);
+		printf("ERROR: Could not read xclbin file\n");
+		man (0);
+		exit(EXIT_FAILURE);
+	}
+	fclose(f);
+	(*result)[size] = 0;
+	return size;
+}
 
 // prints manual
 void man (int verbose){
     printf("\nAvaiable modes:\n");
-    printf("From file:\t./serial [PATH_TO_FILE]\n");
-    printf("Random: \t./serial -r [N_PTS] [MAX_COORDINATE]\n\n");
+    printf("From file:\t./fidelta [PATH_TO_XCLBIN] [PATH_TO_FILE]\n");
+    printf("Random: \t./fidelta [PATH_TO_XCLBIN] -r [N_PTS] [MAX_COORDINATE]\n\n");
     printf("Input files must follow .node convention defined in README\n");
 
     if(verbose){

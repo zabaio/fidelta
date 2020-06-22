@@ -6,6 +6,8 @@
 #define DROW 8
 #define FBIT 32
 
+extern "C" {
+
 int in_circle(float *innerdata, float *son){
 
 	//for(int y = 0; y < DCOL; y++)
@@ -30,17 +32,19 @@ int in_circle(float *innerdata, float *son){
     return (det>0);
 }
 
-void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *inson, int *inmaxquery){
+void accel_in_circle(ap_uint<256> *instate, ap_uint<512> *indata, ap_uint<256> *inson, int maxquery){
 
-    #pragma HLS INTERFACE m_axi port=instate offset=slave bundle=gmem0 depth=4
-	#pragma HLS INTERFACE m_axi port=indata offset=slave bundle=gmem1 depth=4
-	#pragma HLS INTERFACE m_axi port=inson offset=slave bundle=gmem2 depth=1
+    #pragma HLS INTERFACE m_axi port=instate offset=slave bundle=gmem0
+	#pragma HLS INTERFACE m_axi port=indata offset=slave bundle=gmem1
+	#pragma HLS INTERFACE m_axi port=inson offset=slave bundle=gmem2
 
 	#pragma HLS INTERFACE s_axilite port=instate bundle=control
 	#pragma HLS INTERFACE s_axilite port=indata bundle=control
-	#pragma HLS INTERFACE s_axilite port=inmaxquery bundle=control
+	#pragma HLS INTERFACE s_axilite port=inson bundle=control
+	#pragma HLS INTERFACE s_axilite port=maxquery bundle=control
 	#pragma HLS INTERFACE s_axilite port=return bundle=control
 
+	//printf("%d\n", maxquery);
 
 	ap_uint<512> temp_data[1];
 	ap_uint<256> temp_state[1];
@@ -49,7 +53,6 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 	float data[DROW][DCOL];
 	ap_int<32> state[DROW];
 	float son[6];
-	int maxquery = *inmaxquery;
 	int i;
 
 	#pragma HLS ARRAY_PARTITION variable=data complete
@@ -77,7 +80,7 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 		memcpy(temp_state, instate + i, sizeof(ap_uint<256>));
 
 		int j,k;
-
+		//printf("Data in kernel:\n");
 		for(j=0; j<DROW; j++){
 			#pragma HLS PIPELINE
 			for(k=0; k<DCOL; k++){
@@ -88,8 +91,11 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 				temp = temp_data[0].range(hi, lo);
 
 				data[j][k] = *((float *)&temp);
+				//printf("%f ",(float)data[j][k]);
 			}
+			//printf("\n");
 		}
+		//printf("\nState in kernel: ");
 
 		for(j=0; j<DROW; j++){
 			#pragma HLS PIPELINE
@@ -97,7 +103,8 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 			int lo = j*FBIT;
 			int hi = lo + FBIT - 1;
 			state[j] = temp_state[0].range(hi, lo);
-		}
+			//printf("%d ",state[j].to_int());
+		}//printf("\nState out kernel:");
 
 		for(j=0; j<DROW; j++){
 
@@ -105,8 +112,8 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 			if (state[j] != -1 && !in_circle(data[j], son)){
 				state[j] = -1;
 			}
-		//	printf(" -> %d\n", state[j].to_int());
-		}
+			//printf("%d ", state[j].to_int());
+		}//printf("\n");
 
 		for(j=0; j<DROW; j++){
 			#pragma HLS PIPELINE
@@ -119,4 +126,6 @@ void accel_in_circle(ap_uint<512> *indata, ap_uint<256> *instate, ap_uint<256> *
 	}
 
 	return;
+}
+
 }

@@ -8,7 +8,23 @@
 	#include <valgrind/callgrind.h>
 #endif
 
-#include "xcl2.hpp"
+#define CL_HPP_CL_1_2_DEFAULT_BUILD
+#define CL_HPP_TARGET_OPENCL_VERSION 120
+#define CL_HPP_MINIMUM_OPENCL_VERSION 120
+#define CL_HPP_ENABLE_PROGRAM_CONSTRUCTION_FROM_ARRAY_COMPATIBILITY 1
+#define CL_USE_DEPRECATED_OPENCL_1_2_APIS
+
+#include <CL/opencl.h>
+#include <CL/cl_ext.h>
+
+#define OCL_CHECK(error,call)                                       \
+    call;                                                           \
+    if (error != CL_SUCCESS) {                                      \
+      printf("%s:%d Error calling " #call ", error code is: %d\n",  \
+              __FILE__,__LINE__, error);                            \
+      exit(EXIT_FAILURE);                                           \
+    }
+
 #include "types.h"
 #include "display.h"
 
@@ -17,12 +33,12 @@
 #endif
 
 // c-sim of accelerated functions
-int in_circle(float *innerdata, float *son);
-void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery);
+int sym_in_circle(float *innerdata, float *son);
+void sym_accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery);
 
 // Creates and adds the list of points encroaching triangle "son":
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
-int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]);
+int merge (t_node *father, t_node *uncle, float accel_data[], int accel_state[]);
 
 int main(int argc, char *argv[])
 {
@@ -37,6 +53,96 @@ int main(int argc, char *argv[])
 
     // read mode and eventual input file from cmd, then proceed initializing node file
     rmode = init_cmd (argc, argv, &node, &extnode, &n_pts, &max_cor);
+
+
+    // --- Start OpenCL initialization --- //
+
+    cl_int err;
+
+    // Platform
+    char cl_platform_vendor[1001];
+    char cl_platform_name[1001];
+    cl_uint platform_count;
+	cl_platform_id platform_id;
+	cl_platform_id platforms[16];
+
+	OCL_CHECK (err, err = clGetPlatformIDs(16, platforms, &platform_count));
+	for (cl_uint count = 0; count < platform_count; count++){
+		OCL_CHECK (err, err = clGetPlatformInfo(platforms[count], CL_PLATFORM_VENDOR,
+						      1000, (void *)cl_platform_vendor, NULL));
+		if (strcmp(cl_platform_vendor, "Xilinx") == 0){
+			printf("Found platform vendor: %s\n", cl_platform_vendor);
+			platform_id = platforms[count];
+			break;
+		}
+	}
+	OCL_CHECK (err, err = clGetPlatformInfo(platform_id, CL_PLATFORM_NAME,
+						  1000, (void *)cl_platform_name, NULL));
+	printf("Found platform name: %s\n", cl_platform_vendor);
+
+	// Device
+	cl_device_id device_id;
+	char cl_device_name[1001];
+
+	OCL_CHECK (err, err = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_ACCELERATOR,
+			              1, &device_id, NULL));
+	OCL_CHECK (err, err = clGetDeviceInfo(device_id, CL_DEVICE_NAME,
+			              1000, (void *)cl_device_name, NULL));
+    printf("Found device name: %s\n", cl_device_name);
+
+    // Context and queue
+    cl_context context;
+    cl_command_queue q;
+
+    OCL_CHECK (err, context = clCreateContext (NULL, 1, &device_id, NULL, NULL, &err));
+    OCL_CHECK (err, q = clCreateCommandQueue (context, device_id,
+    					CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE, &err));
+
+    // Program and kernel
+    char *xclbin_name = argv[1];
+    char *kernelbinary;
+    cl_program program;
+    cl_kernel krnl_incircle;
+
+    size_t size = load_xclbin(xclbin_name, &kernelbinary);
+    OCL_CHECK (err, program = clCreateProgramWithBinary(context, 1, &device_id, &size,
+    			              (const unsigned char **) &kernelbinary, NULL, &err));
+    OCL_CHECK (err, krnl_incircle = clCreateKernel(program, "accel_in_circle", &err));
+
+    // Buffers and arguments
+    float *accel_data;
+    int *accel_state;
+    int *sym_accel_state;
+    float *accel_son;
+    cl_int maxquery;
+    cl_mem data_buf;
+    cl_mem state_buf;
+    cl_mem son_buf;
+
+    OCL_CHECK (err, err = posix_memalign((void **) &accel_data, 4096, 2*(PTSLIM + 10) * sizeof(float)));
+    OCL_CHECK (err, err = posix_memalign((void **) &accel_state, 4096, (PTSLIM + 10) * sizeof(int)));
+    OCL_CHECK (err, err = posix_memalign((void **) &sym_accel_state, 4096, (PTSLIM + 10) * sizeof(int)));
+    OCL_CHECK (err, err = posix_memalign((void **) &accel_son, 4096, 6*sizeof(float)));
+
+	OCL_CHECK (err, data_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR,
+			                   2*(PTSLIM + 10) * sizeof(float), accel_data, NULL));
+
+	OCL_CHECK (err, state_buf = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR,
+    				            (PTSLIM + 10) * sizeof (int), accel_state, NULL));
+
+	OCL_CHECK (err, son_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR,
+							  6 * sizeof(float), accel_son, NULL));
+
+	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 0, sizeof(cl_mem), &state_buf));
+	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 1, sizeof(cl_mem), &data_buf));
+	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 2, sizeof(cl_mem), &son_buf));
+	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 3, sizeof(cl_int), &maxquery));
+
+
+	// ----- End OpenCL initialization ---- //
+
+
+	// --- Start reading input data set --- //
 
     if (rmode)
         init_random(&node, n_pts, max_cor);
@@ -63,7 +169,8 @@ int main(int argc, char *argv[])
     tris->enc = (point *) malloc(tris->dim*sizeof(point));
     for (i = 0; i < n_pts; i++){
         fscanf (node, "%d %f %f \n", &(tris->enc[i].id), &(tris->enc[i].x), &(tris->enc[i].y));
-        pts[i+3] = tris->enc[i];    
+        pts[i+3] = tris->enc[i];
+        print_pt (pts[i+3]);
     }
 
     fclose (node);
@@ -96,19 +203,24 @@ int main(int argc, char *argv[])
         int roundcount = 0, roundwidth = 0;
     #endif
 
-    int *accel_state = (int *) malloc((PTSLIM + 10) * sizeof(int));
-    float (*accel_data)[2] = (float (*)[2]) malloc((PTSLIM + 10) * sizeof(*accel_data));
-    float accel_son[6];
+    // ------- End of data set input ------ //
 
-    // end init timing, start delaunay construction timing
+        OCL_CHECK (err, err = clEnqueueWriteBuffer(q, data_buf, CL_FALSE, 0,
+         					  8*sizeof(float), (void *)accel_data, 0, NULL, NULL));
+        OCL_CHECK (err, err =clFinish(q));
+        OCL_CHECK (err, err = clEnqueueTask(q, krnl_incircle, 0, NULL, NULL));
+        OCL_CHECK (err, err =clFinish(q));
+
+
+
+    // --- Start Delaunay Triangulation --- //
+
     a = clock() - a; 
     clock_t t = clock();
 
 	#ifdef VALDEB
     	CALLGRIND_START_INSTRUMENTATION;
 	#endif
-
-    // Initialization is over, we start timing the construction
 
     while(acts != NULL || nextround != NULL){
         
@@ -141,12 +253,6 @@ int main(int argc, char *argv[])
                     alldim += aprobe->act->tsecond->dim;
                 tprobe->enc = (point *) malloc(alldim*sizeof(point));
 
-                int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
-
-                for(i = maxquery; i < maxquery + 7; i ++){
-                    accel_state[i] = -1;
-                }
-
                 accel_son[0] = tprobe->t.p1.x;
                 accel_son[1] = tprobe->t.p1.y;
                 accel_son[2] = tprobe->t.p2.x;
@@ -154,28 +260,75 @@ int main(int argc, char *argv[])
                 accel_son[4] = tprobe->t.p3.x;
                 accel_son[5] = tprobe->t.p3.y;
 
-                #ifdef DEBUG
-                    printf("\n\n%d %d %d\n ", tprobe->t.p1.id, tprobe->t.p2.id, tprobe->t.p3.id);
-                    for (i = 0; i<maxquery; i++){
-                        printf("%2d ",accel_state[i]);
-                    }
-                    printf("\nv\n ");
-                #endif                
+                int dimquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);
 
-                accel_in_circle (accel_data[0], accel_state, accel_son, &maxquery);
-                
+                maxquery = (dimquery + 7) & ~0x07;
 
-                #ifdef DEBUG
-                    for (i = 0; i<maxquery; i++){
-                        printf("%2d ",accel_state[i]);
-                    }
-                    printf("\n");
+                //printf("dimquery = %d, maxquery = %d\n", dimquery, maxquery);
+				if (dimquery == 0){
+					aprobe = aprobe->next;
+					continue;
+				}
+				/*
+					for(i = 0; i<dimquery; i++){
+						sym_accel_state[i] = accel_state[i];
+					}
+				*/
+				for(i = dimquery; i < maxquery; i ++){
+                    accel_state[i] = -1;
+                    //sym_accel_state[i] = accel_state[i];
+                }
+
+				#ifdef DEBUG
+					printf("\n\n%d %d %d\nState out host: ", tprobe->t.p1.id, tprobe->t.p2.id, tprobe->t.p3.id);
+					for (i = 0; i<maxquery; i++){
+						printf("%2d ",accel_state[i]);
+					}
+					printf("\nv\n Data out host\n");
+
+					for(i =0; i<8; i++){
+						printf("%f %f\n", accel_data[i*2], accel_data[i*2+1]);
+					}
+				#endif
+
+				cl_event evts[5];
+
+                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, state_buf, CL_FALSE, 0,
+                					  maxquery*sizeof(int), (void *)accel_state, 0, NULL, (evts)));
+                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, son_buf, CL_FALSE, 0,
+                					  6*sizeof(float), (void *)accel_son, 0, NULL, (evts + 1)));
+                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, data_buf, CL_FALSE, 0,
+                					  2*maxquery*sizeof(float), (void *)accel_data, 0, NULL, (evts+2)));
+
+            	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 3, sizeof(cl_int), &maxquery));
+
+                OCL_CHECK (err, err = clEnqueueWaitForEvents(q, 3, evts));
+
+                //sym_accel_in_circle(accel_data, sym_accel_state, accel_son, &maxquery);
+                OCL_CHECK (err, err = clEnqueueTask(q, krnl_incircle, 0, NULL, (evts + 3)));
+
+                OCL_CHECK (err, err = clEnqueueReadBuffer(q, state_buf, CL_FALSE, 0,
+                				      dimquery*sizeof(int), (void *)accel_state, 1, (evts + 3), (evts + 4)));
+
+                OCL_CHECK (err, err =clFinish(q));
+
+				#ifdef DEBUG
+
+					printf("State sym host: ");
+					for (i = 0; i<maxquery; i++){
+						printf("%2d ",sym_accel_state[i]);
+					}
+					printf("\nState in host: ");
+					for (i = 0; i<maxquery; i++){
+						printf("%2d ",accel_state[i]);
+					}
+					printf("\n");
 
                     printf("\nPrima:");
                     print_tris_id(tprobe);
                 #endif
 
-                for (i = 0; i < maxquery; i++){
+                for (i = 0; i < dimquery; i++){
                     if (accel_state[i] != -1){
                         tprobe->enc[tprobe->dim] = pts[accel_state[i]];
                         tprobe->dim ++;
@@ -283,7 +436,19 @@ int main(int argc, char *argv[])
 
     }
 
-    // End of triangulation, starting output
+    // ---- End Delaunay Triangulation ----- //
+
+
+    // --- Cleanup, output and profiling --- //
+
+    clReleaseCommandQueue(q);
+    clReleaseContext(context);
+    clReleaseDevice(device_id);
+    clReleaseKernel(krnl_incircle);
+    clReleaseProgram(program);
+    clReleaseMemObject(data_buf);
+    clReleaseMemObject(state_buf);
+    clReleaseMemObject(son_buf);
 
 	#ifdef VALDEB
 	    CALLGRIND_STOP_INSTRUMENTATION;
@@ -312,7 +477,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state[]){
+int merge (t_node *father, t_node *uncle, float accel_data[], int accel_state[]){
 
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
@@ -324,8 +489,8 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
     if (uncle == NULL){
         for(; fid < father->dim; fid++){
             accel_state[sid] = fenc[fid].id;
-            accel_data[sid][0] = fenc[fid].x;
-            accel_data[sid][1] = fenc[fid].y;
+            accel_data[2*sid] = fenc[fid].x;
+            accel_data[2*sid + 1] = fenc[fid].y;
             sid ++;
         }
     }
@@ -338,24 +503,24 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
             
             if (uid == uncle->dim || (fid < father->dim && fenc[fid].id < uenc[uid].id)){
                 accel_state[sid] = fenc[fid].id;
-                accel_data[sid][0] = fenc[fid].x;
-                accel_data[sid][1] = fenc[fid].y;
+                accel_data[2*sid] = fenc[fid].x;
+                accel_data[2*sid + 1] = fenc[fid].y;
                 sid ++;
                 fid ++;
             }
             
             else if (fid == father->dim || (uid < uncle->dim && uenc[uid].id < fenc[fid].id)){
                 accel_state[sid] = uenc[uid].id;
-                accel_data[sid][0] = uenc[uid].x;
-                accel_data[sid][1] = uenc[uid].y;
+                accel_data[2*sid] = uenc[uid].x;
+                accel_data[2*sid + 1] = uenc[uid].y;
                 sid ++;
                 uid ++;
             }
 
             else if (fid < father->dim && uid < uncle->dim && fenc[fid].id == uenc[uid].id){
                 accel_state[sid] = fenc[fid].id;
-                accel_data[sid][0] = fenc[fid].x;
-                accel_data[sid][1] = fenc[fid].y;
+                accel_data[2*sid] = fenc[fid].x;
+                accel_data[2*sid + 1] = fenc[fid].y;
                 sid ++;
                 uid ++;
                 fid ++;
@@ -366,7 +531,8 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
     return sid;
 }
 
-int in_circle(float *innerdata, float *son){
+
+int sym_in_circle(float *innerdata, float *son){
 
     float xda = son[0] - innerdata[0];
     float xdb = son[2] - innerdata[0];
@@ -386,7 +552,7 @@ int in_circle(float *innerdata, float *son){
     return (det>0);
 }
 
-void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery){
+void sym_accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery){
 
 	float data[2];
 	int state;
@@ -401,7 +567,7 @@ void accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery)
 		memcpy(data, indata + 2*i, 2*sizeof(float));
 		memcpy(&state, instate + i, sizeof(int));
 
-        if (state != -1 && !in_circle(data, son))
+        if (state != -1 && !sym_in_circle(data, son))
             state = -1;
         
 		memcpy(instate + i, &state, sizeof(int));
