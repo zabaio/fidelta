@@ -1627,3 +1627,8 @@ selectToolBarButton("Run", "fidelta", "WorkbenchWindow", "ToolItem.RUN");
 selectTreeTable("Run Summary", "fidelta_system > fidelta > Emulation-SW > fidelta-generic launch for all flows", EventType.DOUBLE_CLICK, "Assistant", "SDXAssistantView", "TreeViewer.AssistantContentProvider");
 selectToolBarButton("Run", "fidelta", "WorkbenchWindow", "ToolItem.RUN");
 selectTreeTable("Run Summary", "fidelta_system > fidelta > Emulation-SW > fidelta-generic launch for all flows", EventType.DOUBLE_CLICK, "Assistant", "SDXAssistantView", "TreeViewer.AssistantContentProvider");
+selectToolBarButton("Build Emulation-SW for project fidelta", "fidelta", "WorkbenchWindow", "ToolItem.BUILD_EMULATION_SW");
+selectToolBarButton("Run", "fidelta", "WorkbenchWindow", "ToolItem.RUN");
+selectTree("fidelta", "fidelta_system", "Explorer", "ProjectExplorer", "Tree");
+selectTab("Tool Settings", "Properties for fidelta", "PropertyDialog", "TabItem.TOOL_SETTINGS");
+selectButton("Cancel", "Properties for fidelta", "PropertyDialog", "Button.CANCEL");
