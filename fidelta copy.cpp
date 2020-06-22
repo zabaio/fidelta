@@ -28,17 +28,20 @@
 #include "types.h"
 #include "display.h"
 
+#ifndef MAXQUERY
+    #define MAXQUERY 30
+#endif
 #ifndef PTSLIM
     #define PTSLIM 300000
 #endif
 
 // c-sim of accelerated functions
 int sym_in_circle(float *innerdata, float *son);
-void sym_accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery);
+void sym_accel_in_circle(float *indata, int *instate);
 
 // Creates and adds the list of points encroaching triangle "son":
 // a point p is added if it's encroaching "father" or "uncle" AND if in_circle (son, p) is true
-int merge (t_node *father, t_node *uncle, float accel_data[], int accel_state[]);
+void merge (t_node *father, int *fid, t_node *uncle, int *uid, float accel_data[MAXQUERY][8], int accel_state[MAXQUERY], int *bookmark);
 
 int main(int argc, char *argv[])
 {
@@ -113,31 +116,20 @@ int main(int argc, char *argv[])
     float *accel_data;
     int *accel_state;
     int *sym_accel_state;
-    float *accel_son;
-    cl_int maxquery;
     cl_mem data_buf;
     cl_mem state_buf;
-    cl_mem son_buf;
 
-    OCL_CHECK (err, err = posix_memalign((void **) &accel_data, 4096, 2*(PTSLIM + 10) * sizeof(float)));
-    OCL_CHECK (err, err = posix_memalign((void **) &accel_state, 4096, (PTSLIM + 10) * sizeof(int)));
-    OCL_CHECK (err, err = posix_memalign((void **) &sym_accel_state, 4096, (PTSLIM + 10) * sizeof(int)));
-    OCL_CHECK (err, err = posix_memalign((void **) &accel_son, 4096, 6*sizeof(float)));
+    OCL_CHECK (err, err = posix_memalign((void **) &accel_data, 4096, 8*MAXQUERY * sizeof(float)));
+    OCL_CHECK (err, err = posix_memalign((void **) &accel_state, 4096, MAXQUERY * sizeof(int)));
 
 	OCL_CHECK (err, data_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR,
-			                   2*(PTSLIM + 10) * sizeof(float), accel_data, NULL));
+			                   8*MAXQUERY*sizeof(float), accel_data, NULL));
 
 	OCL_CHECK (err, state_buf = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR,
-    				            (PTSLIM + 10) * sizeof (int), accel_state, NULL));
-
-	OCL_CHECK (err, son_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR,
-							  6 * sizeof(float), accel_son, NULL));
+    				            MAXQUERY * sizeof (int), accel_state, NULL));
 
 	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 0, sizeof(cl_mem), &state_buf));
 	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 1, sizeof(cl_mem), &data_buf));
-	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 2, sizeof(cl_mem), &son_buf));
-	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 3, sizeof(cl_int), &maxquery));
-
 
 	// ----- End OpenCL initialization ---- //
 
@@ -205,12 +197,12 @@ int main(int argc, char *argv[])
 
     // ------- End of data set input ------ //
 
-        OCL_CHECK (err, err = clEnqueueWriteBuffer(q, data_buf, CL_FALSE, 0,
-         					  8*sizeof(float), (void *)accel_data, 0, NULL, NULL));
-        OCL_CHECK (err, err =clFinish(q));
-        OCL_CHECK (err, err = clEnqueueTask(q, krnl_incircle, 0, NULL, NULL));
-        OCL_CHECK (err, err =clFinish(q));
 
+    OCL_CHECK (err, err = clEnqueueWriteBuffer(q, data_buf, CL_FALSE, 0,
+                            8*sizeof(float), (void *)accel_data, 0, NULL, NULL));
+    OCL_CHECK (err, err = clFinish(q));
+    OCL_CHECK (err, err = clEnqueueTask(q, krnl_incircle, 0, NULL, NULL));
+    OCL_CHECK (err, err = clFinish(q));
 
 
     // --- Start Delaunay Triangulation --- //
@@ -242,105 +234,107 @@ int main(int argc, char *argv[])
             act_node *aprobe = acts;
             t_node *tprobe = tris;
 
+            push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]); 
+            
+            int alldim = 0;
+            if(aprobe->act->tfirst != NULL)
+                alldim += aprobe->act->tfirst->dim;
+            if(aprobe->act->tsecond != NULL)
+                alldim += aprobe->act->tsecond->dim;
+            tprobe->enc = malloc(alldim*sizeof(point));
+            
+            int fid = 1, uid = 0;
             while (aprobe != NULL){
                 
-                push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]); 
-                
-                int alldim = 0;
-                if(aprobe->act->tfirst != NULL)
-                    alldim += aprobe->act->tfirst->dim;
-                if(aprobe->act->tsecond != NULL)
-                    alldim += aprobe->act->tsecond->dim;
-                tprobe->enc = (point *) malloc(alldim*sizeof(point));
+                int bookmark = 0;
+                int ndone;
+                int complete;
+                t_node *data_ref[MAXQUERY];
 
-                accel_son[0] = tprobe->t.p1.x;
-                accel_son[1] = tprobe->t.p1.y;
-                accel_son[2] = tprobe->t.p2.x;
-                accel_son[3] = tprobe->t.p2.y;
-                accel_son[4] = tprobe->t.p3.x;
-                accel_son[5] = tprobe->t.p3.y;
+                while (bookmark < MAXQUERY && aprobe != NULL){
 
-                int dimquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);
+                    ndone = bookmark;
+                    merge (aprobe->father, &fid, aprobe->uncle, &uid, accel_data, accel_state, &bookmark);
+                    ndone = bookmark - ndone;
 
-                maxquery = (dimquery + 7) & ~0x07;
+                    if (fid + uid < alldim)
+                        complete = 0;
+                    else{
+                        complete = 1;
+                        fid = 1;
+                        uid = 0;
+                    }
 
-                //printf("dimquery = %d, maxquery = %d\n", dimquery, maxquery);
-				if (dimquery == 0){
-					aprobe = aprobe->next;
-					continue;
-				}
-				/*
-					for(i = 0; i<dimquery; i++){
-						sym_accel_state[i] = accel_state[i];
-					}
-				*/
-				for(i = dimquery; i < maxquery; i ++){
-                    accel_state[i] = -1;
-                    //sym_accel_state[i] = accel_state[i];
+                    for (i = 1; i <= ndone; i++){
+                        data_ref[bookmark - i] = tprobe;
+                        accel_data[(bookmark - i)*8 + 2] = tprobe->t.p1.x;
+                        accel_data[(bookmark - i)*8 + 3] = tprobe->t.p1.y;
+                        accel_data[(bookmark - i)*8 + 4] = tprobe->t.p2.x;
+                        accel_data[(bookmark - i)*8 + 5] = tprobe->t.p2.y;
+                        accel_data[(bookmark - i)*8 + 6] = tprobe->t.p3.x;
+                        accel_data[(bookmark - i)*8 + 7] = tprobe->t.p3.y;
+                    }
+
+                    if (complete){
+                        aprobe = aprobe->next;
+                        if (aprobe != NULL){
+                            push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]);
+                        
+                            alldim = 0;
+                            if(aprobe->act->tfirst != NULL)
+                                alldim += aprobe->act->tfirst->dim;
+                            if(aprobe->act->tsecond != NULL)
+                                alldim += aprobe->act->tsecond->dim;
+                            tprobe->enc = malloc(alldim*sizeof(point));
+                        }
+                    }
+
                 }
 
-				#ifdef DEBUG
-					printf("\n\n%d %d %d\nState out host: ", tprobe->t.p1.id, tprobe->t.p2.id, tprobe->t.p3.id);
-					for (i = 0; i<maxquery; i++){
-						printf("%2d ",accel_state[i]);
-					}
-					printf("\nv\n Data out host\n");
+                for(; bookmark < MAXQUERY; bookmark ++){
+                    accel_state[bookmark] = -1;
+                }
 
-					for(i =0; i<8; i++){
-						printf("%f %f\n", accel_data[i*2], accel_data[i*2+1]);
-					}
-				#endif
+                for (i = 0; i<MAXQUERY; i++){
+                    printf("%2d -> ",accel_state[i]);
+                    int p;
+                    for (p = 0; p < 8; p ++){
+                        printf("%6.2f ",accel_data[i][p]);
+                    }
+                    printf("\n");
+                }
+                printf("v\n");
 
-				cl_event evts[5];
+                accel_in_circle (accel_data, accel_state);
+                
+                for (i = 0; i<MAXQUERY; i++){
+                    printf("%2d -> ",accel_state[i]);
+                    int p;
+                    for (p = 0; p < 8; p ++){
+                        printf("%6.2f ",accel_data[i*8 + p]);
+                    }
+                    printf("\n");
+                }
+                printf("\n");
 
-                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, state_buf, CL_FALSE, 0,
-                					  maxquery*sizeof(int), (void *)accel_state, 0, NULL, (evts)));
-                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, son_buf, CL_FALSE, 0,
-                					  6*sizeof(float), (void *)accel_son, 0, NULL, (evts + 1)));
-                OCL_CHECK (err, err = clEnqueueWriteBuffer(q, data_buf, CL_FALSE, 0,
-                					  2*maxquery*sizeof(float), (void *)accel_data, 0, NULL, (evts+2)));
-
-            	OCL_CHECK (err, err = clSetKernelArg(krnl_incircle, 3, sizeof(cl_int), &maxquery));
-
-                OCL_CHECK (err, err = clEnqueueWaitForEvents(q, 3, evts));
-
-                //sym_accel_in_circle(accel_data, sym_accel_state, accel_son, &maxquery);
-                OCL_CHECK (err, err = clEnqueueTask(q, krnl_incircle, 0, NULL, (evts + 3)));
-
-                OCL_CHECK (err, err = clEnqueueReadBuffer(q, state_buf, CL_FALSE, 0,
-                				      dimquery*sizeof(int), (void *)accel_state, 1, (evts + 3), (evts + 4)));
-
-                OCL_CHECK (err, err =clFinish(q));
-
-				#ifdef DEBUG
-
-					printf("State sym host: ");
-					for (i = 0; i<maxquery; i++){
-						printf("%2d ",sym_accel_state[i]);
-					}
-					printf("\nState in host: ");
-					for (i = 0; i<maxquery; i++){
-						printf("%2d ",accel_state[i]);
-					}
-					printf("\n");
-
-                    printf("\nPrima:");
+                #ifdef DEBUG
+                    printf("Prima\n");
                     print_tris_id(tprobe);
                 #endif
 
-                for (i = 0; i < dimquery; i++){
+                for (i = 0; i < MAXQUERY; i++){
                     if (accel_state[i] != -1){
-                        tprobe->enc[tprobe->dim] = pts[accel_state[i]];
-                        tprobe->dim ++;
+                        data_ref[i]->enc[data_ref[i]->dim] = pts[accel_state[i]];
+                        data_ref[i]->dim ++;
                     }
                 }
 
                 #ifdef DEBUG
-                    printf("\nDopo:");
+                    printf("Dopo\n");
                     print_tris_id(tprobe);
                 #endif
             
-                aprobe = aprobe->next;
+                
             }
 
             #ifdef DEBUG
@@ -477,21 +471,21 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int merge (t_node *father, t_node *uncle, float accel_data[], int accel_state[]){
+void merge (t_node *father, int *infid, t_node *uncle, int *inuid, float accel_data[], int accel_state[], int *inbookmark){
 
     // We discard the fist point of father since is a vertex of son.
     // If there's no uncle we just test the father's vertices and add them to son
     point *fenc = father->enc;
-    int fid = 1;
-    int uid = 0;
-    int sid = 0;
-
+    int fid = *infid;
+    int uid = *inuid;
+    int bookmark = *inbookmark;
+    
     if (uncle == NULL){
-        for(; fid < father->dim; fid++){
-            accel_state[sid] = fenc[fid].id;
-            accel_data[2*sid] = fenc[fid].x;
-            accel_data[2*sid + 1] = fenc[fid].y;
-            sid ++;
+        for(; fid < father->dim && bookmark < MAXQUERY; fid++){
+            accel_state[bookmark] = fenc[fid].id;
+            accel_data[bookmark*8] = fenc[fid].x;
+            accel_data[bookmark*8 + 1] = fenc[fid].y;
+            (bookmark) ++;
         }
     }
     else{
@@ -499,51 +493,55 @@ int merge (t_node *father, t_node *uncle, float accel_data[], int accel_state[])
         // If uncle exists we merge its and father's encroaching point lists
         // and add it to son, while maintaining the order of the ids
         point *uenc = uncle->enc;
-        while ((fid < father->dim || uid < uncle->dim)){
+        while ((fid < father->dim || uid < uncle->dim) && bookmark < MAXQUERY){
             
             if (uid == uncle->dim || (fid < father->dim && fenc[fid].id < uenc[uid].id)){
-                accel_state[sid] = fenc[fid].id;
-                accel_data[2*sid] = fenc[fid].x;
-                accel_data[2*sid + 1] = fenc[fid].y;
-                sid ++;
+                accel_state[bookmark] = fenc[fid].id;
+                accel_data[bookmark*8] = fenc[fid].x;
+                accel_data[bookmark*8 + 1] = fenc[fid].y;
+                bookmark ++;
                 fid ++;
             }
             
             else if (fid == father->dim || (uid < uncle->dim && uenc[uid].id < fenc[fid].id)){
-                accel_state[sid] = uenc[uid].id;
-                accel_data[2*sid] = uenc[uid].x;
-                accel_data[2*sid + 1] = uenc[uid].y;
-                sid ++;
+                accel_state[bookmark] = uenc[uid].id;
+                accel_data[bookmark*8] = uenc[uid].x;
+                accel_data[bookmark*8 + 1] = uenc[uid].y;
+                bookmark ++;
                 uid ++;
             }
 
             else if (fid < father->dim && uid < uncle->dim && fenc[fid].id == uenc[uid].id){
-                accel_state[sid] = fenc[fid].id;
-                accel_data[2*sid] = fenc[fid].x;
-                accel_data[2*sid + 1] = fenc[fid].y;
-                sid ++;
-                uid ++;
-                fid ++;
+                accel_state[bookmark] = fenc[fid].id;
+                accel_data[bookmark*8] = fenc[fid].x;
+                accel_data[bookmark*8 + 1] = fenc[fid].y;
+                (bookmark) ++;
+                (uid) ++;
+                (fid) ++;
             }
         }
     }
 
-    return sid;
+    *infid = fid;
+    *inuid = uid;
+    *inbookmark = bookmark;
+    return;
 }
 
 
-int sym_in_circle(float *innerdata, float *son){
+int sym_in_circle(float *data){
 
-    float xda = son[0] - innerdata[0];
-    float xdb = son[2] - innerdata[0];
-    float xdc = son[4] - innerdata[0];
-    float yda = son[1] - innerdata[1];
-    float ydb = son[3] - innerdata[1];
-    float ydc = son[5] - innerdata[1];
+    float xda = data[2] - data[0];
+    float xdb = data[4] - data[0];
+    float xdc = data[6] - data[0];
+    float yda = data[3] - data[1];
+    float ydb = data[5] - data[1];
+    float ydc = data[7] - data[1];
     float da2da2 = xda*xda + yda*yda;
     float db2db2 = xdb*xdb + ydb*ydb;
     float dc2dc2 = xdc*xdc + ydc*ydc;
 
+    // calcolo i minimi complementari
     float min1 = xdb*ydc - xdc*ydb;
     float min2 = xda*ydc - xdc*yda;
     float min3 = xda*ydb - xdb*yda;
@@ -552,26 +550,23 @@ int sym_in_circle(float *innerdata, float *son){
     return (det>0);
 }
 
-void sym_accel_in_circle(float *indata, int *instate, float *inson, int *inmaxquery){
+void sym_accel_in_circle(float *indata, int *instate){
 
-	float data[2];
-	int state;
-	float son[6];
-	int maxquery = *inmaxquery;
-	int i;
+    float data[MAXQUERY][8];
+    int state[MAXQUERY];
 
-	memcpy(son, inson, 6*sizeof(float));
+    memcpy(data[0], indata, 8*MAXQUERY*sizeof(float));
+    memcpy(state, instate, MAXQUERY*sizeof(int));
 
-	for (i = 0; i < maxquery; i++){
+    int i;
 
-		memcpy(data, indata + 2*i, 2*sizeof(float));
-		memcpy(&state, instate + i, sizeof(int));
-
-        if (state != -1 && !sym_in_circle(data, son))
-            state = -1;
-        
-		memcpy(instate + i, &state, sizeof(int));
-	}
-
+    for (i = 0; i < MAXQUERY; i++){
+        if (state[i] != -1 && !in_circle(data[i]))
+            state[i] = -1;
+    }
+    
+    memcpy(indata, data[0], 8*MAXQUERY*sizeof(float));
+    memcpy(instate, state, MAXQUERY*sizeof(int));
+    
 	return;
 }
