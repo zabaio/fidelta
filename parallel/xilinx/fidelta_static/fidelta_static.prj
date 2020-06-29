@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<openclProject:OpenCLProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:openclProject="http://www.xilinx.com/openclproject" name="fidelta_static" location="/home/users/alberto.giusti/Desktop/FIDELTA/parallel/xilinx/fidelta_static" platform="/opt/xilinx/platforms/xilinx_u200_xdma_201830_2/xilinx_u200_xdma_201830_2.xpfm" platformUID="xilinx:u200:xdma:201830.2" systemProject="fidelta_static_system" sysConfig="config0_0" cpu="x86_0" os="linux">
+  <configuration name="Emulation-SW" id="com.xilinx.accelerated.config.sw_emu.222524921" dirty="true">
+    <configBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </lastBuildOptions>
+  </configuration>
+  <configuration name="Emulation-HW" id="com.xilinx.accelerated.config.hw_emu.1248940436" dirty="true">
+    <configBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true" target="hw_emu">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </configBuildOptions>
+  </configuration>
+  <configuration name="Hardware" id="com.xilinx.accelerated.config.hw.346628712" dirty="true">
+    <configBuildOptions xsi:type="openclProject:OpenCLOptions" target="hw">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="openclProject:OpenCLOptions" target="hw">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </lastBuildOptions>
+  </configuration>
+  <configuration name="Only_Host" id="com.xilinx.accelerated.config.sw_emu.222524921.276427831" dirty="true">
+    <configBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
+      <binaryContainers name="binary_container_1">
+        <kernels name="accel_in_circle" sourceFile="src/krnl_static.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
+      </binaryContainers>
+    </lastBuildOptions>
+  </configuration>
+</openclProject:OpenCLProject>

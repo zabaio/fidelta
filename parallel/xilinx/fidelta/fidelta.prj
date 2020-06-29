@@ -3,12 +3,16 @@
   <configuration name="Emulation-SW" id="com.xilinx.accelerated.config.sw_emu.2094880732">
     <configBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
       <binaryContainers name="binary_container_1">
-        <kernels name="accel_in_circle" sourceFile="src/krnl_incircle.cpp"/>
+        <kernels name="accel_in_circle" sourceFile="src/krnl_incircle.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
       </binaryContainers>
     </configBuildOptions>
     <lastBuildOptions xsi:type="openclProject:OpenCLOptions" kernelDebug="true">
       <binaryContainers name="binary_container_1">
-        <kernels name="accel_in_circle" sourceFile="src/krnl_incircle.cpp"/>
+        <kernels name="accel_in_circle" sourceFile="src/krnl_incircle.cpp">
+          <computeUnits name="accel_in_circle_1" slr=""/>
+        </kernels>
       </binaryContainers>
     </lastBuildOptions>
   </configuration>
@@ -28,7 +32,7 @@
       </binaryContainers>
     </lastBuildOptions>
   </configuration>
-  <configuration name="Hardware" id="com.xilinx.accelerated.config.hw.1536904262">
+  <configuration name="Hardware" id="com.xilinx.accelerated.config.hw.1536904262" dirty="true">
     <configBuildOptions xsi:type="openclProject:OpenCLOptions" target="hw">
       <binaryContainers name="binary_container_1">
         <kernels name="accel_in_circle" sourceFile="src/krnl_incircle.cpp">

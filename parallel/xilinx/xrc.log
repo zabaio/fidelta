@@ -834,3 +834,22 @@ Mon Jun 22 21:34:07 2020: SESSION_MGR: creating session with session uuid: '41de
 Mon Jun 22 21:34:08 2020: SESSION_MGR: closing session for UUID '41de50ab-1f7d-4de4-90f8-65f267252234' with name 'Emulation-SW'
 Mon Jun 22 21:34:12 2020: SESSION_MGR: creating session with session uuid: '7c84479e-74d8-4986-9934-54b2b722a08e' and name 'fidelta-generic launch for all flows'
 Mon Jun 22 21:34:19 2020: SESSION_MGR: closing session for UUID '7c84479e-74d8-4986-9934-54b2b722a08e' with name 'fidelta-generic launch for all flows'
+Mon Jun 22 22:34:29 2020: SESSION_MGR: creating session with session uuid: 'dd241fa0-65df-4061-8dc3-829bc2416938' and name 'Emulation-SW'
+Mon Jun 22 22:34:29 2020: SESSION_MGR: closing session for UUID 'dd241fa0-65df-4061-8dc3-829bc2416938' with name 'Emulation-SW'
+Mon Jun 22 22:34:29 2020: SESSION_MGR: creating session with session uuid: '43af9ce9-36b5-42a8-89af-1abff898b9c0' and name 'Emulation-HW'
+Mon Jun 22 22:34:30 2020: SESSION_MGR: closing session for UUID '43af9ce9-36b5-42a8-89af-1abff898b9c0' with name 'Emulation-HW'
+Mon Jun 22 22:34:30 2020: SESSION_MGR: creating session with session uuid: 'ef3dac07-08bf-4579-a889-4d40a9cf57c7' and name 'Hardware'
+Mon Jun 22 22:34:30 2020: SESSION_MGR: closing session for UUID 'ef3dac07-08bf-4579-a889-4d40a9cf57c7' with name 'Hardware'
+Mon Jun 22 22:59:22 2020: SESSION_MGR: creating session with session uuid: '53623f7b-085b-4abf-ae9f-24abfaa42218' and name 'Emulation-SW'
+Mon Jun 22 22:59:22 2020: SESSION_MGR: closing session for UUID '53623f7b-085b-4abf-ae9f-24abfaa42218' with name 'Emulation-SW'
+Mon Jun 22 22:59:22 2020: SESSION_MGR: creating session with session uuid: 'c2765e13-3730-4318-ad5b-18b15e0084e8' and name 'Emulation-SW'
+Mon Jun 22 22:59:34 2020: SESSION_MGR: closing session for UUID 'c2765e13-3730-4318-ad5b-18b15e0084e8' with name 'Emulation-SW'
+Mon Jun 22 23:07:51 2020: SESSION_MGR: creating session with session uuid: 'ff61fde4-b730-43cf-8599-4fbad72228fc' and name 'Emulation-SW'
+Mon Jun 22 23:07:51 2020: SESSION_MGR: closing session for UUID 'ff61fde4-b730-43cf-8599-4fbad72228fc' with name 'Emulation-SW'
+Mon Jun 22 23:08:20 2020: SESSION_MGR: creating session with session uuid: '290bf200-c25c-4a47-bc86-452897937704' and name 'Emulation-SW'
+Mon Jun 22 23:08:20 2020: SESSION_MGR: closing session for UUID '290bf200-c25c-4a47-bc86-452897937704' with name 'Emulation-SW'
+Mon Jun 22 23:09:14 2020: STOP_SERVER received, server token: 88de3c31-20e7-4e99-9f6f-09f347797491, passed token: 88de3c31-20e7-4e99-9f6f-09f347797491
+Mon Jun 22 23:09:14 2020: Socket received request to stop server.
+Mon Jun 22 23:09:14 2020: SERVER: destructor for server bound to port 46784
+Mon Jun 22 23:09:14 2020: XRC main fifo: Good unlink of /tmp/xrcmain88de3c31-20e7-4e99-9f6f-09f347797491
+Mon Jun 22 23:09:14 2020: Server exiting with status 0.
