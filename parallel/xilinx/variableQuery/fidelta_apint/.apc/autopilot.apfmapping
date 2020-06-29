@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
-  <source>
-    <originFiles name="incircle.cpp" path="/home/users/alberto.giusti/Desktop/backup/variableQuery/incircle.cpp"/>
-  </source>
-  <testbench>
-    <originFiles name="bench.cpp" path="/home/users/alberto.giusti/Desktop/backup/variableQuery/bench.cpp"/>
-  </testbench>
-</autopilotfilemapping:AutoPilotFileMapping>
