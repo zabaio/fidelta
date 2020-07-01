@@ -6,6 +6,11 @@ callgrind.*
 massif.*
 *.node
 *.ele
-/serial/fidelta
+/software/fidelta
 /showme/showme
-/parallel/fidelta
+Packages/
+hardware/ip_cache
+hardware/RemoteSystemsTempFiles
+hardware/webtalk
+hardware/*.log
+hardware/vitis_pid21813.str

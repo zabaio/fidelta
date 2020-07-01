@@ -1,4 +1,0 @@
-timestamp=[2020-06-18 17:02:33], mode=WORKBENCH_START, duration=0:00:02.563, duration_ms=2563, data={}
-timestamp=[2020-06-18 17:02:36], mode=WORKBENCH_UI_INIT, duration=0:00:03.155, duration_ms=3155, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
-timestamp=[2020-06-18 17:04:10], mode=APP_CREATION, duration=0:00:02.331, duration_ms=2331, data={name=fidelta, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u200_xdma_201830_2, application_type=application}
-timestamp=[2020-06-21 18:58:46], mode=APP_CREATION, duration=0:00:01.533, duration_ms=1533, data={name=prova, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u200_xdma_201830_2, application_type=application}
