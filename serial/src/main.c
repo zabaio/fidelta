@@ -159,7 +159,8 @@ int main(int argc, char *argv[])
 
 
     #ifdef LOG
-        int roundcount = 0, roundwidth = 0;
+        int roundcount = 0, roundwidth = 0, roundpts = 0; 
+        float roundtime = 0;
     #endif
     a = clock() - a;
     clock_t t = clock();
@@ -173,8 +174,10 @@ int main(int argc, char *argv[])
         // loads next round
         if (acts == NULL){
             #ifdef LOG
-                printf ("Round width: %d\n", roundwidth);
+                roundtime += (0.25*(float)roundpts/50000);
+                printf ("Round %d: processed %d triangles, %d points\n", roundcount, roundwidth, roundpts);
                 roundwidth = 0;
+                roundpts = 0;
                 roundcount++;
             #endif
             #ifdef DEBUG
@@ -187,9 +190,6 @@ int main(int argc, char *argv[])
         }
 
 
-        #ifdef LOG
-            roundwidth++;
-        #endif
         #ifdef DEBUG
             print_acts_id(acts);
             printf("\nAttivo: %d %d\n", acts->act->seg.a.id, acts->act->seg.b.id);
@@ -216,6 +216,11 @@ int main(int argc, char *argv[])
         
         merge (acts->father, tris, acts->uncle);
 
+
+        #ifdef LOG
+            roundwidth++;
+            roundpts += tris->dim;
+        #endif
         #ifdef DEBUG
             print_tris_id(tris);
         #endif
