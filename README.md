@@ -3,7 +3,7 @@ FIDELTA (FPGA-based Incremental DELaunay Triangulation Acceleration) is a projec
 It's a parallelized **Delaunay Triangulation builder** which exploits the reconfigurable hardware provided by Xilinx Alveo cards for Data Center acceleration.
 
 ## The algorithm
-We're implementing the algorithm proposed by [[Belloch, Gu, Shun, Sun]](https://arxiv.org/pdf/1810.05303.pdf) which is an incremental approach  
+We're implementing the algorithm proposed by [[Blelloch, Gu, Shun, Sun]](https://arxiv.org/pdf/1810.05303.pdf) which is an incremental approach  
 that lowers iteration dependency, improving the degree of **parallelization** reached, with respect to traditional methods.
 
 ## Directory layout
