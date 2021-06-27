@@ -14,10 +14,10 @@ PTSLIM = 5000000
 $(OBJDIR)/fidelta.o: DEFS = -DPTSLIM=$(PTSLIM)
 $(OBJDIR)/display.o: DEFS = -DRESPATHNOEXT=\"$(RESPATHNOEXT)\" -DPTSLIM=$(PTSLIM)
 
-.PHONY = clean reset draw run
+.PHONY = all clean reset draw run
 
-$(OUT): $(OBJ)
-	$(CC) -o $@ $^
+all: $(OBJ)
+	$(CC) -o $(OUT) $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(INC) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(DEFS) -c $< -o $@ 

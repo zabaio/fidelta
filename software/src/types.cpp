@@ -19,14 +19,10 @@ void swap_pts(point *a,point *b){
 void order_two_pts(point *a,point *b){    
     if(a->id > b->id)
         swap_pts(a,b);
-    return;
 }
 
-// sorting 3 points: the first according to PTS_IN_ORDER (TODO necessary?), 
-// the others so that they are counterclockwise
+// sorting 3 points counterclockwise
 void order_three_pts(point *a,point *b,point *c){
-    if(!PTS_IN_ORDER(a,b)) swap_pts(a,b);
-    if(!PTS_IN_ORDER(a,c)) swap_pts(a,c);
     
     float xca = a->x - c->x;
     float xcb = b->x - c->x;
@@ -37,52 +33,22 @@ void order_three_pts(point *a,point *b,point *c){
     if (det<0){
         swap_pts(b,c);
     }
-
-    return;
-}
-
-// fill point
-void set_pt(point *pt,float x,float y,float id){
-    pt->id=id;
-    pt->x=x;
-    pt->y=y;
-    return;
-}
-
-// fill segment
-void set_seg(segment *seg,point a,point b){
-    order_two_pts(&a,&b);
-    seg->a=a;
-    seg->b=b;
-    return;
-}
-
-// fill triangle
-void set_t(triangle *t,point a,point b,point c){
-    order_three_pts(&a,&b,&c);
-    t->p1=a;
-    t->p2=b;
-    t->p3=c;
-    return;
 }
 
 // add triangle to the front of the list
 void push_t (t_node **ref, point p1, point p2, point p3){
-    t_node *newnode = (t_node*)malloc(sizeof(t_node));
+    t_node *newnode = new t_node(p1, p2, p3);
     if(*ref != NULL){
         (*ref)->prev = newnode;
     }
-    set_t(&(newnode->t), p1, p2, p3);
-    newnode->dim = 0;
     newnode->next = *ref;
-    newnode->prev = NULL;
+    newnode->prev = nullptr;
     *ref = newnode;
-    return;
 }
 
 // delete triangle from t_node list
 void pop_t(t_node *del, t_node **head){
-    
+
     if (del->prev != NULL)
         del->prev->next = del->next;
     else
@@ -91,30 +57,27 @@ void pop_t(t_node *del, t_node **head){
     if (del->next != NULL)
         del->next->prev = del->prev;
 
-    free (del);
-    return;    
+    free(del->enc);
+    delete del;
 }
 
 // add a new triangle to the (maybe new) segs record p1p2. Then, if one of the neighbors is encroached, returns its address.
-t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
-    record_segs *record;
-    order_two_pts (&p1, &p2);
-    idxkey idx;
-    idx.id1 = p1.id;
-    idx.id2 = p2.id;
+t_node *push_seg(segment **head, point p1, point p2, t_node *tknown){
+
+    segment *record;
+    order_two_pts(&p1, &p2);
+
+    idxkey idx(p1.id, p2.id);
     HASH_FIND(hh, *head, &idx, sizeof(idxkey), record);
     
-    if (record == NULL){
-        record = (record_segs *)malloc(sizeof(record_segs));
-        record->key.id1 = idx.id1;
-        record->key.id2 = idx.id2;
-        set_seg(&(record->seg),p1,p2);
+    if (record == nullptr){
+        record = new segment(p1, p2);
         record->tfirst = tknown;
-        record->tsecond = NULL;
+        record->tsecond = nullptr;
         HASH_ADD(hh, *head, key, sizeof(idxkey), record);
     }
     else{
-        assert (record->tfirst != NULL && record->tsecond == NULL);
+        assert (record->tfirst != nullptr && record->tsecond == nullptr);
         record->tsecond = tknown;
         if (record->tfirst->dim > 0 && (record->tsecond->dim == 0 || record->tfirst->enc[0].id < record->tsecond->enc[0].id)){
             return record->tfirst;
@@ -123,32 +86,18 @@ t_node *segs_add(record_segs **head, point p1, point p2, t_node *tknown){
             return record->tsecond;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 // pushes a new active segment in acts
-void push_act(act_node **acts, record_segs *segs, point p1, point p2, t_node *father){
-    act_node *newnode = (act_node *)malloc(sizeof(act_node));
-    
-    order_two_pts (&p1, &p2);
-    idxkey idx;
-    idx.id1 = p1.id;
-    idx.id2 = p2.id;
-    HASH_FIND(hh, segs, &idx, sizeof(idxkey), newnode->act);
-    
-    newnode->father = father;
-    if (newnode->act->tfirst == father){
-        newnode->uncle = newnode->act->tsecond;
-    }
-    else if (newnode->act->tsecond == father){
-        newnode->uncle = newnode->act->tfirst;
-    }
-    else{
-        assert(0);
-    }
+void push_act(act_node **acts, segment *segs, point p1, point p2, t_node *father){
+
+    segment *active_seg;
+    idxkey idx(p1.id, p2.id);
+    HASH_FIND(hh, segs, &idx, sizeof(idxkey), active_seg);
+    act_node *newnode = new act_node(active_seg, father);
     newnode->next = *acts;
     *acts = newnode;
-    return;
 }
 
 // deletes element in acts
@@ -157,5 +106,4 @@ void pop_act(act_node **acts){
     act_node *tmp = *acts;
     free(tmp);
     *acts = (*acts)->next;
-    return;
 }

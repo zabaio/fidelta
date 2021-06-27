@@ -20,10 +20,10 @@ void print_result(t_node *tris, int n_pts);
 void man(int verbose);
 
 // fprints a point (id x y), id shifted by 3
-void fprint_pt(FILE *f, point *pt);
+void fprint_pt(FILE *f, int id, float x, float y);
 
 // fprintfs a triangle (id1 id2 id3), ids shifted by 3
-void fprint_t(FILE *f, triangle *pt);
+void fprint_t(FILE *f, t_node *pt);
 
 // prints a point (x,y)
 void print_pt(point pt);
@@ -37,12 +37,12 @@ void print_seg(segment seg);
 void print_seg_id(segment seg);
 
 // prints a triangle (xa,ya)-(xb,yb)-(xc,yc)
-void print_t(triangle t);
+void print_t(t_node t);
 
-void print_t_id(triangle t);
+void print_t_id(t_node t);
 
 // prints a triangle (seg1) (seg2) (seg3)
-void print_t_exp(triangle t);
+void print_t_exp(t_node t);
 
 // prints all triangles in tris (xa,ya)-(xb,yb)-(xc,yc)
 void print_tris(t_node *tris);
@@ -51,10 +51,10 @@ void print_tris(t_node *tris);
 void print_tris_id(t_node *tris);
 
 // prints the entire hash table (xa,ya)-(xb,yb)
-void print_segs(record_segs *elem);
+void print_segs(segment *elem);
 
 // prints the entire hash table (id1)-(id2)
-void print_segs_id(record_segs *elem);
+void print_segs_id(segment *elem);
 
 void print_acts_id(act_node *acts);
 

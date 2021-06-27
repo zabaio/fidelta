@@ -1,6 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "types.h"
 #include "display.h"
 
@@ -76,29 +79,23 @@ void init_random(FILE **node, int n_pts, float max_cor){
     // whose max coordinate has absolute value max_cor.
     // We then write in result.node three points that wrap the cloud
     // and then all the other points
-    
-    point prov;
+
     fprintf (*node, "%d 2 0 0\n", n_pts+3);
     srand((unsigned)time(NULL));
 
-    set_pt(&prov, -max_cor*3, -max_cor*3, 0);
-    fprint_pt (*node, &prov);
-    set_pt(&prov, 0, max_cor*3, 1);
-    fprint_pt (*node, &prov);
-    set_pt(&prov, max_cor*3, 0, 2);
-    fprint_pt (*node, &prov);        
+    fprint_pt (*node, 0, -max_cor*3, -max_cor*3);
+    fprint_pt (*node, 1, 0, max_cor*3);
+    fprint_pt (*node, 2, max_cor*3, 0);
     #ifdef LOG
         printf("Mock point 0 = "PT_FRMT"\n", (float)-max_cor*3, (float)-max_cor*3);
         printf("Mock point 1 = "PT_FRMT"\n", (float)0, (float)max_cor*3);
         printf("Mock point 2 = "PT_FRMT"\n", (float)max_cor*3, (float)0);
     #endif
 
-    int i;
-    for(i = 3; i < n_pts+3; i++){
-        prov.x = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
-        prov.y = (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor;
-        prov.id = i;
-        fprint_pt (*node, &prov);
+    for(int i = 3; i < n_pts+3; i++){
+        fprint_pt (*node, i,
+                (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor,
+                (float)rand()/(float)(RAND_MAX/(max_cor*2))-max_cor);
         #ifdef LOG
             printf("Point");
             print_pt_id(prov);
@@ -106,8 +103,6 @@ void init_random(FILE **node, int n_pts, float max_cor){
             print_pt(prov);
         #endif
     }
-
-    return;
 }
 
 void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
@@ -120,15 +115,15 @@ void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
     int n_pts;
     float max_cor = 0;
 
-    point prov;
     if(fscanf (*extnode, "%d %*[^\n]\n", &n_pts) == EOF){
         printf("ERROR: Input file is empty\n");
         man(0);
         exit(EXIT_FAILURE);
     }
 
-    int i;
-    for (i = 0; i < n_pts; i++){
+    point prov;
+    for (int i = 0; i < n_pts; i++){
+
         if (fscanf (*extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y) != 3 || prov.id != i){
             printf("ERROR: Error in input file format at line %d\n", i+2);
             man(1);
@@ -148,19 +143,15 @@ void init_from_file(FILE **extnode, FILE **node, int *n_pts_ptr){
     }
 
     fprintf (*node, "%d 2 0 0\n", n_pts+3);
-    set_pt(&prov, -max_cor*3, -max_cor*3, 0);
-    fprint_pt (*node, &prov);
-    set_pt(&prov, 0, max_cor*3, 1);
-    fprint_pt (*node, &prov);
-    set_pt(&prov, max_cor*3, 0, 2);
-    fprint_pt (*node, &prov);
+    fprint_pt (*node, 0, -max_cor*3, -max_cor*3);
+    fprint_pt (*node, 1, 0, max_cor*3);
+    fprint_pt (*node, 2, max_cor*3, 0);
 
     fseek (*extnode, 0, SEEK_SET);
     fscanf (*extnode, "%*[^\n]\n");
-    for (i = 0; i < n_pts; i++){
+    for (int i = 0; i < n_pts; i++){
         fscanf (*extnode, "%d %f %f \n", &prov.id, &prov.x, &prov.y);
-        prov.id += 3;
-        fprint_pt (*node, &prov);
+        fprint_pt (*node, prov.id + 3, prov.x, prov.y);
     }
 
     (*n_pts_ptr) = n_pts;
@@ -180,92 +171,56 @@ void man (int verbose){
         printf("[MAX_COORDINATE] range is [1; %d]\n", CORLIM);
     }
     printf("\n");
-    return;
 }
 
 // prints point on file following .node format
-void fprint_pt(FILE *f, point *pt){
-    fprintf(f,"%d %f %f\n",pt->id, pt->x, pt->y);
-    return;
+void fprint_pt(FILE *f, int id, float x, float y){
+    fprintf(f,"%d %f %f\n",id, x, y);
 }
 
-// prints triangle on file following .ele format
-void fprint_t(FILE *f, triangle *t){
-    fprintf(f, "%d %d %d\n", t->p1.id, t->p2.id, t->p3.id);
-    return;
-}
-
-// deletes wrong triangles and prints correct ones on ele file
+// prints triangulation, omitting initial bounding points
 void print_result(t_node *tris, int n_pts){
     
     // Output section
-    // soldim and gendim are the dimension of the triangulation with and without dummy points, 
-    // tridim the dimension of the list tris:
-    // We scan through tris, every triangle who hasn't encroaching points
-    // is part of the triangulation and we print it
+    // soldim and gendim are the dimension of the triangulation with and without dummy points,
+    // The triangles obtained are all part of the correct Delaunay triangulation,
+    // but some external edges that form the convex hull may be missing
 
-    FILE *ele = fopen (RESPATHNOEXT ".ele", "w");
-    if (ele == NULL){
-        printf ("ERROR: Could not create result.ele\n");
+    std::ostringstream result;
+    int soldim = 0, gendim = 0, totdim = 0, tot2 = 0;
+    std::ofstream outFile;
+
+    outFile.open(RESPATHNOEXT ".ele", std::ios::trunc);
+    if (!outFile.is_open()){
+        printf("ERROR: Could not create output file\n");
         exit(EXIT_FAILURE);
     }
 
-    int soldim=0, tridim=0, gendim=0;
-    t_node *tprobe = tris, *temp;
-    
-    // We screw triangles with vertices on artificial bound. 
-    // The triangles obtained are all part of the correct Delaunay triangulation, 
-    // but some external edges that form the convex hull may be missing 
-
-    while (tprobe != NULL){
-
-        tridim++;
-
-        if (tprobe->dim != 0){
-            temp = tprobe;
-            tprobe = tprobe->next;
-            pop_t (temp, &tris);
-        }      
-
-        else if (tprobe->t.p1.id < 3 || tprobe->t.p2.id < 3 || tprobe->t.p3.id < 3){
-            temp = tprobe;
-            tprobe = tprobe->next;
-            pop_t (temp, &tris);
+    while (tris != nullptr){
+        totdim++;
+        if (tris->lives <= 0) tot2++;
+        if (tris->dim == 0){
             gendim++;
-        }
-        
-        else{
-            tprobe = tprobe->next;
-            gendim++;
-            soldim++;
+            if (tris->p1.id >= 3 && tris->p2.id >= 3 && tris->p3.id >= 3){
+                soldim++;
+                result << soldim << " " << tris->p1.id << " " << tris->p2.id << " " << tris->p3.id << std::endl;
+            }
         }
 
+        tris = tris->next;
     }
+    outFile << soldim << " 3 0\n" << result.str();
+    outFile.close();
 
-    fprintf (ele, "%d 3 0\n", soldim);
-    tprobe = tris;
-
-    int i = 0;
-    while (tprobe != NULL){
-
-        fprintf (ele, "%d ", i);
-        fprint_t (ele, &tprobe->t);
-        tprobe = tprobe->next;
-        i++;
-
-    }
-  
-    fclose (ele);
-    
     // From the theory we know that a correct triangulation must have 2*(points)-5 triangles.
-    // Note that we added the three bounding points
+    // Note that that takes into account the three bounding points
 
-    if (gendim == 2*(n_pts + 3) - 5)   
-        printf ("Generated %d triangles: Correct\n", soldim);
-    else
+    if (gendim == 2*(n_pts + 3) - 5) {
+        printf("Generated %d triangles\n", totdim);
+        printf("Still deletable triangles: %d\n", tot2);
+        printf("Dimension of the solution: %d - correct\n", soldim);
+    }else
         printf ("Generated %d triangles: Incorrect\n", soldim);
-
-    return;
 }
 
 //--------------------------------------//
@@ -274,46 +229,39 @@ void print_result(t_node *tris, int n_pts){
 
 void print_pt(point pt){
     printf( PT_FRMT "\n", pt.x, pt.y);
-    return;
 }
 
 void print_pt_id(point pt){
     printf("%2d ", pt.id);
-    return;
 }
 
 void print_seg(segment seg){
     printf(PT_FRMT "-" PT_FRMT, seg.a.x, seg.a.y, seg.b.x, seg.b.y);
-    return;
 }
 
 void print_seg_id(segment seg){
     printf("(%d %d)", seg.a.id, seg.b.id);
-    return;
 }
 
-void print_t(triangle t){
+void print_t(t_node t){
     printf(PT_FRMT "-" PT_FRMT "-" PT_FRMT "\n", t.p1.x, t.p1.y, t.p2.x, t.p2.y, t.p3.x, t.p3.y);
-    return;
 }
 
-void print_t_id(triangle t){
+void print_t_id(t_node t){
     printf("(%d %d %d)", t.p1.id, t.p2.id, t.p3.id);
-    return;
 }
 
-void print_t_exp(triangle t){
+void print_t_exp(t_node t){
     printf("Tri:\n\t" PT_FRMT "-" PT_FRMT "\n\t" PT_FRMT "-" PT_FRMT "\n\t" PT_FRMT "-" PT_FRMT "\n",
            t.p1.x, t.p1.y, t.p2.x, t.p2.y,
            t.p2.x, t.p2.y, t.p3.x, t.p3.y,
            t.p1.x, t.p1.y, t.p3.x, t.p3.y);
-    return;
 }
 
 void print_tris(t_node *tris){
     printf("\nTriangoli in tris:\n");
-    while(tris != NULL){
-        print_t(tris->t);
+    while(tris != nullptr){
+        print_t(*tris);
         int i;
         for(i = 0; i < tris->dim; i++){
             printf("\t" PT_FRMT "\n", tris->enc[i].x, tris->enc[i].y);
@@ -323,9 +271,9 @@ void print_tris(t_node *tris){
 }
 
 void print_tris_id(t_node *tris){
-    printf("\nTriangoli in tris:\n");
-    while(tris != NULL){
-        printf("%2d %2d %2d  -->",tris->t.p1.id, tris->t.p2.id, tris->t.p3.id);
+    while(tris != nullptr){
+        print_t_id(*tris);
+        printf(" %d -->", tris->lives);
         int i;
         for(i = 0; i < tris->dim; i++){
             printf(" %d", tris->enc[i].id);
@@ -333,68 +281,64 @@ void print_tris_id(t_node *tris){
         printf ("\n");
         tris = tris->next;
     }
-    return;
 }
 
-void print_segs(record_segs *elem){
+void print_segs(segment *iter){
     printf("\n Elements in segs:\n");
-    while(elem != NULL){
-        print_seg(elem->seg);
-        if(elem->tfirst){
+    while(iter != nullptr){
+        print_seg(*iter);
+        if(iter->tfirst){
             printf("\t");
-            print_t(elem->tfirst->t);
+            print_t(*iter->tfirst);
         } 
         else printf("\tnil\n");
         
-        if(elem->tsecond) {
+        if(iter->tsecond) {
             printf("\t");
-            print_t(elem->tsecond->t); 
+            print_t(*iter->tsecond);
         }    
         else printf("\tnil\n");
         
-        elem = (record_segs *) elem->hh.next;
+        iter = (segment *) iter->hh.next;
     }
-    return;
 }
 
-void print_segs_id(record_segs *elem){
-    printf("\n Elements in segs:\n");
-    while(elem != NULL){
-        print_pt_id(elem->seg.a);
-        print_pt_id(elem->seg.b);
+void print_segs_id(segment *iter){
+
+    while(iter != NULL){
+        print_pt_id(iter->a);
+        print_pt_id(iter->b);
         printf(" --> (");
-        if(elem->tfirst){
-            print_pt_id(elem->tfirst->t.p1);
-            print_pt_id(elem->tfirst->t.p2);
-            print_pt_id(elem->tfirst->t.p3);
+        if(iter->tfirst){
+            print_pt_id(iter->tfirst->p1);
+            print_pt_id(iter->tfirst->p2);
+            print_pt_id(iter->tfirst->p3);
         } 
-        else printf(" --> (nil");
+        else printf("     (nil");
         
-        if(elem->tsecond) {
+        if(iter->tsecond) {
             printf(") (");
-            print_pt_id(elem->tsecond->t.p1);
-            print_pt_id(elem->tsecond->t.p2);
-            print_pt_id(elem->tsecond->t.p3);
+            print_pt_id(iter->tsecond->p1);
+            print_pt_id(iter->tsecond->p2);
+            print_pt_id(iter->tsecond->p3);
             printf(")"); 
         }    
         else printf(") (nil)");
         printf("\n");
-        elem = (record_segs *) elem->hh.next;
+        iter = (segment *) iter->hh.next;
     }
-    return;
 }
 
 void print_acts_id(act_node *acts){
-    printf("\nElements in act: \n");
     while(acts != NULL){
-        print_seg_id(acts->act->seg);
+        print_seg_id(*acts->seg);
         printf(" -> ");
-        print_pt_id(acts->father->enc[0]); 
+        print_pt_id(acts->father->enc[0]);
         printf(", ");
-        print_t_id(acts->father->t);
+        print_t_id(*acts->father);
         if(acts->uncle != NULL){
             printf(", ");
-            print_t_id(acts->uncle->t);
+            print_t_id(*acts->uncle);
         }
         printf("\n");
         acts = acts->next;

@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <assert.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <cassert>
+#include <cstring>
 
 #ifdef VALDEB
 	#include <valgrind/callgrind.h>
@@ -24,7 +24,7 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
 
 int main(int argc, char *argv[])
 {
-    int rmode = 0, n_pts, i;
+    int rmode, n_pts, i;
     float max_cor;
 
     //node: file where we store generated points/a copy of those in input
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     // The first three points in result.node form a triangle bounding all other points, which we add to tris.
     // Then we add every point to its encroaching points array.
 
-    t_node *tris = NULL;
+    t_node *tris = nullptr;
 
     // Simple array of points which we then fill with those in the node file
     point *pts = (point *) malloc((PTSLIM + 3) * sizeof(point));    
@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
     // and their (up to two) adjacent triangles
     // We start by adding the three artificial bounding segments
 
-    record_segs *segs = NULL;
-    segs_add (&segs, tris->t.p1, tris->t.p2, tris);
-    segs_add (&segs, tris->t.p2, tris->t.p3, tris);
-    segs_add (&segs, tris->t.p3, tris->t.p1, tris);
+    segment *segs = nullptr;
+    push_seg(&segs, tris->p1, tris->p2, tris);
+    push_seg(&segs, tris->p2, tris->p3, tris);
+    push_seg(&segs, tris->p3, tris->p1, tris);
 
     // Initialization of the active segments list acts.
     // Each element of acts represents a future triangle generation.
@@ -87,18 +87,19 @@ int main(int argc, char *argv[])
     // so all merge and inCircle calls could be processed simultaneously
     // When a round ends nextround is loaded in acts.
 
-    act_node *acts = NULL;
-    act_node *nextround = NULL;
+    act_node *acts = nullptr;
+    act_node *nextround = nullptr;
 
     // The first three active segments are added, their father being the bounding triangle
 
-    push_act (&nextround, segs, tris->t.p1, tris->t.p2, tris);
-    push_act (&nextround, segs, tris->t.p2, tris->t.p3, tris);
-    push_act (&nextround, segs, tris->t.p3, tris->t.p1, tris);
-    
+    push_act (&nextround, segs, tris->p1, tris->p2, tris);
+    push_act (&nextround, segs, tris->p2, tris->p3, tris);
+    push_act (&nextround, segs, tris->p3, tris->p1, tris);
+
     #ifdef LOG
         int roundcount = 0, roundwidth = 0;
     #endif
+        int deleted_t = 0;
 
     int *accel_state = (int *) malloc((PTSLIM + 10) * sizeof(int));
     float (*accel_data)[2] = (float (*)[2]) malloc((PTSLIM + 10) * sizeof(*accel_data));
@@ -115,72 +116,67 @@ int main(int argc, char *argv[])
     // Initialization is over, we start timing the construction
 	// The algorithm continues until there are no more active segments
 
-    while(acts != NULL || nextround != NULL){
-        
+    while(acts != nullptr || nextround != nullptr){
+
         // loads next round
-        if (acts == NULL){
+        if (acts == nullptr){
             #ifdef LOG
-                printf ("Round width: %d\n", roundwidth);
-                roundwidth = 0;
+                printf("FINISHED ROUND %d [witdh=%d]\n\n", roundcount, roundwidth);
                 roundcount++;
+                printf("LOADING ROUND %d\n", roundcount);
+                roundwidth = 0;
             #endif
-            #ifdef DEBUG
-                printf("Fine round;\n");
-                print_tris_id(tris);
-            #endif
-            
-            // Load round
+
             acts = nextround;
-            nextround = NULL;
+            nextround = nullptr;
 
             act_node *aprobe = acts;
             t_node *tprobe = tris;
 
-            while (aprobe != NULL){
-                
+            while (aprobe != nullptr){
+
                 // Generate new triangle
-                push_t (&tprobe, aprobe->act->seg.a, aprobe->act->seg.b, aprobe->father->enc[0]); 
-                
+                push_t (&tprobe, aprobe->seg->a, aprobe->seg->b, aprobe->father->enc[0]);
+
                 // Allocate its enc array.
                 // It can't be bigger then the sum of its parent's arrays, so we use that as an upper bound
                 int alldim = 0;
-                if(aprobe->act->tfirst != NULL)
-                    alldim += aprobe->act->tfirst->dim;
-                if(aprobe->act->tsecond != NULL)
-                    alldim += aprobe->act->tsecond->dim;
+                if(aprobe->seg->tfirst != nullptr)
+                    alldim += aprobe->seg->tfirst->dim;
+                if(aprobe->seg->tsecond != nullptr)
+                    alldim += aprobe->seg->tsecond->dim;
                 tprobe->enc = (point *) malloc(alldim*sizeof(point));
 
-                int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);                
+                int maxquery = merge (aprobe->father, aprobe->uncle, accel_data, accel_state);
 
                 for(i = maxquery; i < maxquery + 7; i ++){
                     accel_state[i] = -1;
                 }
 
-                accel_son[0] = tprobe->t.p1.x;
-                accel_son[1] = tprobe->t.p1.y;
-                accel_son[2] = tprobe->t.p2.x;
-                accel_son[3] = tprobe->t.p2.y;
-                accel_son[4] = tprobe->t.p3.x;
-                accel_son[5] = tprobe->t.p3.y;
+                accel_son[0] = tprobe->p1.x;
+                accel_son[1] = tprobe->p1.y;
+                accel_son[2] = tprobe->p2.x;
+                accel_son[3] = tprobe->p2.y;
+                accel_son[4] = tprobe->p3.x;
+                accel_son[5] = tprobe->p3.y;
 
-                #ifdef DEBUG
-                    printf("\n\n%d %d %d\n ", tprobe->t.p1.id, tprobe->t.p2.id, tprobe->t.p3.id);
+                /*#ifdef DEBUG
+                    printf("\n\nNew triangle: %d %d %d\n ", tprobe->p1.id, tprobe->p2.id, tprobe->p3.id);
                     for (i = 0; i<maxquery; i++){
                         printf("%2d ",accel_state[i]);
                     }
                     printf("\nv\n ");
-                #endif                
+                #endif*/
 
                 accel_in_circle (accel_data[0], accel_state, accel_son, &maxquery);
-                
+
                 #ifdef DEBUG
-                    for (i = 0; i<maxquery; i++){
-                        printf("%2d ",accel_state[i]);
+                    printf("New triangle: (%d %d %d) -> ", tprobe->p1.id, tprobe->p2.id, tprobe->p3.id);
+                    for (i = 0; i < maxquery; i++){
+                        if (accel_state[i] >= 0)
+                            printf("%2d ",accel_state[i]);
                     }
                     printf("\n");
-
-                    printf("\nPrima:");
-                    print_tris_id(tprobe);
                 #endif
 
                 for (i = 0; i < maxquery; i++){
@@ -190,26 +186,22 @@ int main(int argc, char *argv[])
                     }
                 }
 
-                #ifdef DEBUG
-                    printf("\nDopo:");
-                    print_tris_id(tprobe);
-                #endif
-            
                 aprobe = aprobe->next;
             }
 
             #ifdef DEBUG
                 print_tris_id(tprobe);
+                printf("\nSTART ROUND %d\n", roundcount);
             #endif
-
         }
 
         #ifdef LOG
             roundwidth++;
         #endif
         #ifdef DEBUG
+            printf("\nActs:\n");
             print_acts_id(acts);
-            printf("\nAttivo: %d %d\n", acts->act->seg.a.id, acts->act->seg.b.id);
+            printf("\nActive: (%d %d)\n", acts->seg->a.id, acts->seg->b.id);
         #endif
         
         // All new triangles of the round are in tris.
@@ -220,30 +212,35 @@ int main(int argc, char *argv[])
         tris = tris->prev;
 
         #ifdef DEBUG
+            printf ("\nTris:\n");
             print_tris_id(tris);
         #endif
         
         // We add one of its segment to segs.
-        // If the segment already existed, on it's other side there's already a triangle.
+        // If the segment already existed, on its other side there's already a triangle.
         // In that case we find which one, beteween the new neighboring triangles, has the lowest-id point.
         // That triangle will be deleted in the next round, so we add it to nextround along with the segment.
         // Else, if their lowest-id point is the same, no triangle will be deleted, we do nothing.
 
-        t_node *encroached = NULL;
-        encroached = segs_add (&segs, acts->act->seg.a, acts->father->enc[0], tris);
+        segment *active = acts->seg;
+        t_node *father = acts->father;
+        t_node *uncle = acts->uncle;
+        assert (active->tfirst == father || active->tsecond == father);
+
+        t_node *encroached;
+        encroached = push_seg (&segs, active->a, father->enc[0], tris);
         
-        if (encroached != NULL){
-            push_act (&nextround, segs, acts->act->seg.a, acts->father->enc[0], encroached);
-        }
+        if (encroached != nullptr)
+            push_act (&nextround, segs, active->a, father->enc[0], encroached);
 
         // Same as before, but considering the second new segment
-        encroached = segs_add (&segs, acts->act->seg.b, acts->father->enc[0], tris);
+        encroached = push_seg (&segs, active->b, father->enc[0], tris);
         
-        if (encroached != NULL){
-            push_act (&nextround, segs, acts->act->seg.b, acts->father->enc[0], encroached);
-        }
+        if (encroached != nullptr)
+            push_act (&nextround, segs, active->b, father->enc[0], encroached);
         
         #ifdef DEBUG
+            printf("\n Elements in segs:\n");
             print_segs_id(segs);
         #endif
 
@@ -251,51 +248,90 @@ int main(int argc, char *argv[])
 		// If uncle is null we're on the border.
         // We update its only adjacent triangle, and if the new one has still enc pts we add it to nextround.
 
-        assert (acts->act->tfirst == acts->father || acts->act->tsecond == acts->father);
-        if(acts->uncle == NULL){
-            acts->act->tfirst = tris;
+        if(uncle == nullptr){
+            active->tfirst = tris;
             if (tris->dim != 0){
-                push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, tris);
+                push_act (&nextround, segs, active->a, active->b, tris);
             }
         }
 
         // If uncle isn't null we find which triangle of the two adjecent is the father and replace it,
         // then we check if the common segment is active, on both sides
         else{
-            
+
             // Checking who's the father and replacing it with the son
-            if (acts->act->tfirst == acts->father){
-                acts->act->tfirst = tris;
+            if (active->tfirst == father){
+                active->tfirst = tris;
             }
-            else{ 
-                acts->act->tsecond = tris;
+            else{
+                active->tsecond = tris;
             }
 
-            // Checking if the first adjecent triangle added in segs is going to die in next round.
-            if (acts->act->tfirst->dim != 0 && 
-               (acts->act->tsecond->dim == 0 || acts->act->tfirst->enc[0].id  <  acts->act->tsecond->enc[0].id)){
+            // Checking if the first adjecent triangle added in segs must die in the next round.
+            if (active->tfirst->dim != 0 &&
+               (active->tsecond->dim == 0 || active->tfirst->enc[0].id  <  active->tsecond->enc[0].id)){
                 
-                push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, acts->act->tfirst);
-            
+                push_act (&nextround, segs, active->a, active->b, active->tfirst);
             }
 
             // Same thing but with the second triangle
-            else if (acts->act->tsecond->dim != 0 && 
-                    (acts->act->tfirst->dim == 0 || acts->act->tsecond->enc[0].id  <  acts->act->tfirst->enc[0].id)){
+            else if (active->tsecond->dim != 0 &&
+                    (active->tfirst->dim == 0 || active->tsecond->enc[0].id  <  active->tfirst->enc[0].id)){
 
-                push_act (&nextround, segs, acts->act->seg.a, acts->act->seg.b, acts->act->tsecond);
-            
+                push_act (&nextround, segs, active->a, active->b, active->tsecond);
             }
         }
 
         #ifdef DEBUG
+            printf("\nNextround:\n");
             print_acts_id(nextround);
         #endif
 
+        segment *left_s, *right_s;
+
+        int f_opp_id = father->opposite(active->a, active->b).id;
+        idxkey left_idx(active->a.id, f_opp_id);
+        idxkey right_idx(active->b.id, f_opp_id);
+        HASH_FIND(hh, segs, &left_idx, sizeof(idxkey), left_s);
+        HASH_FIND(hh, segs, &right_idx, sizeof(idxkey), right_s);
+
+        t_node *left_t, *right_t;
+        left_t = left_s->opposite(father);
+        right_t = right_s->opposite(father);
+
+        //We update how many times the father has been replaced
+        father->lives--;
+        if (left_t != nullptr && left_t->enc[0].id == father->enc[0].id) {
+            father->lives--;
+        }
+        else
+            left_t = nullptr;
+        if (right_t != nullptr && right_t->enc[0].id == father->enc[0].id)
+            father->lives--;
+        else
+            right_t = nullptr;
+
+        //If all three sides replaced it it is deleted;
+        if (father->lives <= 0) {
+            if (left_t != nullptr) {
+                left_t->lives--;
+                left_s->remove(&segs, father);
+            }
+            if (right_t != nullptr) {
+                right_t->lives--;
+                right_s->remove(&segs, father);
+            }
+            pop_t(father, &tris);
+            deleted_t ++;
+        }
+
 		// We pass to the next active segment
         pop_act (&acts);
-
     }
+
+    #ifdef DEBUG
+        print_tris_id(tris);
+    #endif
 
     // End of triangulation, starting output
 
@@ -325,6 +361,7 @@ int main(int argc, char *argv[])
     #ifdef LOG
         printf ("Number of rounds: %d\n", roundcount);
     #endif
+    printf ("Deleted triangles: %d\n", deleted_t);
 
     return 0;
 }
@@ -338,7 +375,7 @@ int merge (t_node *father, t_node *uncle, float accel_data[][2], int accel_state
     int uid = 0;
     int sid = 0;
 
-    if (uncle == NULL){
+    if (uncle == nullptr){
         for(; fid < father->dim; fid++){
             accel_state[sid] = fenc[fid].id;
             accel_data[sid][0] = fenc[fid].x;
